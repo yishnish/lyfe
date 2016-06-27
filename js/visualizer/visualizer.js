@@ -6,24 +6,31 @@
 
  */
 function Visualizer(world, colorMapping) {
-    var nodeStuff = createNodeStuff();
-    var nodes = nodeStuff.nodeCollection;
-    var nodeHTML = nodeStuff.nodeHTML;
+    var nodes, nodeHTML;
 
-    validateDataShape();
+    init();
 
-    this.thingAt = function (x, y) {
-        return {color: null};
-    };
-
-    this.update = function () {
+    this.thingAt = function (row, col) {
+        return this.getNodes()[row][col];
     };
 
     this.getDisplay = function () {
         return {rows: world.length, columns: world[0].length};
     };
 
+    this.getNodes = function () {
+        return nodes;
+    };
+
 //private
+
+    function init(){
+        validateDataShape();
+        validateColorMapping();
+        var nodeStuff = createNodeStuff();
+        nodes = nodeStuff.nodeCollection;
+        nodeHTML = nodeStuff.nodeHTML;
+    }
 
     function createNodeStuff(){
         var tableNode  = document.createElement("table");
@@ -36,17 +43,29 @@ function Visualizer(world, colorMapping) {
                 var tdNode = document.createElement("td");
                 tdNode.setAttribute("color", colorMapping[col.iAmA]);
                 rowNode.appendChild(tdNode);
-                r.push(tdNode)
+                r.push(new WorldNode(tdNode));
             });
             tableNode.appendChild(rowNode);
             nodeCollection.push(r);
         });
-
         return {nodeHTML: tableNode, nodeCollection: nodeCollection};
+    }
+
+    function validateColorMapping(){
+        if(colorMapping === null || isEmptyObject(colorMapping)) {
+            throw new Error("You need a non-empty color mapping");
+        }
+    }
+
+    function isEmptyObject(object) {
+        return Object.keys(object).length === 0;
     }
 
     function validateDataShape() {
         var rowCount = world.length;
+        if(world === null || world.length === 0) {
+            throw new Error("Can't create a visualization from empty data");
+        }
         if (rowCount > 0) {
             var colCount = world[0].length;
             world.forEach(function (row) {

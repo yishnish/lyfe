@@ -4,8 +4,8 @@ describe('Visualizers', function () {
     describe('building a visualization', function () {
         describe("from a data array", function () {
             describe("when there is no data", function () {
-                it('should be ok', function () {
-                    expect(function(){new Visualizer([], colorMapping)}).not.toThrow();
+                it('should fail', function () {
+                    expect(function(){new Visualizer([], colorMapping)}).toThrowError("Can't create a visualization from empty data");
                 })
             });
             describe("when there is data", function () {
@@ -29,26 +29,21 @@ describe('Visualizers', function () {
                     })
                 });
                 describe('when there is a color mapping', function(){
-                    xit('table elements should be colored according to their matching type', function(){
+                    it('table elements should be colored according to their matching type', function(){
                         var viz = new Visualizer([[{iAmA: "vole"}, {iAmA: "bird"}]], colorMapping);
-                        expect(viz.thingAt(0, 0).color).toBe("brown");
-                        expect(viz.thingAt(0, 1).color).toBe("blue");
+                        expect(viz.thingAt(0, 0).color()).toBe("brown");
+                        expect(viz.thingAt(0, 1).color()).toBe("blue");
+                    })
+                });
+                describe('when there is no color mapping', function(){
+                    it('should fail', function(){
+                        expect(function(){new Visualizer([[{iAmA: "vole"}, {iAmA: "bird"}]], null)}).toThrowError("You need a non-empty color mapping");
                     })
                 })
             });
         });
         describe("updating a display", function () {
-            describe("when there are no underlying data elements", function () {
-                var viz;
-                beforeEach(function () {
-                    var myWorld = [];
-                    viz = new Visualizer(myWorld, colorMapping);
-                });
-                xit('should not update anything', function () {
-                    viz.update();
-                    expect(viz.thingAt(0,0).color).toBe("transparent");
-                });
-            });
+
         });
     });
 });
