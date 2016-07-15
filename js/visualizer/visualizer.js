@@ -25,11 +25,15 @@ function Visualizer(world, colorMapping) {
 //private
 
     function init(){
-        validateDataShape();
-        validateColorMapping();
+        validate();
         var nodeStuff = createNodeStuff();
         nodes = nodeStuff.nodeCollection;
         nodeHTML = nodeStuff.nodeHTML;
+    }
+
+    function validate(){
+        validateDataShape();
+        validateColorMapping();
     }
 
     function createNodeStuff(){
