@@ -32,7 +32,6 @@ function Visualizer(world, colorMapping) {
     }
 
     function validate(){
-        validateDataShape();
         validateColorMapping();
     }
 
@@ -40,7 +39,7 @@ function Visualizer(world, colorMapping) {
         var tableNode  = document.createElement("table");
         var nodeCollection = [];
 
-        world.forEach(function (row) {
+        world.getGrid().forEach(function (row) {
             var r = [];
             var rowNode = document.createElement("tr");
             row.forEach(function (col) {
@@ -64,20 +63,5 @@ function Visualizer(world, colorMapping) {
 
     function isEmptyObject(object) {
         return Object.keys(object).length === 0;
-    }
-
-    function validateDataShape() {
-        var rowCount = world.length;
-        if(world === null || world.length === 0) {
-            throw new Error("Can't create a visualization from empty data");
-        }
-        if (rowCount > 0) {
-            var colCount = world[0].length;
-            world.forEach(function (row) {
-                if (row.length !== colCount) {
-                    throw new Error("Non rectangular world");
-                }
-            });
-        }
     }
 }

@@ -7,6 +7,27 @@ describe("A World", function () {
     it("contains data", function () {
         expect(world.getGrid()).toEqual(dataGrid);
     });
+    describe("validations", function () {
+        it('should fail when there is no data', function () {
+            expect(function () {
+                new World()
+            }).toThrowError("Can't create a world from empty data");
+        });
+        it('should fail when there is empty data', function () {
+            expect(function () {
+                new World([])
+            }).toThrowError("Can't create a world from empty data");
+        });
+        it("should fail when the data isn't rectangular", function () {
+            expect(function () {
+                new World(
+                        [
+                            [{iAmA: "vole"}, {iAmA: "vole"}],
+                            [{iAmA: "vole"}]
+                        ])
+            }).toThrowError("Can't create a non-rectangular world");
+        });
+    });
     describe('callbacks', function () {
         var thing;
         beforeEach(function () {

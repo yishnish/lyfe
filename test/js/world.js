@@ -5,11 +5,12 @@
  */
 
 function World(dataGrid){
-    var inhabitants = dataGrid;
     var callbacks = [];
 
+    init();
+
     this.getGrid = function () {
-        return inhabitants;
+        return dataGrid;
     };
     this.onChange = function(obj, callback) {
         callbacks.push({_object : obj, _callback : callback})
@@ -18,5 +19,26 @@ function World(dataGrid){
         callbacks.forEach(function (objectAndCallback) {
             objectAndCallback._callback.apply(objectAndCallback._object);
         });
+    };
+
+    //private
+
+    function init(){
+        validateDataShape();
+    }
+
+    function validateDataShape() {
+        if(!dataGrid || dataGrid.length == 0){
+            throw new Error("Can't create a world from empty data");
+        }
+        var rowCount = dataGrid.length;
+        if (rowCount > 0) {
+            var colCount = dataGrid[0].length;
+            dataGrid.forEach(function (row) {
+                if (row.length !== colCount) {
+                    throw new Error("Can't create a non-rectangular world");
+                }
+            });
+        }
     }
 }
