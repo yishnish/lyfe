@@ -23,7 +23,6 @@ function Visualizer(world, colorMapping) {
     };
 
 //private
-
     function init(){
         validate();
         var nodeStuff = createNodeStuff();
