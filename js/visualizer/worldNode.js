@@ -4,8 +4,15 @@
  * i don't think it can just be a list of colors though because nodes need to get updated so
  * that CSS can update the color on the page. So keep it as the actual Nodes created by the document
  */
-function WorldNode(domNode){
-    this.color = function(){
-        return domNode.getAttribute("color");
+function WorldNode(){
+    var td = document.createElement("td");
+    this.color = function () {
+        return td.getAttribute("color");
+    };
+    this.setColor = function(color) {
+        td.setAttribute("color", color);
+    };
+    this.getTableCell = function(){
+        return td;
     }
 }

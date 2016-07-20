@@ -44,10 +44,11 @@ function Visualizer(world, colorMapping) {
             var r = [];
             var rowNode = document.createElement("tr");
             row.forEach(function (col) {
-                var tdNode = document.createElement("td");
-                tdNode.setAttribute("color", colorMapping[col.iAmA]);
+                var worldNode = new WorldNode();
+                worldNode.setColor(colorMapping[col.iAmA]);
+                var tdNode = worldNode.getTableCell();
                 rowNode.appendChild(tdNode);
-                r.push(new WorldNode(tdNode));
+                r.push(worldNode);
             });
             tableNode.appendChild(rowNode);
             nodeCollection.push(r);
