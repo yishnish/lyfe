@@ -11,14 +11,14 @@ function Visualizer(world, colorMapping) {
     init();
 
     this.thingAt = function (row, col) {
-        return this.getNodes()[row][col];
+        return this.getDataNodes()[row][col];
     };
 
-    this.getDisplay = function () {
-        return {rows: world.length, columns: world[0].length};
+    this.getDisplayHtml = function () {
+        return nodeHTML;
     };
 
-    this.getNodes = function () {
+    this.getDataNodes = function () {
         return nodes;
     };
 

@@ -27,11 +27,17 @@ describe('Visualizers', function () {
             });
             it('should create a DOM table with the same number of rows and columns as the data', function () {
                 var viz = new Visualizer([[{iAmA: "vole"}]], colorMapping);
-                expect(viz.getDisplay().rows).toEqual(1);
-                expect(viz.getDisplay().columns).toEqual(1);
+                var table = new TableAccessor(viz.getDisplayHtml());
+                expect(table.rows()).toEqual(1);
+                expect(table.columns()).toEqual(1);
+            });
+            it('should create a 2D array of worldNodes with the same number of rows and columns as the data', function () {
+                var viz = new Visualizer([[{iAmA: "vole"}]], colorMapping);
+                expect(viz.getDataNodes().length).toEqual(1);
+                expect(viz.getDataNodes()[0].length).toEqual(1);
             });
             describe('color mapping', function () {
-                it('table elements should be colored according to their matching type', function () {
+                it('should have table elements colored according to their matching type', function () {
                     var viz = new Visualizer([[{iAmA: "vole"}, {iAmA: "bird"}]], colorMapping);
                     expect(viz.thingAt(0, 0).color()).toBe("brown");
                     expect(viz.thingAt(0, 1).color()).toBe("blue");
@@ -40,6 +46,8 @@ describe('Visualizers', function () {
         });
     });
     describe("updating a display", function () {
-
+        xit('should update the display when the backing world changes', function () {
+            expect(true).toBeFalsy();
+        });
     });
 });
