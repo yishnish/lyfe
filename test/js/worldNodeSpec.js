@@ -9,8 +9,9 @@ describe('WorldNode', function () {
             it('should provide the color of a node', function () {
                 expect(node.color()).toEqual("blue");
             });
-            xit('should update the color of a node', function () {
-                expect(true).toBeFalsy();
+            it('should update the color of a node', function () {
+                node.setColor("green");
+                expect(node.color()).toEqual("green");
             });
         })
     })
