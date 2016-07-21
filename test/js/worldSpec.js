@@ -1,7 +1,7 @@
 describe("A World", function () {
     var dataGrid, world;
     beforeEach(function () {
-        dataGrid = [[{iAmA: "vole"}]];
+        dataGrid = [[new Thing("vole")]];
         world = new World(dataGrid);
     });
     it("contains data", function () {
@@ -10,21 +10,21 @@ describe("A World", function () {
     describe("validations", function () {
         it('should fail when there is no data', function () {
             expect(function () {
-                new World()
+                new World();
             }).toThrowError("Can't create a world from empty data");
         });
         it('should fail when there is empty data', function () {
             expect(function () {
-                new World([])
+                new World([]);
             }).toThrowError("Can't create a world from empty data");
         });
         it("should fail when the data isn't rectangular", function () {
             expect(function () {
                 new World(
-                        [
-                            [{iAmA: "vole"}, {iAmA: "vole"}],
-                            [{iAmA: "vole"}]
-                        ])
+                    [
+                        [new Thing("vole"), new Thing("vole")],
+                        [new Thing("vole")]
+                    ]);
             }).toThrowError("Can't create a non-rectangular world");
         });
     });
@@ -44,7 +44,7 @@ describe("A World", function () {
         });
         it('performs multiple callbacks on a registered listener', function () {
             world.onChange(thing, function () {
-                this.value = 69
+                this.value = 69;
             });
             world.onChange(thing, function () {
                 this.otherValue = 42;
@@ -56,7 +56,7 @@ describe("A World", function () {
         it('performs callbacks on multiple listeners', function () {
             var otherThing = {value: null};
             world.onChange(thing, function () {
-                this.value = 69
+                this.value = 69;
             });
             world.onChange(otherThing, function () {
                 this.value = 42;
