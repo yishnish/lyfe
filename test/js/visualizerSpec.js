@@ -31,8 +31,49 @@ describe('Visualizers', function () {
         });
     });
     describe("updating a display", function () {
-        xit('should update the display when the backing world changes', function () {
-            expect(true).toBeFalsy();
+        it('should update the display nodes when the backing world changes', function () {
+            var dataGrid = [
+                [{iAmA: "vole"}, {iAmA: "bird"}],
+                [{iAmA: "bird"}, {iAmA: "vole"}]
+            ];
+            var world = new World(dataGrid);
+            var viz = new Visualizer(world, colorMapping);
+            expect(viz.thingAt(0, 0).color()).toBe("brown");
+            expect(viz.thingAt(0, 1).color()).toBe("blue");
+            expect(viz.thingAt(1, 0).color()).toBe("blue");
+            expect(viz.thingAt(1, 1).color()).toBe("brown");
+            world.getGrid()[0][0].iAmA = "bird";
+            world.getGrid()[0][1].iAmA = "vole";
+            world.getGrid()[1][0].iAmA = "vole";
+            world.getGrid()[1][1].iAmA = "bird";
+            world.turn();
+            expect(viz.thingAt(0, 0).color()).toBe("blue");
+            expect(viz.thingAt(0, 1).color()).toBe("brown");
+            expect(viz.thingAt(1, 0).color()).toBe("brown");
+            expect(viz.thingAt(1, 1).color()).toBe("blue");
+        });
+
+        it('should update the display HTML when the backing world changes', function () {
+            var dataGrid = [
+                [{iAmA: "vole"}, {iAmA: "bird"}],
+                [{iAmA: "bird"}, {iAmA: "vole"}]
+            ];
+            var world = new World(dataGrid);
+            var viz = new Visualizer(world, colorMapping);
+            var table = new TableAccessor(viz.getDisplayHtml());
+            expect(table.cellColorAt(0, 0)).toBe("brown");
+            expect(table.cellColorAt(0, 1)).toBe("blue");
+            expect(table.cellColorAt(1, 0)).toBe("blue");
+            expect(table.cellColorAt(1, 1)).toBe("brown");
+            world.getGrid()[0][0].iAmA = "bird";
+            world.getGrid()[0][1].iAmA = "vole";
+            world.getGrid()[1][0].iAmA = "vole";
+            world.getGrid()[1][1].iAmA = "bird";
+            world.turn();
+            expect(table.cellColorAt(0, 0)).toBe("blue");
+            expect(table.cellColorAt(0, 1)).toBe("brown");
+            expect(table.cellColorAt(1, 0)).toBe("brown");
+            expect(table.cellColorAt(1, 1)).toBe("blue");
         });
     });
 });

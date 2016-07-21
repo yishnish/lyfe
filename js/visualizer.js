@@ -8,7 +8,7 @@
 function Visualizer(world, colorMapping) {
     var nodes, nodeHTML;
 
-    init();
+    init.apply(this);
 
     this.thingAt = function (row, col) {
         return this.getDataNodes()[row][col];
@@ -22,12 +22,24 @@ function Visualizer(world, colorMapping) {
         return nodes;
     };
 
+    this.update = function () {
+        world.getGrid().forEach(function (row, rowNum) {
+            row.forEach(function (col, colNum) {
+                nodes[rowNum][colNum].setColor(colorMapping[col.iAmA]);
+            });
+        });
+    };
+
 //private
     function init(){
+        console.log(this);
         validate();
         var nodeStuff = createNodeStuff();
         nodes = nodeStuff.nodeCollection;
         nodeHTML = nodeStuff.nodeHTML;
+        world.onChange(this, function () {
+            this.update();
+        });
     }
 
     function validate(){
