@@ -32,7 +32,6 @@ function Visualizer(world, colorMapping) {
 
 //private
     function init(){
-        console.log(this);
         validate();
         var nodeStuff = createNodeStuff();
         nodes = nodeStuff.nodeCollection;
