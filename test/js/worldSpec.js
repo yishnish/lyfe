@@ -66,4 +66,15 @@ describe("A World", function () {
             expect(otherThing.value).toEqual(42);
         });
     });
+    describe("Contents", function () {
+        it('should tell you what is at a location', function () {
+           var world = new World(
+                [
+                    [new Thing("vole"), new Thing("vole")],
+                    [new Thing("vole"), undefined]
+                ]);
+            expect(world.thingAt(0, 0).iAmA).toBe('vole');
+            expect(world.thingAt(1, 1)).not.toBeDefined();
+        });
+    });
 });

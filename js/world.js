@@ -20,6 +20,12 @@ function World(dataGrid){
             objectAndCallback._callback.apply(objectAndCallback._object);
         });
     };
+    this.thingAt = function(row, col) {
+        var y = dataGrid[row];
+        if(y) {
+            return y[col];
+        }return null;
+    };
 
     //private
 
