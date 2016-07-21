@@ -6,7 +6,7 @@ describe('Visualizers', function () {
             describe("validations", function () {
                 it('should fail when there is no color mapping', function () {
                     expect(function () {
-                        new Visualizer(new World([[{iAmA: "vole"}, {iAmA: "bird"}]]), null)
+                        new Visualizer(new World([[{iAmA: "vole"}, {iAmA: "bird"}]]), null);
                     }).toThrowError("You need a non-empty color mapping");
                 });
             });

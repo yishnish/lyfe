@@ -13,7 +13,7 @@ function World(dataGrid){
         return dataGrid;
     };
     this.onChange = function(obj, callback) {
-        callbacks.push({_object : obj, _callback : callback})
+        callbacks.push({_object : obj, _callback : callback});
     };
     this.turn = function(){
         callbacks.forEach(function (objectAndCallback) {
@@ -28,7 +28,7 @@ function World(dataGrid){
     }
 
     function validateDataShape() {
-        if(!dataGrid || dataGrid.length == 0){
+        if(!dataGrid || dataGrid.length === 0){
             throw new Error("Can't create a world from empty data");
         }
         var rowCount = dataGrid.length;

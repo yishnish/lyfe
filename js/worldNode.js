@@ -14,5 +14,5 @@ function WorldNode(){
     };
     this.getTableCell = function(){
         return td;
-    }
+    };
 }

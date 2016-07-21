@@ -1,6 +1,6 @@
 describe('WorldNode', function () {
-    describe('wraps the DOM node for an item in the world', function(){
-        describe('accessing attributes', function(){
+    describe('wraps the DOM node for an item in the world', function () {
+        describe('accessing attributes', function () {
             var node;
             beforeEach(function () {
                 node = new WorldNode();
@@ -13,6 +13,6 @@ describe('WorldNode', function () {
                 node.setColor("green");
                 expect(node.color()).toEqual("green");
             });
-        })
-    })
+        });
+    });
 });
