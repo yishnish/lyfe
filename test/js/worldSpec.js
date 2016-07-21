@@ -54,7 +54,7 @@ describe("A World", function () {
             expect(thing.otherValue).toEqual(42);
         });
         it('performs callbacks on multiple listeners', function () {
-            var otherThing = {value : null}
+            var otherThing = {value: null};
             world.onChange(thing, function () {
                 this.value = 69
             });

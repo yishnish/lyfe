@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="js/worldNode.js"></script>
+    <script src="js/world.js"></script>
+    <script src="js/visualizer.js"></script>
+    <link href="css/view.css" rel="stylesheet"/>
+</head>
+<body>
+    <div id="world-goes-here"></div>
+    <script>
+        var colorMapping = {"vole": "brown", "bird": "blue"};
+        var dataGrid = createGrid();
+        var world = new World(dataGrid);
+        var viz = new Visualizer(world, colorMapping);
+        document.getElementById("world-goes-here").appendChild(viz.getDisplayHtml());
+
+        window.setInterval(updateGrid, 100);
+
+        function updateGrid(){
+            var beasts = ["vole", "bird"];
+            var grid = world.getGrid();
+            for(var i = 0; i < 100; i++) {
+                for (var j = 0; j < 100; j++) {
+                    grid[i][j].iAmA = beasts[Math.round(Math.random())];
+                }
+            }
+            world.turn();
+        }
+
+        function createGrid(){
+            var grid = [];
+            var beasts = ["vole", "bird"];
+            for(var i = 0; i < 100; i++) {
+                var row = [];
+                for(var j = 0; j < 100; j++) {
+                    var num = Math.round(Math.random());
+                    var beast = beasts[num];
+                    row.push({iAmA: beast});
+                }
+                grid.push(row);
+            }
+            return grid;
+        }
+    </script>
+</body>
+</html>

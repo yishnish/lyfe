@@ -47,6 +47,7 @@ function Visualizer(world, colorMapping) {
 
     function createNodeStuff(){
         var tableNode  = document.createElement("table");
+        tableNode.setAttribute("id", "the-world");
         var nodeCollection = [];
 
         world.getGrid().forEach(function (row) {

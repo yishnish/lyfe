@@ -1,0 +1,12 @@
+table#the-world{
+    width: 45em;
+    height: 45em;
+}
+
+td[color="brown"] {
+    background-color: brown;
+}
+
+td[color="blue"] {
+    background-color: blue;
+}
