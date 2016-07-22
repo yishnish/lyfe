@@ -17,8 +17,9 @@ describe('Visualizers', function () {
             });
             it('should create a 2D array of worldNodes with the same number of rows and columns as the data', function () {
                 var viz = new Visualizer(new World([[new Thing("vole")]]), ColorMapping);
-                expect(viz.getDataNodes().length).toEqual(1);
-                expect(viz.getDataNodes()[0].length).toEqual(1);
+                var tableAccessor = new TableAccessor(viz.getDisplayHtml());
+                expect(tableAccessor.rows()).toEqual(1);
+                expect(tableAccessor.columns()).toEqual(1);
             });
             describe('color mapping', function () {
                 it('should have table elements colored according to their matching type', function () {

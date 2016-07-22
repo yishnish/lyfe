@@ -11,15 +11,11 @@ function Visualizer(world, colorMapping) {
     init.apply(this);
 
     this.thingAt = function (row, col) {
-        return this.getDataNodes()[row][col];
+        return getDataNodes.call(this)[row][col];
     };
 
     this.getDisplayHtml = function () {
         return nodeHTML;
-    };
-
-    this.getDataNodes = function () {
-        return nodes;
     };
 
     this.update = function () {
@@ -28,7 +24,7 @@ function Visualizer(world, colorMapping) {
                 if(col) {
                     nodes[rowNum][colNum].setColor(colorMapping[col.iAmA]);
                 }else{
-                    nodes[rowNum][colNum].setColor(colorMapping['empty']);
+                    nodes[rowNum][colNum].setColor(colorMapping.empty);
                 }
             });
         });
@@ -44,6 +40,10 @@ function Visualizer(world, colorMapping) {
             //noinspection JSPotentiallyInvalidUsageOfThis
             this.update();
         });
+    }
+
+    function getDataNodes() {
+        return nodes;
     }
 
     function validate(){
@@ -63,7 +63,7 @@ function Visualizer(world, colorMapping) {
                 if(col) {
                     worldNode.setColor(colorMapping[col.iAmA]);
                 }else{
-                    worldNode.setColor(colorMapping['empty']);
+                    worldNode.setColor(colorMapping.empty);
                 }
                 var tdNode = worldNode.getTableCell();
                 rowNode.appendChild(tdNode);
