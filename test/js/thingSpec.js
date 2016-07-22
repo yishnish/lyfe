@@ -44,6 +44,44 @@ describe("Things", function () {
         });
     });
 
+    describe("Well being", function () {
+        var thing;
+
+        beforeEach(function () {
+            thing = new Thing();
+        });
+
+        it('has health', function () {
+            expect(thing.hp).toBeDefined();
+        });
+        it('has vitality', function () {
+            expect(thing.vitality).toBeDefined();
+        });
+        it('loses vitality every turn', function () {
+            var dataGrid = [
+                [thing, undefined]
+            ];
+            var world = new World(dataGrid);
+            thing.vitality = 10;
+            world.turn();
+            expect(thing.vitality).toBe(9);
+        });
+        it('loses health every turn once its vitality reaches zero', function () {
+            var dataGrid = [
+                [thing, undefined]
+            ];
+            var world = new World(dataGrid);
+            thing.hp = 10;
+            thing.vitality = 1;
+            world.turn();
+            expect(thing.vitality).toBe(0);
+            expect(thing.hp).toBe(10);
+            world.turn();
+            expect(thing.vitality).toBe(0);
+            expect(thing.hp).toBe(9);
+        });
+    });
+
     describe("Activities", function () {
         describe("movement", function () {
             it('should be able to move around in the world', function () {
