@@ -39,6 +39,24 @@ describe("Things", function () {
             expect(thing.canMoveTo({row: -1, col: 0}, world)).toBe(false);
             expect(thing.canMoveTo({row: -1, col: -1}, world)).toBe(false);
             expect(thing.canMoveTo({row: 0, col: -1}, world)).toBe(false);
+            expect(thing.canMoveTo({row: 50, col: 50}, world)).toBe(false);
+
         });
     });
+
+    describe("Activities", function () {
+        describe("movement", function () {
+            it('should be able to move around in the world', function () {
+                var thing = new Thing('bird');
+                var dataGrid = [
+                    [thing, undefined]
+                ];
+                var world = new World(dataGrid);
+                world.turn();
+                expect(world.thingAt(0, 0)).toBeUndefined();
+                expect(world.thingAt(0, 1)).toBe(thing);
+            });
+        });
+    });
+
 });

@@ -7,7 +7,7 @@
 function World(dataGrid){
     var callbacks = [];
 
-    init();
+    init(this);
 
     this.getGrid = function () {
         return dataGrid;
@@ -16,6 +16,17 @@ function World(dataGrid){
         callbacks.push({_object : obj, _callback : callback});
     };
     this.turn = function(){
+        var thingsThatCanDoSomething = [];
+        dataGrid.forEach(function (row, rowNumber) {
+            row.forEach(function (maybeThing, colNumber) {
+                if(maybeThing) {
+                    thingsThatCanDoSomething.push({thing: maybeThing, location: {row: rowNumber, col: colNumber}});
+                }
+            });
+        });
+        thingsThatCanDoSomething.forEach(function (thingAndLocation) {
+            thingAndLocation.thing.takeTurn(this, thingAndLocation.location);
+        }, this);
         callbacks.forEach(function (objectAndCallback) {
             objectAndCallback._callback.apply(objectAndCallback._object);
         });
@@ -26,11 +37,18 @@ function World(dataGrid){
             return y[col];
         }return null;
     };
+    this.move = function(from, to) {
+        var thing = dataGrid[from.row][from.col];
+        dataGrid[from.row][from.col] = undefined;
+        dataGrid[to.row][to.col] = thing;
+    };
 
     //private
 
-    function init(){
+    function init(_this){
         validateDataShape();
+        _this.rows = dataGrid.length;
+        _this.columns = dataGrid[0].length;
     }
 
     function validateDataShape() {

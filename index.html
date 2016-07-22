@@ -17,7 +17,7 @@
         var viz = new Visualizer(world, ColorMapping);
         document.getElementById("world-goes-here").appendChild(viz.getDisplayHtml());
 
-        window.setInterval(updateGrid, 100);
+        window.setInterval(function(){world.turn();}, 100);
 
         function updateGrid(){
             var beasts = ["vole", "bird"];
@@ -32,16 +32,14 @@
 
         function createGrid(){
             var grid = [];
-            var beasts = ["vole", "bird"];
             for(var i = 0; i < 100; i++) {
                 var row = [];
                 for(var j = 0; j < 100; j++) {
-                    var num = Math.round(Math.random());
-                    var beast = beasts[num];
-                    row.push(new Thing(beast));
+                    row.push(null);
                 }
                 grid.push(row);
             }
+            grid[10][10] = new Thing('bird');
             return grid;
         }
     </script>

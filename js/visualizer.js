@@ -25,7 +25,11 @@ function Visualizer(world, colorMapping) {
     this.update = function () {
         world.getGrid().forEach(function (row, rowNum) {
             row.forEach(function (col, colNum) {
-                nodes[rowNum][colNum].setColor(colorMapping[col.iAmA]);
+                if(col) {
+                    nodes[rowNum][colNum].setColor(colorMapping[col.iAmA]);
+                }else{
+                    nodes[rowNum][colNum].setColor(colorMapping['empty']);
+                }
             });
         });
     };
@@ -37,6 +41,7 @@ function Visualizer(world, colorMapping) {
         nodes = nodeStuff.nodeCollection;
         nodeHTML = nodeStuff.nodeHTML;
         world.onChange(this, function () {
+            //noinspection JSPotentiallyInvalidUsageOfThis
             this.update();
         });
     }
@@ -55,7 +60,11 @@ function Visualizer(world, colorMapping) {
             var rowNode = document.createElement("tr");
             row.forEach(function (col) {
                 var worldNode = new WorldNode();
-                worldNode.setColor(colorMapping[col.iAmA]);
+                if(col) {
+                    worldNode.setColor(colorMapping[col.iAmA]);
+                }else{
+                    worldNode.setColor(colorMapping['empty']);
+                }
                 var tdNode = worldNode.getTableCell();
                 rowNode.appendChild(tdNode);
                 r.push(worldNode);

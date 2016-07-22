@@ -31,7 +31,7 @@ describe("A World", function () {
     describe('callbacks', function () {
         var thing;
         beforeEach(function () {
-            thing = {value: null, otherValue : null};
+            thing = {value: null, otherValue: null};
         });
 
         it('performs a callback on a registered object', function () {
@@ -68,13 +68,42 @@ describe("A World", function () {
     });
     describe("Contents", function () {
         it('should tell you what is at a location', function () {
-           var world = new World(
+            var world = new World(
                 [
                     [new Thing("vole"), new Thing("vole")],
                     [new Thing("vole"), undefined]
                 ]);
             expect(world.thingAt(0, 0).iAmA).toBe('vole');
             expect(world.thingAt(1, 1)).not.toBeDefined();
+        });
+        describe("activating Things that live in it", function () {
+            it('should notifiy Things when they can move', function () {
+                var thing = new Thing("vole");
+                var world = new World(
+                    [
+                        [thing, undefined],
+                        [undefined, undefined]
+                    ]);
+                spyOn(thing, 'takeTurn').and.callThrough();
+                world.turn();
+
+                expect(thing.takeTurn).toHaveBeenCalledWith(world, {row: 0, col: 0});
+            });
+        });
+
+        describe("moving contents", function () {
+            it('should move a Thing to another requested location', function () {
+                var thing1 = new Thing("vole");
+                var thing2 = new Thing("vole");
+                var thing3 = new Thing("vole");
+                var world = new World(
+                    [
+                        [thing1, thing2],
+                        [thing3, undefined]
+                    ]);
+                world.move({row: 0, col: 0}, {row: 1, col: 1});
+                expect(world.thingAt(0, 0)).not.toBeDefined();
+            });
         });
     });
 });
