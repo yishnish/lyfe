@@ -42,28 +42,17 @@ describe("Things", function () {
         it('has vitality', function () {
             expect(thing.vitality).toBeDefined();
         });
-        it('loses vitality every turn', function () {
-            var dataGrid = [
-                [thing, null]
-            ];
-            var world = new World(dataGrid);
-            thing.vitality = 10;
-            world.turn();
-            expect(thing.vitality).toBe(9);
-        });
         it('loses health every turn once its vitality reaches zero', function () {
             var dataGrid = [
                 [thing, null]
             ];
             var world = new World(dataGrid);
             thing.hp = 10;
-            thing.vitality = 1;
+            thing.vitality = 0;
             world.turn();
-            expect(thing.vitality).toBe(0);
-            expect(thing.hp).toBe(10);
-            world.turn();
-            expect(thing.vitality).toBe(0);
             expect(thing.hp).toBe(9);
+            world.turn();
+            expect(thing.hp).toBe(8);
         });
     });
 
@@ -75,8 +64,7 @@ describe("Things", function () {
                 [thing]
             ];
             var world = new World(dataGrid);
-            thing.hp = 1;
-            thing.vitality = 0;
+            thing.hp = 0;
             world.turn();
             expect(world.thingAt(0, 0)).toBeNull();
         });

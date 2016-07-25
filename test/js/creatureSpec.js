@@ -28,14 +28,14 @@ describe("Creatures", function () {
     });
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
-            var thing = new Thing('vole');
+            var thing = new Creature('vole');
             expect(thing.iAmA).toEqual('vole');
         });
     });
     describe("awareness of surroundings", function () {
         it('should know what adjacent squares are unoccupied', function () {
-            var thing = new Thing('bird');
-            var thing2 = new Thing('bird');
+            var thing = new Creature('bird');
+            var thing2 = new Creature('bird');
             var dataGrid = [
                 [null, thing, null],
                 [null, thing2, null],
@@ -50,46 +50,46 @@ describe("Creatures", function () {
     });
 
     describe("Well being", function () {
-        var thing;
+        var creature;
 
         beforeEach(function () {
-            thing = new Thing();
+            creature = new Creature();
         });
 
         it('has health', function () {
-            expect(thing.hp).toBeDefined();
+            expect(creature.hp).toBeDefined();
         });
         it('has vitality', function () {
-            expect(thing.vitality).toBeDefined();
+            expect(creature.vitality).toBeDefined();
         });
         it('loses vitality every turn', function () {
             var dataGrid = [
-                [thing, null]
+                [creature, null]
             ];
             var world = new World(dataGrid);
-            thing.vitality = 10;
+            creature.vitality = 10;
             world.turn();
-            expect(thing.vitality).toBe(9);
+            expect(creature.vitality).toBe(9);
         });
         it('loses health every turn once its vitality reaches zero', function () {
             var dataGrid = [
-                [thing, null]
+                [creature, null]
             ];
             var world = new World(dataGrid);
-            thing.hp = 10;
-            thing.vitality = 1;
+            creature.hp = 10;
+            creature.vitality = 1;
             world.turn();
-            expect(thing.vitality).toBe(0);
-            expect(thing.hp).toBe(10);
+            expect(creature.vitality).toBe(0);
+            expect(creature.hp).toBe(10);
             world.turn();
-            expect(thing.vitality).toBe(0);
-            expect(thing.hp).toBe(9);
+            expect(creature.vitality).toBe(0);
+            expect(creature.hp).toBe(9);
         });
     });
 
     describe("Death", function () {
         it('Things should be removed from the world when their health reaches zero', function () {
-            var thing = new Thing('bird');
+            var thing = new Creature('bird');
 
             var dataGrid = [
                 [thing]
