@@ -100,7 +100,7 @@ describe("A World", function () {
                         [thing1, thing2],
                         [thing3, undefined]
                     ]);
-                world.move({row: 0, col: 0}, {row: 1, col: 1});
+                world.move({row: 0, col: 0}, new Coordinates(1, 1));
                 expect(world.thingAt(0, 0)).not.toBeDefined();
             });
         });

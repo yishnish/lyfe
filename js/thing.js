@@ -45,9 +45,8 @@ function Thing(type) {
         dy.forEach(function (rowChange) {
             dx.forEach(function (colChange) {
                 if (dy !== 0 && dx !== 0) {
-                    var possiblePlaceToMoveTo = {row: location.row + rowChange, col: location.col + colChange};
-                    var canMoveTo = this.canMoveTo(new Coordinates(possiblePlaceToMoveTo.row, possiblePlaceToMoveTo.col), world);
-                    if (canMoveTo) {
+                    var possiblePlaceToMoveTo = new Coordinates(location.row + rowChange, location.col + colChange);
+                    if (this.canMoveTo(possiblePlaceToMoveTo, world)) {
                         placesToMoveTo.push(possiblePlaceToMoveTo);
                     }
                 }

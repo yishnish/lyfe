@@ -37,10 +37,11 @@ function World(dataGrid){
             return y[col];
         }return null;
     };
+
     this.move = function(from, to) {
         var thing = dataGrid[from.row][from.col];
         dataGrid[from.row][from.col] = undefined;
-        dataGrid[to.row][to.col] = thing;
+        dataGrid[to.getRow()][to.getColumn()] = thing;
     };
     this.remove = function (row, col) {
         dataGrid[row][col] = undefined;
