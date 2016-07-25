@@ -37,7 +37,6 @@ function Visualizer(world, colorMapping) {
         nodes = nodeStuff.nodeCollection;
         nodeHTML = nodeStuff.nodeHTML;
         world.onChange(this, function () {
-            //noinspection JSPotentiallyInvalidUsageOfThis
             this.update();
         });
     }

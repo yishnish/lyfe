@@ -17,7 +17,7 @@ function Thing(type) {
         decrementVitality.call(this);
     };
     this.die = function (world, location) {
-        world.remove(location.row, location.col);
+        world.remove(location.getRow(), location.getColumn());
     };
 
     function decrementVitality() {
@@ -45,7 +45,7 @@ function Thing(type) {
         dy.forEach(function (rowChange) {
             dx.forEach(function (colChange) {
                 if (dy !== 0 && dx !== 0) {
-                    var possiblePlaceToMoveTo = new Coordinates(location.row + rowChange, location.col + colChange);
+                    var possiblePlaceToMoveTo = new Coordinates(location.getRow() + rowChange, location.getColumn() + colChange);
                     if (this.canMoveTo(possiblePlaceToMoveTo, world)) {
                         placesToMoveTo.push(possiblePlaceToMoveTo);
                     }

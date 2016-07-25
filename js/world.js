@@ -20,7 +20,7 @@ function World(dataGrid){
         dataGrid.forEach(function (row, rowNumber) {
             row.forEach(function (maybeThing, colNumber) {
                 if(maybeThing) {
-                    thingsThatCanDoSomething.push({thing: maybeThing, location: {row: rowNumber, col: colNumber}});
+                    thingsThatCanDoSomething.push({thing: maybeThing, location: new Coordinates(rowNumber, colNumber)});
                 }
             });
         });
@@ -39,8 +39,8 @@ function World(dataGrid){
     };
 
     this.move = function(from, to) {
-        var thing = dataGrid[from.row][from.col];
-        dataGrid[from.row][from.col] = undefined;
+        var thing = dataGrid[from.getRow()][from.getColumn()];
+        dataGrid[from.getRow()][from.getColumn()] = undefined;
         dataGrid[to.getRow()][to.getColumn()] = thing;
     };
     this.remove = function (row, col) {

@@ -87,7 +87,7 @@ describe("A World", function () {
                 spyOn(thing, 'takeTurn').and.callThrough();
                 world.turn();
 
-                expect(thing.takeTurn).toHaveBeenCalledWith(world, {row: 0, col: 0});
+                expect(thing.takeTurn).toHaveBeenCalled();
             });
         });
         describe("moving contents", function () {
@@ -100,7 +100,7 @@ describe("A World", function () {
                         [thing1, thing2],
                         [thing3, undefined]
                     ]);
-                world.move({row: 0, col: 0}, new Coordinates(1, 1));
+                world.move(new Coordinates(0, 0), new Coordinates(1, 1));
                 expect(world.thingAt(0, 0)).not.toBeDefined();
             });
         });
