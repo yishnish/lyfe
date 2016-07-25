@@ -40,11 +40,11 @@ function World(dataGrid){
 
     this.move = function(from, to) {
         var thing = dataGrid[from.getRow()][from.getColumn()];
-        dataGrid[from.getRow()][from.getColumn()] = undefined;
+        dataGrid[from.getRow()][from.getColumn()] = null;
         dataGrid[to.getRow()][to.getColumn()] = thing;
     };
     this.remove = function (row, col) {
-        dataGrid[row][col] = undefined;
+        dataGrid[row][col] = null;
     };
 
     //private

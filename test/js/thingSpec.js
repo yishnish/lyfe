@@ -17,9 +17,9 @@ describe("Things", function () {
             var thing = new Thing('bird');
             var thing2 = new Thing('bird');
             var dataGrid = [
-                [undefined, thing, undefined],
-                [undefined, thing2, undefined],
-                [undefined, undefined, undefined]
+                [null, thing, null],
+                [null, thing2, null],
+                [null, null, null]
             ];
             var world = new World(dataGrid);
             expect(thing.canMoveTo(new Coordinates(0, 0), world)).toBe(true);
@@ -29,9 +29,9 @@ describe("Things", function () {
         it('should know that it cannot move off the map', function () {
             var thing = new Thing('bird');
             var dataGrid = [
-                [thing, undefined, undefined],
-                [undefined, undefined, undefined],
-                [undefined, undefined, undefined]
+                [thing, null, null],
+                [null, null, null],
+                [null, null, null]
             ];
             var world = new World(dataGrid);
             expect(thing.canMoveTo(new Coordinates(-1, 0), world)).toBe(false);
@@ -58,7 +58,7 @@ describe("Things", function () {
         });
         it('loses vitality every turn', function () {
             var dataGrid = [
-                [thing, undefined]
+                [thing, null]
             ];
             var world = new World(dataGrid);
             thing.vitality = 10;
@@ -67,7 +67,7 @@ describe("Things", function () {
         });
         it('loses health every turn once its vitality reaches zero', function () {
             var dataGrid = [
-                [thing, undefined]
+                [thing, null]
             ];
             var world = new World(dataGrid);
             thing.hp = 10;
@@ -86,11 +86,11 @@ describe("Things", function () {
             it('should be able to move around in the world', function () {
                 var thing = new Thing('bird');
                 var dataGrid = [
-                    [thing, undefined]
+                    [thing, null]
                 ];
                 var world = new World(dataGrid);
                 world.turn();
-                expect(world.thingAt(0, 0)).toBeUndefined();
+                expect(world.thingAt(0, 0)).toBeNull();
                 expect(world.thingAt(0, 1)).toBe(thing);
             });
         });
@@ -107,7 +107,7 @@ describe("Things", function () {
             thing.hp = 1;
             thing.vitality = 0;
             world.turn();
-            expect(world.thingAt(0, 0)).toBeUndefined();
+            expect(world.thingAt(0, 0)).toBeNull();
         });
     });
 

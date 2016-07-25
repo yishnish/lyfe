@@ -71,18 +71,18 @@ describe("A World", function () {
             var world = new World(
                 [
                     [new Thing("vole"), new Thing("vole")],
-                    [new Thing("vole"), undefined]
+                    [new Thing("vole"), null]
                 ]);
             expect(world.thingAt(0, 0).iAmA).toBe('vole');
-            expect(world.thingAt(1, 1)).not.toBeDefined();
+            expect(world.thingAt(1, 1)).toBeNull();
         });
         describe("activating Things that live in it", function () {
             it('should notifiy Things when they can move', function () {
                 var thing = new Thing("vole");
                 var world = new World(
                     [
-                        [thing, undefined],
-                        [undefined, undefined]
+                        [thing, null],
+                        [null, null]
                     ]);
                 spyOn(thing, 'takeTurn').and.callThrough();
                 world.turn();
@@ -98,10 +98,10 @@ describe("A World", function () {
                 var world = new World(
                     [
                         [thing1, thing2],
-                        [thing3, undefined]
+                        [thing3, null]
                     ]);
                 world.move(new Coordinates(0, 0), new Coordinates(1, 1));
-                expect(world.thingAt(0, 0)).not.toBeDefined();
+                expect(world.thingAt(0, 0)).toBeNull();
             });
         });
         describe('removing Things', function () {
@@ -112,7 +112,7 @@ describe("A World", function () {
                         [thing]
                     ]);
                 world.remove(0, 0);
-                expect(world.thingAt(0, 0)).not.toBeDefined();
+                expect(world.thingAt(0, 0)).toBeNull();
             });
         });
     });
