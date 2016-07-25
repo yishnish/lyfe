@@ -42,6 +42,9 @@ function World(dataGrid){
         dataGrid[from.row][from.col] = undefined;
         dataGrid[to.row][to.col] = thing;
     };
+    this.remove = function (row, col) {
+        dataGrid[row][col] = undefined;
+    };
 
     //private
 

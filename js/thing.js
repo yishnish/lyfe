@@ -2,8 +2,8 @@ function Thing(type) {
     var dx = [-1, 0, 1];
     var dy = [-1, 0, 1];
     this.iAmA = type;
-    this.hp = 0;
-    this.vitality = 0;
+    this.hp = 10;
+    this.vitality = 10;
 
     this.canMoveTo = function (coords, world) {
         var row = coords.row, col = coords.col;
@@ -13,17 +13,23 @@ function Thing(type) {
     this.takeTurn = function(world, location) {
         var placesToMoveTo = findPlacesToMoveTo.call(this, location, world);
         moveToRandomLocation(placesToMoveTo, world, location);
-        adjustHealthBasedOnVitality.call(this);
+        adjustHealthBasedOnVitality.call(this, world, location);
         decrementVitality.call(this);
+    };
+    this.die = function (world, location) {
+        world.remove(location.row, location.col);
     };
 
     function decrementVitality() {
         this.vitality = Math.max(--this.vitality, 0);
     }
 
-    function adjustHealthBasedOnVitality() {
+    function adjustHealthBasedOnVitality(world, location) {
         if (this.vitality === 0) {
             this.hp = Math.max(--this.hp, 0);
+        }
+        if(this.hp <= 0) {
+            this.die(world, location);
         }
     }
 

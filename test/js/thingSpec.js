@@ -97,4 +97,19 @@ describe("Things", function () {
         });
     });
 
+    describe("Death", function () {
+        it('Things should be removed from the world when their health reaches zero', function () {
+            var thing = new Thing('bird');
+
+            var dataGrid = [
+                [thing]
+            ];
+            var world = new World(dataGrid);
+            thing.hp = 1;
+            thing.vitality = 0;
+            world.turn();
+            expect(world.thingAt(0, 0)).toBeUndefined();
+        });
+    });
+
 });

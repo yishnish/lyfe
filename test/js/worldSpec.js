@@ -90,7 +90,6 @@ describe("A World", function () {
                 expect(thing.takeTurn).toHaveBeenCalledWith(world, {row: 0, col: 0});
             });
         });
-
         describe("moving contents", function () {
             it('should move a Thing to another requested location', function () {
                 var thing1 = new Thing("vole");
@@ -102,6 +101,17 @@ describe("A World", function () {
                         [thing3, undefined]
                     ]);
                 world.move({row: 0, col: 0}, {row: 1, col: 1});
+                expect(world.thingAt(0, 0)).not.toBeDefined();
+            });
+        });
+        describe('removing Things', function () {
+            it('should let you remove things', function () {
+                var thing = new Thing("vole");
+                var world = new World(
+                    [
+                        [thing]
+                    ]);
+                world.remove(0, 0);
                 expect(world.thingAt(0, 0)).not.toBeDefined();
             });
         });
