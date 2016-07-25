@@ -5,8 +5,8 @@ function Thing(type) {
     this.hp = 10;
     this.vitality = 10;
 
-    this.canMoveTo = function (coords, world) {
-        var row = coords.row, col = coords.col;
+    this.canMoveTo = function(coords, world) {
+        var row = coords.getRow(), col = coords.getColumn();
         return row >= 0 && col >= 0 && row < world.rows && col < world.columns && !world.thingAt(row, col);
     };
 
@@ -46,7 +46,7 @@ function Thing(type) {
             dx.forEach(function (colChange) {
                 if (dy !== 0 && dx !== 0) {
                     var possiblePlaceToMoveTo = {row: location.row + rowChange, col: location.col + colChange};
-                    var canMoveTo = this.canMoveTo(possiblePlaceToMoveTo, world);
+                    var canMoveTo = this.canMoveTo(new Coordinates(possiblePlaceToMoveTo.row, possiblePlaceToMoveTo.col), world);
                     if (canMoveTo) {
                         placesToMoveTo.push(possiblePlaceToMoveTo);
                     }

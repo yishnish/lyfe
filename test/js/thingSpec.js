@@ -22,24 +22,23 @@ describe("Things", function () {
                 [undefined, undefined, undefined]
             ];
             var world = new World(dataGrid);
-            expect(thing.canMoveTo({row: 0, col: 0}, world)).toBe(true);
-            expect(thing.canMoveTo({row: 0, col: 1}, world)).toBe(false);
-            expect(thing.canMoveTo({row: 1, col: 1}, world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(0, 0), world)).toBe(true);
+            expect(thing.canMoveTo(new Coordinates(0, 1), world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(1, 1), world)).toBe(false);
         });
         it('should know that it cannot move off the map', function () {
             var thing = new Thing('bird');
             var dataGrid = [
-                [
-                    [thing, undefined, undefined],
-                    [undefined, undefined, undefined],
-                    [undefined, undefined, undefined]
-                ]
+                [thing, undefined, undefined],
+                [undefined, undefined, undefined],
+                [undefined, undefined, undefined]
             ];
             var world = new World(dataGrid);
-            expect(thing.canMoveTo({row: -1, col: 0}, world)).toBe(false);
-            expect(thing.canMoveTo({row: -1, col: -1}, world)).toBe(false);
-            expect(thing.canMoveTo({row: 0, col: -1}, world)).toBe(false);
-            expect(thing.canMoveTo({row: 50, col: 50}, world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(-1, 0), world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(-1, -1), world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(0, -1), world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(50, 50), world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(1, 1), world)).toBe(true);
 
         });
     });
