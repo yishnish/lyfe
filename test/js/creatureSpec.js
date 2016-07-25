@@ -1,11 +1,31 @@
-/**
- * philosophy stuff. does a thing know wabout the world? if i'm a thing and i want to move somewhere do i ask the
- * world if there is stuff there? i think so. i don't negotiate with the world about the location of objects, i
- * query it with my senses and determine whether there's stuff where i want to be. so i guess Things know about the
- * World. but maybe just when the world tells the thing it can do something? "ok, you can do a thing now, here's me if
- * you need any info about me"
- */
-describe("Things", function () {
+describe("Creatures", function () {
+    describe("Movement", function () {
+        it('should be able to move around in the world', function () {
+            var creature = new Creature('bird');
+            var dataGrid = [
+                [creature, null]
+            ];
+            var world = new World(dataGrid);
+            world.turn();
+            expect(world.thingAt(0, 0)).toBeNull();
+            expect(world.thingAt(0, 1)).toBe(creature);
+        });
+
+        it('should know that it cannot move off the map', function () {
+            var creature = new Creature('bird');
+            var dataGrid = [
+                [creature, null, null],
+                [null, null, null],
+                [null, null, null]
+            ];
+            var world = new World(dataGrid);
+            expect(creature.hasThingAt(new Coordinates(-1, 0), world)).toBe(false);
+            expect(creature.hasThingAt(new Coordinates(-1, -1), world)).toBe(false);
+            expect(creature.hasThingAt(new Coordinates(0, -1), world)).toBe(false);
+            expect(creature.hasThingAt(new Coordinates(50, 50), world)).toBe(false);
+            expect(creature.hasThingAt(new Coordinates(1, 1), world)).toBe(true);
+        });
+    });
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
             var thing = new Thing('vole');
@@ -81,5 +101,4 @@ describe("Things", function () {
             expect(world.thingAt(0, 0)).toBeNull();
         });
     });
-
 });
