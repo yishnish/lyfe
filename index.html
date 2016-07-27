@@ -21,17 +21,6 @@
 
         window.setInterval(function(){world.turn();}, 100);
 
-        function updateGrid(){
-            var beasts = ["vole", "bird"];
-            var grid = world.getGrid();
-            for(var i = 0; i < 100; i++) {
-                for (var j = 0; j < 100; j++) {
-                    grid[i][j].iAmA = beasts[Math.round(Math.random())];
-                }
-            }
-            world.turn();
-        }
-
         function createGrid(){
             var grid = [];
             for(var i = 0; i < 100; i++) {

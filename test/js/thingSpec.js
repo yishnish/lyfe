@@ -6,6 +6,25 @@
  * you need any info about me"
  */
 describe("Things", function () {
+    describe("identification", function () {
+        it('should have a unique identifier after being added to the world', function () {
+            var world = new World([[]]);
+            var thing = new Thing('bird');
+            expect(thing.id).not.toBeDefined();
+            world.addThing(thing);
+            expect(thing.id).toBeDefined();
+        });
+        it('two things added to the world should have different ids', function () {
+            var world = new World([[]]);
+            var thing1 = new Thing('bird');
+            var thing2 = new Thing('vole');
+            expect(thing1.id).not.toBeDefined();
+            expect(thing2.id).not.toBeDefined();
+            world.addThing(thing1);
+            world.addThing(thing2);
+            expect(thing1.id).not.toEqual(thing2.id);
+        });
+    });
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
             var thing = new Thing('vole');
