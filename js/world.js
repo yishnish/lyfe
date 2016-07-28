@@ -6,8 +6,6 @@
 
 function World(dataGrid){
     var callbacks = [];
-    var _things = {};
-    var lastUUID = 0;
 
     init(this);
 
