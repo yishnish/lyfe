@@ -32,7 +32,7 @@ function Creature(type){
             dx.forEach(function (colChange) {
                 if (dy !== 0 && dx !== 0) {
                     var possiblePlaceToMoveTo = new Coordinates(location.getRow() + rowChange, location.getColumn() + colChange);
-                    if (this.hasThingAt(possiblePlaceToMoveTo, world)) {
+                    if (this.canMoveTo(possiblePlaceToMoveTo, world)) {
                         placesToMoveTo.push(possiblePlaceToMoveTo);
                     }
                 }

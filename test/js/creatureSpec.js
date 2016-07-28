@@ -19,11 +19,11 @@ describe("Creatures", function () {
                 [null, null, null]
             ];
             var world = new World(dataGrid);
-            expect(creature.hasThingAt(new Coordinates(-1, 0), world)).toBe(false);
-            expect(creature.hasThingAt(new Coordinates(-1, -1), world)).toBe(false);
-            expect(creature.hasThingAt(new Coordinates(0, -1), world)).toBe(false);
-            expect(creature.hasThingAt(new Coordinates(50, 50), world)).toBe(false);
-            expect(creature.hasThingAt(new Coordinates(1, 1), world)).toBe(true);
+            expect(creature.canMoveTo(new Coordinates(-1, 0), world)).toBe(false);
+            expect(creature.canMoveTo(new Coordinates(-1, -1), world)).toBe(false);
+            expect(creature.canMoveTo(new Coordinates(0, -1), world)).toBe(false);
+            expect(creature.canMoveTo(new Coordinates(50, 50), world)).toBe(false);
+            expect(creature.canMoveTo(new Coordinates(1, 1), world)).toBe(true);
         });
     });
     describe("type awareness", function () {
@@ -42,9 +42,9 @@ describe("Creatures", function () {
                 [null, null, null]
             ];
             var world = new World(dataGrid);
-            expect(thing.hasThingAt(new Coordinates(0, 0), world)).toBe(true);
-            expect(thing.hasThingAt(new Coordinates(0, 1), world)).toBe(false);
-            expect(thing.hasThingAt(new Coordinates(1, 1), world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(0, 0), world)).toBe(true);
+            expect(thing.canMoveTo(new Coordinates(0, 1), world)).toBe(false);
+            expect(thing.canMoveTo(new Coordinates(1, 1), world)).toBe(false);
         });
 
     });
