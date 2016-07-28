@@ -46,9 +46,6 @@ function World(dataGrid){
     this.remove = function (row, col) {
         dataGrid[row][col] = null;
     };
-    this.addThing = function (thing) {
-        thing.id = ++lastUUID;
-    };
 
     //private
 
