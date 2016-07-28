@@ -10,10 +10,11 @@ function Creature(type){
     };
 
     function moveIfPossible(startingPoint, world) {
-        var placesToMoveTo = findPlacesToMoveTo.call(this, startingPoint, world);
+        var turnContext = new TurnContext(world, this, startingPoint);
+        var placesToMoveTo = findPlacesToMoveTo.call(this, turnContext);
         var placeToMoveTo = chooseLocationToMoveTo(placesToMoveTo);
         if (placeToMoveTo) {
-            world.move(startingPoint, placeToMoveTo);
+            world.move(turnContext.getActorLocation(), placeToMoveTo);
         }
         return placeToMoveTo;
     }
@@ -26,14 +27,14 @@ function Creature(type){
         return placesToMoveTo[Math.floor(Math.random() * placesToMoveTo.length)];
     }
 
-    function findPlacesToMoveTo(location, world) {
+    function findPlacesToMoveTo(turnContext) {
         var placesToMoveTo = [];
         dy.forEach(function (rowChange) {
             dx.forEach(function (colChange) {
                 if (dy !== 0 && dx !== 0) {
-                    var possiblePlaceToMoveTo = new Coordinates(location.getRow() + rowChange, location.getColumn() + colChange);
-                    if (this.canMoveTo(possiblePlaceToMoveTo, world)) {
-                        placesToMoveTo.push(possiblePlaceToMoveTo);
+                    var delta = new Delta(rowChange, colChange);
+                    if (turnContext.canMoveTo(delta)) {
+                        placesToMoveTo.push(turnContext.coordinatesForDelta(delta));
                     }
                 }
             }, this);

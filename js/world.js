@@ -43,6 +43,7 @@ function World(dataGrid){
         dataGrid[from.getRow()][from.getColumn()] = null;
         dataGrid[to.getRow()][to.getColumn()] = thing;
     };
+
     this.remove = function (row, col) {
         dataGrid[row][col] = null;
     };
