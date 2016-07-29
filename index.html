@@ -32,7 +32,11 @@
                 }
                 grid.push(row);
             }
-            grid[10][10] = new Creature('bird');
+            for(var i = 0; i < 10; i++) {
+                for(var j = 0; j < 10; j++) {
+                    grid[i][j] = j % 2 === 0 ? new Creature('bird') : new Creature('vole');
+                }
+            }
             return grid;
         }
     </script>
