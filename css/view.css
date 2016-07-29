@@ -10,3 +10,15 @@ td[color="brown"] {
 td[color="blue"] {
     background-color: blue;
 }
+
+td[color="red"] {
+    background-color: red;
+}
+
+td[color="yellow"] {
+    background-color: yellow;
+}
+
+td[color="green"] {
+    background-color: green;
+}
