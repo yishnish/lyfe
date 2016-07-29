@@ -55,15 +55,29 @@ describe("Creatures", function () {
             expect(creature.hp).toBe(9);
         });
         describe("Eating", function () {
+            var food, creature;
+            beforeEach(function () {
+                food = new Food();
+                creature = new Creature('bird');
+            });
             it('should raise vitality by one when eating food', function () {
-                var food = new Food();
-                var creature = new Creature('bird');
                 var startingVitality = creature.vitality;
                 creature.vitality--;
                 expect(creature.vitality).toEqual(startingVitality - 1);
                 creature.eat(food);
                 expect(creature.vitality).toEqual(startingVitality);
 
+            });
+            it('should eat food if food is adjacent and vitality is less than full', function () {
+                var world = new World([
+                    [food, creature]
+                ]);
+                spyOn(creature, 'eat');
+                world.turn();
+                expect(creature.eat).not.toHaveBeenCalled();
+                creature.vitality--;
+                world.turn();
+                expect(creature.eat).toHaveBeenCalled();
             });
         });
     });

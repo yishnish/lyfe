@@ -1,4 +1,5 @@
 function Thing(type) {
+    this.MAX_VITALITY = 10;
     this.iAmA = type;
     this.hp = 10;
     this.vitality = 10;

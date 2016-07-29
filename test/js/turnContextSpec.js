@@ -22,6 +22,25 @@ describe('TurnContext', function () {
         expect(turnContext.hasThingAt(new Delta(1, 1))).toBe(false);
     });
 
+    it('should tell you if there are things at some delta that fulfil a criteria', function () {
+        var thing1 = new Thing('vole');
+        var thing2 = new Thing('vole');
+        var food = new Food();
+        var world = new World([
+            [null, thing1, null],
+            [null, thing2, null],
+            [null, null, food]
+        ]);
+        var turnContext = new TurnContext(world, thing2, new Coordinates(1, 1));
+        var isFood = function (thing) {
+            return thing instanceof Food;
+        };
+        expect(turnContext.hasMatchingThingAt(new Delta(-1, 0), isFood)).toBe(false);
+        expect(turnContext.hasMatchingThingAt(new Delta(0, 0), isFood)).toBe(false);
+        expect(turnContext.hasMatchingThingAt(new Delta(0, 1), isFood)).toBe(false);
+        expect(turnContext.hasMatchingThingAt(new Delta(1, 1), isFood)).toBe(true);
+    });
+
     it('can tell you if a location is possible to move to', function () {
         var thing1 = new Thing('vole');
         var thing2 = new Thing('vole');
@@ -102,5 +121,17 @@ describe('TurnContext', function () {
         var turnContext = new TurnContext(world, thing, new Coordinates(0, 0));
         turnContext.removeThing();
         expect(world.thingAt(0, 0)).toBeNull();
+    });
+    it('should perform an arbitrary action on a thing at a location', function () {
+        var creature = new Creature('vole');
+        var food = new Food();
+        var world = new World([
+            [creature, food]
+        ]);
+        var turnContext = new TurnContext(world, creature, new Coordinates(0, 0));
+        spyOn(creature, 'eat');
+        turnContext.doThisToThat(creature.eat, new Delta(0, 1));
+
+        expect(creature.eat).toHaveBeenCalled();
     });
 });

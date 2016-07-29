@@ -11,6 +11,13 @@ function TurnContext(world, actor, actorLocation) {
         return world.thingAt(row, col) !== null;
     };
 
+    this.hasMatchingThingAt = function(delta, criteria) {
+        var row = this.location.getRow() + delta.dy();
+        var col = this.location.getColumn() + delta.dx();
+        var thingAt = world.thingAt(row, col);
+        return thingAt !== null && criteria(thingAt);
+    };
+
     this.canMoveTo = function(delta) {
         var row = this.location.getRow() + delta.dy();
         var col = this.location.getColumn() + delta.dx();
@@ -31,7 +38,13 @@ function TurnContext(world, actor, actorLocation) {
         this.location = newLocation;
     };
 
-    this.removeThing = function(){
+    this.removeThing = function () {
         world.remove(this.location.getRow(), this.location.getColumn());
-    }
+    };
+
+    this.doThisToThat = function(fun, delta) {
+        var eateeLocation = this.coordinatesForDelta(delta);
+        var thing = world.thingAt(eateeLocation.getRow(), eateeLocation.getColumn());
+        fun(thing);
+    };
 }
