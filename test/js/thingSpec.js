@@ -12,22 +12,6 @@ describe("Things", function () {
             expect(thing.iAmA).toEqual('vole');
         });
     });
-    describe("awareness of surroundings", function () {
-        it('should know what adjacent squares are unoccupied', function () {
-            var thing = new Thing('bird');
-            var thing2 = new Thing('bird');
-            var dataGrid = [
-                [null, thing, null],
-                [null, thing2, null],
-                [null, null, null]
-            ];
-            var world = new World(dataGrid);
-            expect(thing.canMoveTo(new Coordinates(0, 0), world)).toBe(true);
-            expect(thing.canMoveTo(new Coordinates(0, 1), world)).toBe(false);
-            expect(thing.canMoveTo(new Coordinates(1, 1), world)).toBe(false);
-        });
-
-    });
 
     describe("Well being", function () {
         var thing;

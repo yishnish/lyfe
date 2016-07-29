@@ -10,43 +10,12 @@ describe("Creatures", function () {
             expect(world.thingAt(0, 0)).toBeNull();
             expect(world.thingAt(0, 1)).toBe(creature);
         });
-
-        it('should know that it cannot move off the map', function () {
-            var creature = new Creature('bird');
-            var dataGrid = [
-                [creature, null, null],
-                [null, null, null],
-                [null, null, null]
-            ];
-            var world = new World(dataGrid);
-            expect(creature.canMoveTo(new Coordinates(-1, 0), world)).toBe(false);
-            expect(creature.canMoveTo(new Coordinates(-1, -1), world)).toBe(false);
-            expect(creature.canMoveTo(new Coordinates(0, -1), world)).toBe(false);
-            expect(creature.canMoveTo(new Coordinates(50, 50), world)).toBe(false);
-            expect(creature.canMoveTo(new Coordinates(1, 1), world)).toBe(true);
-        });
     });
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
             var thing = new Creature('vole');
             expect(thing.iAmA).toEqual('vole');
         });
-    });
-    describe("awareness of surroundings", function () {
-        it('should know what adjacent squares are unoccupied', function () {
-            var thing = new Creature('bird');
-            var thing2 = new Creature('bird');
-            var dataGrid = [
-                [null, thing, null],
-                [null, thing2, null],
-                [null, null, null]
-            ];
-            var world = new World(dataGrid);
-            expect(thing.canMoveTo(new Coordinates(0, 0), world)).toBe(true);
-            expect(thing.canMoveTo(new Coordinates(0, 1), world)).toBe(false);
-            expect(thing.canMoveTo(new Coordinates(1, 1), world)).toBe(false);
-        });
-
     });
 
     describe("Well being", function () {

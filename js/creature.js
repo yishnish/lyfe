@@ -40,7 +40,6 @@ function Creature(type){
         }, this);
         return placesToMoveTo;
     }
-
 }
 
 Creature.prototype = Object.create(Thing.prototype);
