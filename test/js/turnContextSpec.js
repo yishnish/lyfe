@@ -131,7 +131,7 @@ describe('TurnContext', function () {
         var turnContext = new TurnContext(world, creature, new Coordinates(0, 0));
         spyOn(creature, 'eat').and.callThrough();
         creature.vitality = 1;
-        turnContext.doThisToThat(creature.eat, new Delta(0, 1));
+        turnContext.doThisToThatThere(creature.eat, new Delta(0, 1));
         expect(creature.eat).toHaveBeenCalled();
         expect(creature.vitality).toEqual(2);
     });

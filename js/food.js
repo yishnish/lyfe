@@ -1,10 +1,15 @@
 function Food(){
-    Thing.call(this);
+    Thing.call(this, 'food');
 
-    this.getEaten = function(){
+    this.getEaten = function () {
         this.hp--;
-        if(this.hp <=0 ) {
+        if (this.hp <= 0) {
             this.die(null);
         }
-    }
+    };
+
+    this.die = function (turnContext) {
+        this.dead = true;
+    };
+
 }

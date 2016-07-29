@@ -3,13 +3,18 @@ function Thing(type) {
     this.iAmA = type;
     this.hp = 10;
     this.vitality = 10;
+    this.dead = false;
 
     this.takeTurn = function (turnContext) {
-        this.adjustHealthBasedOnVitality(turnContext);
+        if(this.dead) {
+            turnContext.removeThing();
+        }else {
+            this.adjustHealthBasedOnVitality(turnContext);
+        }
     };
 
     this.die = function (turnContext) {
-        turnContext.removeThing();
+        this.dead = true;
     };
 
     this.adjustHealthBasedOnVitality = function (turnContext) {

@@ -92,7 +92,8 @@ describe("Creatures", function () {
             var world = new World(dataGrid);
             thing.hp = 1;
             thing.vitality = 0;
-            world.turn();
+            world.turn();//this kills the thing
+            world.turn();//this removes the thing
             expect(world.thingAt(0, 0)).toBeNull();
         });
     });

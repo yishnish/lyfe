@@ -4,13 +4,17 @@ function Creature(type) {
     Thing.call(this, type);
 
     this.takeTurn = function (turnContext) {
-        if (this.vitality < this.MAX_VITALITY) {
-            var didEat = eatIfPossible.call(this, turnContext);
-        }
-        this.adjustHealthBasedOnVitality.call(this, turnContext);
-        if(!didEat) {
-            moveIfPossible.call(this, turnContext);
-            decrementVitality.call(this);
+        if(this.dead) {
+            turnContext.removeThing();
+        }else{
+            if (this.vitality < this.MAX_VITALITY) {
+                var didEat = eatIfPossible.call(this, turnContext);
+            }
+            this.adjustHealthBasedOnVitality.call(this, turnContext);
+            if(!didEat) {
+                moveIfPossible.call(this, turnContext);
+                decrementVitality.call(this);
+            }
         }
     };
 
@@ -23,7 +27,7 @@ function Creature(type) {
         var placesWithFood = findPlacesWithFood(turnContext);
         var placeToEatAt = pickRandomLocation(placesWithFood);
         if (placeToEatAt) {
-            turnContext.doThisToThat(this.eat, placeToEatAt);
+            turnContext.doThisToThatThere(this.eat, placeToEatAt);
             return true;
         }
         return false;

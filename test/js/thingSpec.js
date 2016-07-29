@@ -48,8 +48,10 @@ describe("Things", function () {
                 [thing]
             ];
             var world = new World(dataGrid);
-            thing.hp = 0;
-            world.turn();
+            thing.vitality = 0;
+            thing.hp = 1;
+            world.turn(); //this kills the thing
+            world.turn(); //this removes the thing
             expect(world.thingAt(0, 0)).toBeNull();
         });
     });

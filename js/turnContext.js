@@ -42,9 +42,9 @@ function TurnContext(world, actor, actorLocation) {
         world.remove(this.location.getRow(), this.location.getColumn());
     };
 
-    this.doThisToThat = function(fun, delta) {
-        var eateeLocation = this.coordinatesForDelta(delta);
-        var thing = world.thingAt(eateeLocation.getRow(), eateeLocation.getColumn());
+    this.doThisToThatThere = function(fun, delta) {
+        var thatLocation = this.coordinatesForDelta(delta);
+        var thing = world.thingAt(thatLocation.getRow(), thatLocation.getColumn());
         fun.call(actor, thing);
     };
 }
