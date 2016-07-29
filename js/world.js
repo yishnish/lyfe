@@ -20,13 +20,12 @@ function World(dataGrid){
         dataGrid.forEach(function (row, rowNumber) {
             row.forEach(function (maybeThing, colNumber) {
                 if(maybeThing) {
-                    thingsThatCanDoSomething.push({thing: maybeThing, location: new Coordinates(rowNumber, colNumber)});
+                    thingsThatCanDoSomething.push(new TurnContext(this, maybeThing, new Coordinates(rowNumber, colNumber)));
                 }
-            });
-        });
-        thingsThatCanDoSomething.forEach(function (thingAndLocation) {
-            var turnContext = new TurnContext(this, thingAndLocation.thing, thingAndLocation.location);
-            thingAndLocation.thing.takeTurn(turnContext);
+            }, this);
+        }, this);
+        thingsThatCanDoSomething.forEach(function (turnContext) {
+            turnContext.takeTurn();
         }, this);
         callbacks.forEach(function (objectAndCallback) {
             objectAndCallback._callback.apply(objectAndCallback._object);

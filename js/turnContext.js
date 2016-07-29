@@ -1,6 +1,10 @@
 function TurnContext(world, actor, actorLocation) {
     this.location = actorLocation;
 
+    this.takeTurn = function () {
+        actor.takeTurn(this);
+    };
+
     this.hasThingAt = function(delta) {
         var row = this.location.getRow() + delta.dy();
         var col = this.location.getColumn() + delta.dx();
