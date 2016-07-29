@@ -25,7 +25,8 @@ function World(dataGrid){
             });
         });
         thingsThatCanDoSomething.forEach(function (thingAndLocation) {
-            thingAndLocation.thing.takeTurn(this, thingAndLocation.location);
+            var turnContext = new TurnContext(this, thingAndLocation.thing, thingAndLocation.location);
+            thingAndLocation.thing.takeTurn(turnContext);
         }, this);
         callbacks.forEach(function (objectAndCallback) {
             objectAndCallback._callback.apply(objectAndCallback._object);

@@ -3,18 +3,17 @@ function Creature(type){
     var dy = [-1, 0, 1];
     Thing.call(this, type);
 
-    this.takeTurn = function (world, location) {
-        var placeToMoveTo = moveIfPossible.call(this, location, world);
-        this.adjustHealthBasedOnVitality.call(this, world, placeToMoveTo || location);
+    this.takeTurn = function (turnContext) {
+        moveIfPossible.call(this, turnContext);
+        this.adjustHealthBasedOnVitality.call(this, turnContext);
         decrementVitality.call(this);
     };
 
-    function moveIfPossible(startingPoint, world) {
-        var turnContext = new TurnContext(world, this, startingPoint);
+    function moveIfPossible(turnContext) {
         var placesToMoveTo = findPlacesToMoveTo.call(this, turnContext);
         var placeToMoveTo = chooseLocationToMoveTo(placesToMoveTo);
         if (placeToMoveTo) {
-            world.move(turnContext.getActorLocation(), placeToMoveTo);
+            turnContext.moveThing(placeToMoveTo);
         }
         return placeToMoveTo;
     }
@@ -34,7 +33,7 @@ function Creature(type){
                 if (dy !== 0 && dx !== 0) {
                     var delta = new Delta(rowChange, colChange);
                     if (turnContext.canMoveTo(delta)) {
-                        placesToMoveTo.push(turnContext.coordinatesForDelta(delta));
+                        placesToMoveTo.push(delta);
                     }
                 }
             }, this);

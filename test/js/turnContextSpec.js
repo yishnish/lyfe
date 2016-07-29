@@ -71,4 +71,36 @@ describe('TurnContext', function () {
         turnContext.moveThing(new Delta(0, 1));
         expect(world.thingAt(1, 2)).toBe(thing);
     });
+    it('should update location after moving a thing', function () {
+        var thing = new Thing('vole');
+        var world = new World([
+            [null, null, null],
+            [null, thing, null],
+            [null, null, null]
+        ]);
+        var startingCoords = new Coordinates(1, 1);
+        var turnContext = new TurnContext(world, thing, startingCoords);
+        expect(turnContext.coordinatesForThing()).toBeSameCoordinates(startingCoords);
+        turnContext.moveThing(new Delta(0, 1));
+        expect(turnContext.coordinatesForThing()).toBeSameCoordinates(new Coordinates(1, 2));
+    });
+    it('can get the coordinates for the Thing in context', function () {
+        var thing = new Thing('vole');
+        var world = new World([
+            [null, null, null],
+            [null, thing, null],
+            [null, null, null]
+        ]);
+        var turnContext = new TurnContext(world, thing, new Coordinates(1, 1));
+        expect(turnContext.coordinatesForThing()).toBeSameCoordinates(new Coordinates(1, 1));
+    });
+    it('should be able to remove things from the world', function () {
+        var thing = new Thing('vole');
+        var world = new World([
+            [thing]
+        ]);
+        var turnContext = new TurnContext(world, thing, new Coordinates(0, 0));
+        turnContext.removeThing();
+        expect(world.thingAt(0, 0)).toBeNull();
+    });
 });

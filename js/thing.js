@@ -8,20 +8,20 @@ function Thing(type) {
         return row >= 0 && col >= 0 && row < world.rows && col < world.columns && !world.thingAt(row, col);
     };
 
-    this.takeTurn = function (world, location) {
-        this.adjustHealthBasedOnVitality(world, location);
+    this.takeTurn = function (turnContext) {
+        this.adjustHealthBasedOnVitality(turnContext);
     };
 
-    this.die = function (world, location) {
-        world.remove(location.getRow(), location.getColumn());
+    this.die = function (turnContext) {
+        turnContext.removeThing();
     };
 
-    this.adjustHealthBasedOnVitality = function (world, location) {
+    this.adjustHealthBasedOnVitality = function (turnContext) {
         if (this.vitality === 0) {
             this.hp = Math.max(--this.hp, 0);
         }
         if (this.hp <= 0) {
-            this.die(world, location);
+            this.die(turnContext);
         }
     };
 }
