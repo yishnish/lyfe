@@ -45,6 +45,6 @@ function TurnContext(world, actor, actorLocation) {
     this.doThisToThat = function(fun, delta) {
         var eateeLocation = this.coordinatesForDelta(delta);
         var thing = world.thingAt(eateeLocation.getRow(), eateeLocation.getColumn());
-        fun(thing);
+        fun.call(actor, thing);
     };
 }

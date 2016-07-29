@@ -38,6 +38,7 @@
                     grid[i][j] = j % 2 === 0 ? new Creature('bird') : new Creature('vole');
                 }
             }
+            grid[5][5] = new Food();
             return grid;
         }
     </script>
