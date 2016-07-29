@@ -54,6 +54,18 @@ describe("Creatures", function () {
             expect(creature.vitality).toBe(0);
             expect(creature.hp).toBe(9);
         });
+        describe("Eating", function () {
+            it('should raise vitality by one when eating food', function () {
+                var food = new Food();
+                var creature = new Creature('bird');
+                var startingVitality = creature.vitality;
+                creature.vitality--;
+                expect(creature.vitality).toEqual(startingVitality - 1);
+                creature.eat(food);
+                expect(creature.vitality).toEqual(startingVitality);
+
+            });
+        });
     });
 
     describe("Death", function () {

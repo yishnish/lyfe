@@ -9,6 +9,11 @@ function Creature(type){
         decrementVitality.call(this);
     };
 
+    this.eat = function(food) {
+        this.vitality++;
+        food.getEaten();
+    };
+
     function moveIfPossible(turnContext) {
         var placesToMoveTo = findPlacesToMoveTo.call(this, turnContext);
         var placeToMoveTo = chooseLocationToMoveTo(placesToMoveTo);
