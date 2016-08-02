@@ -54,6 +54,23 @@ describe("Creatures", function () {
             expect(creature.vitality).toBe(0);
             expect(creature.hp).toBe(9);
         });
+        it('gains health every turn once its vitality reaches maximum', function () {
+            var dataGrid = [
+                [creature]
+            ];
+            var world = new World(dataGrid);
+            creature.hp = 1;
+            creature.vitality = 9;
+            world.turn();
+            expect(creature.vitality).toBe(8);
+            expect(creature.hp).toBe(1);
+            creature.vitality = 10;
+            world.turn();
+            expect(creature.hp).toBe(2);
+            world.turn();
+            expect(creature.vitality).toBe(8);
+            expect(creature.hp).toBe(2);
+        });
         describe("Eating", function () {
             var food, creature;
             beforeEach(function () {
