@@ -7,8 +7,9 @@ function Creature(type) {
         if(this.dead) {
             turnContext.removeThing();
         }else{
+            var didEat;
             if (this.vitality < this.MAX_VITALITY) {
-                var didEat = eatIfPossible.call(this, turnContext);
+                didEat = eatIfPossible.call(this, turnContext);
             }
             this.adjustHealthBasedOnVitality.call(this, turnContext);
             if(!didEat) {
@@ -71,7 +72,7 @@ function Creature(type) {
                 if (dy !== 0 && dx !== 0) {
                     var delta = new Delta(rowChange, colChange);
                     if (turnContext.hasMatchingThingAt(delta, function (thing) {
-                            return thing instanceof Food
+                            return thing instanceof Food;
                         })) {
                         placesWithFood.push(delta);
                     }

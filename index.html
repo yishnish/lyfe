@@ -4,9 +4,10 @@
     <meta charset="utf-8"/>
     <script src="js/coordinates.js"></script>
     <script src="js/delta.js"></script>
-    <script src="js/thing.js"></script>
-    <script src="js/food.js"></script>
-    <script src="js/creature.js"></script>
+    <script src="js/things/thing.js"></script>
+    <script src="js/things/food.js"></script>
+    <script src="js/things/fruitBush.js"></script>
+    <script src="js/things/creature.js"></script>
     <script src="js/worldNode.js"></script>
     <script src="js/world.js"></script>
     <script src="js/turnContext.js"></script>
@@ -26,11 +27,11 @@
 
         function createGrid(){
             var makers = [function () {
-                return new Food();
-            }, function () {
                 return new Creature('vole')
             }, function () {
                 return new Creature('bird');
+            }, function(){
+                return new FruitBush()
             }];
             var grid = [];
             for(var i = 0; i < 100; i++) {
@@ -40,12 +41,12 @@
                 }
                 grid.push(row);
             }
-            for(var i = 0; i < 10; i++) {
-                for(var j = 0; j < 10; j++) {
+            for(i = 0; i < 10; i++) {
+                for(j = 0; j < 10; j++) {
                     grid[i][j] = makers[Math.floor(Math.random() * makers.length)]();
                 }
             }
-            grid[5][5] = new Food();
+
             return grid;
         }
     </script>

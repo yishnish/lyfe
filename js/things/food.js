@@ -1,5 +1,5 @@
-function Food(){
-    Thing.call(this, 'food');
+function Food(type){
+    Thing.call(this, type);
 
     this.getEaten = function () {
         this.hp--;
@@ -13,3 +13,6 @@ function Food(){
     };
 
 }
+
+Food.prototype = Object.create(Thing.prototype);
+Food.prototype.constructor = Food;
