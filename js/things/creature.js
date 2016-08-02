@@ -1,28 +1,31 @@
 function Creature(type) {
+    Thing.call(this, type);
+}
+
+Creature.prototype = Object.create(Thing.prototype);
+Creature.prototype.constructor = Creature;
+
+Creature.prototype.eat = function (food) {
+    this.vitality++;
+    food.getEaten();
+};
+
+Creature.prototype.takeTurn = function (turnContext) {
     var dx = [-1, 0, 1];
     var dy = [-1, 0, 1];
-    Thing.call(this, type);
-
-    this.takeTurn = function (turnContext) {
-        if(this.dead) {
-            turnContext.removeThing();
-        }else{
-            var didEat;
-            if (this.vitality < this.MAX_VITALITY) {
-                didEat = eatIfPossible.call(this, turnContext);
-            }
-            this.adjustHealthBasedOnVitality.call(this, turnContext);
-            if(!didEat) {
-                moveIfPossible.call(this, turnContext);
-                decrementVitality.call(this);
-            }
+    if(this.dead) {
+        turnContext.removeThing();
+    }else{
+        var didEat;
+        if (this.vitality < this.MAX_VITALITY) {
+            didEat = eatIfPossible.call(this, turnContext);
         }
-    };
-
-    this.eat = function (food) {
-        this.vitality++;
-        food.getEaten();
-    };
+        this.adjustHealthBasedOnVitality.call(this, turnContext);
+        if(!didEat) {
+            moveIfPossible.call(this, turnContext);
+            decrementVitality.call(this);
+        }
+    }
 
     function eatIfPossible(turnContext) {
         var placesWithFood = findPlacesWithFood(turnContext);
@@ -81,7 +84,5 @@ function Creature(type) {
         }, this);
         return placesWithFood;
     }
-}
+};
 
-Creature.prototype = Object.create(Thing.prototype);
-Creature.prototype.constructor = Creature;
