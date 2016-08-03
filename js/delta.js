@@ -1,9 +1,12 @@
 function Delta(dy, dx) {
-    this.dy = function() {
-        return dy;
-    };
-
-    this.dx = function() {
-        return dx;
-    };
+    this._dy = dy;
+    this._dx = dx;
 }
+
+Delta.prototype.dy = function () {
+    return this._dy;
+};
+
+Delta.prototype.dx = function () {
+    return this._dx;
+};

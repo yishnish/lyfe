@@ -1,47 +1,89 @@
 function Creature(type) {
     Thing.call(this, type);
 }
-
-Creature.prototype = Object.create(Thing.prototype);
-Creature.prototype.constructor = Creature;
-
-Creature.prototype.eat = function (food) {
-    this.vitality++;
-    food.getEaten();
-};
-
-Creature.prototype.takeTurn = function (turnContext) {
+(function () {
     var dx = [-1, 0, 1];
     var dy = [-1, 0, 1];
-    if(this.dead) {
-        turnContext.removeThing();
-    }else{
-        var didEat;
-        if (this.vitality < this.MAX_VITALITY) {
-            didEat = eatIfPossible.call(this, turnContext);
+
+    Creature.prototype = Object.create(Thing.prototype);
+    Creature.prototype.constructor = Creature;
+
+    Creature.prototype.takeTurn = function (turn) {
+        if (this.dead) {
+            turn.removeThing();
+        } else {
+            var didEat, gaveBirth, didHump;
+            if (this.pregnant) {
+                gaveBirth = giveBirth.call(this, turn);
+            }
+            else if (this.vitality < this.MAX_VITALITY) {
+                didEat = eatIfPossible.call(this, turn);
+            }
+            else {
+                didHump = tryHumping.call(this, turn);
+            }
+            this.adjustHealthBasedOnVitality.call(this, turn);
+            if (!didEat && !gaveBirth && !didHump) {
+                moveIfPossible.call(this, turn);
+                decrementVitality.call(this);
+            }
         }
-        this.adjustHealthBasedOnVitality.call(this, turnContext);
-        if(!didEat) {
-            moveIfPossible.call(this, turnContext);
-            decrementVitality.call(this);
+    };
+
+    Creature.prototype.eat = function (food) {
+        this.vitality++;
+        food.getEaten();
+    };
+
+
+    Creature.prototype.getHumped = function () {
+        if (this.vitality === this.MAX_VITALITY) {
+            this.pregnant = true;
+        }
+    };
+
+    function giveBirth(turn) {
+        var placesToGiveBirthAt = findPlacesToMoveTo(turn);
+        var birthingSpot = pickRandomLocation(placesToGiveBirthAt);
+        if (birthingSpot) {
+            turn.addThing(new Creature(this.iAmA), birthingSpot);
+            return true;
+        } else return false;
+    }
+
+    function tryHumping(turn) {
+        var humpableDeltas = findPlaces(turn, isHumpable);
+        var humpeeDelta = pickRandomLocation(humpableDeltas);
+        if (humpeeDelta) {
+            turn.doThisToThatThere(hump, humpeeDelta);
         }
     }
 
-    function eatIfPossible(turnContext) {
-        var placesWithFood = findPlacesWithFood(turnContext);
+    function hump(creature) {
+        creature.getHumped();
+    }
+
+    function isHumpable(thing) {
+        return thing instanceof Creature;
+    }
+
+    function eatIfPossible(turn) {
+        var placesWithFood = findPlaces(turn, function (thing) {
+            return thing instanceof Food;
+        });
         var placeToEatAt = pickRandomLocation(placesWithFood);
         if (placeToEatAt) {
-            turnContext.doThisToThatThere(this.eat, placeToEatAt);
+            turn.doThisToThatThere(this.eat, placeToEatAt);
             return true;
         }
         return false;
     }
 
-    function moveIfPossible(turnContext) {
-        var placesToMoveTo = findPlacesToMoveTo.call(this, turnContext);
+    function moveIfPossible(turn) {
+        var placesToMoveTo = findPlacesToMoveTo.call(this, turn);
         var placeToMoveTo = pickRandomLocation(placesToMoveTo);
         if (placeToMoveTo) {
-            turnContext.moveThing(placeToMoveTo);
+            turn.moveThing(placeToMoveTo);
         }
     }
 
@@ -49,40 +91,38 @@ Creature.prototype.takeTurn = function (turnContext) {
         this.vitality = Math.max(--this.vitality, 0);
     }
 
+    function findPlacesToMoveTo(turn) {
+        var placesToMoveTo = [];
+        dy.forEach(function (rowChange) {
+            dx.forEach(function (colChange) {
+                if (rowChange + colChange !== 0) {
+                    var delta = new Delta(rowChange, colChange);
+                    if (turn.canMoveTo(delta)) {
+                        placesToMoveTo.push(delta);
+                    }
+                }
+            });
+        });
+        return placesToMoveTo;
+    }
+
+    function findPlaces(turn, criteria) {
+        var places = [];
+        dy.forEach(function (rowChange) {
+            dx.forEach(function (colChange) {
+                if (rowChange + colChange !== 0) {
+                    var delta = new Delta(rowChange, colChange);
+                    if (turn.hasMatchingThingAt(delta, criteria)) {
+                        places.push(delta);
+                    }
+                }
+            });
+        });
+        return places;
+    }
+
     function pickRandomLocation(locations) {
         return locations[Math.floor(Math.random() * locations.length)];
     }
 
-    function findPlacesToMoveTo(turnContext) {
-        var placesToMoveTo = [];
-        dy.forEach(function (rowChange) {
-            dx.forEach(function (colChange) {
-                if (dy !== 0 && dx !== 0) {
-                    var delta = new Delta(rowChange, colChange);
-                    if (turnContext.canMoveTo(delta)) {
-                        placesToMoveTo.push(delta);
-                    }
-                }
-            }, this);
-        }, this);
-        return placesToMoveTo;
-    }
-
-    function findPlacesWithFood(turnContext) {
-        var placesWithFood = [];
-        dy.forEach(function (rowChange) {
-            dx.forEach(function (colChange) {
-                if (dy !== 0 && dx !== 0) {
-                    var delta = new Delta(rowChange, colChange);
-                    if (turnContext.hasMatchingThingAt(delta, function (thing) {
-                            return thing instanceof Food;
-                        })) {
-                        placesWithFood.push(delta);
-                    }
-                }
-            }, this);
-        }, this);
-        return placesWithFood;
-    }
-};
-
+})();
