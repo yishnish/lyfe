@@ -1,8 +1,12 @@
 function Coordinates(row, col) {
-    this.getRow = function () {
-        return row;
-    };
-    this.getColumn = function () {
-        return col;
-    };
+    this._row = row;
+    this._column = col;
+}
+
+Coordinates.prototype.getRow = function(){
+    return this._row;
+}
+
+Coordinates.prototype.getColumn = function(){
+    return this._column;
 }
