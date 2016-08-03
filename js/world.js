@@ -48,6 +48,14 @@ function World(dataGrid){
         dataGrid[row][col] = null;
     };
 
+    this.add = function(thing, coords) {
+        var thingAt = dataGrid[coords.getRow()][coords.getColumn()];
+        if(!thingAt) {
+            dataGrid[coords.getRow()][coords.getColumn()] = thing;
+        }else{
+            throw new Error("Tried to add a thing to (" + coords.getRow() + "," + coords.getColumn() + ") but there was already something there");
+        }
+    };
     //private
 
     function init(_this){

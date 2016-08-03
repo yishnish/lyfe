@@ -113,6 +113,17 @@ describe('TurnContext', function () {
         var turnContext = new TurnContext(world, thing, new Coordinates(1, 1));
         expect(turnContext.coordinatesForThing()).toBeSameCoordinates(new Coordinates(1, 1));
     });
+    describe('adding things to the world', function () {
+        it('should be able to add things to the world', function () {
+            var thing = new Thing('vole');
+            var world = new World([[null, thing]]);
+            var turnContext = new TurnContext(world, thing, new Coordinates(0, 1));
+            turnContext.addThing(new Thing('bird'), new Delta(0, -1));
+            expect(turnContext.hasMatchingThingAt(new Delta(0, -1), function (thing) {
+                return thing.iAmA === 'bird'
+            })).toBe(true);
+        });
+    });
     it('should be able to remove things from the world', function () {
         var thing = new Thing('vole');
         var world = new World([

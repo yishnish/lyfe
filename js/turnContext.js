@@ -19,9 +19,13 @@ function TurnContext(world, actor, actorLocation) {
     };
 
     this.canMoveTo = function(delta) {
+        return this.isOnMap(delta) && !this.hasThingAt(delta);
+    };
+
+    this.isOnMap = function (delta) {
         var row = this.location.getRow() + delta.dy();
         var col = this.location.getColumn() + delta.dx();
-        return row >= 0 && col >= 0 && row < world.rows && col < world.columns && world.thingAt(row, col) === null;
+        return row >= 0 && col >= 0 && row < world.rows && col < world.columns;
     };
 
     this.coordinatesForDelta = function(delta) {
@@ -40,6 +44,10 @@ function TurnContext(world, actor, actorLocation) {
 
     this.removeThing = function () {
         world.remove(this.location.getRow(), this.location.getColumn());
+    };
+
+    this.addThing = function(thing, delta) {
+        world.add(thing, this.coordinatesForDelta(delta));
     };
 
     this.doThisToThatThere = function(fun, delta) {

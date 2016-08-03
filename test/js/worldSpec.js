@@ -112,5 +112,25 @@ describe("A World", function () {
                 expect(world.thingAt(0, 0)).toBeNull();
             });
         });
+        describe('adding Things', function () {
+            it('should let you add things', function () {
+                var thing = new Thing("vole");
+                var world = new World(
+                    [
+                        [null]
+                    ]);
+                world.add(thing, new Coordinates(0, 0));
+                expect(world.thingAt(0, 0)).not.toBeNull();
+            });
+            it('should raise an error if you try to add a thing where there already is a thing', function () {
+                var thing1 = new Thing("vole");
+                var thing2 = new Thing("vole");
+                var world = new World(
+                    [
+                        [thing1]
+                    ]);
+                expect(function(){world.add(thing2, new Coordinates(0, 0))}).toThrowError();
+            });
+        });
     });
 });
