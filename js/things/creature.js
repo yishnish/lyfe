@@ -8,25 +8,19 @@ function Creature(type) {
     Creature.prototype = Object.create(Thing.prototype);
     Creature.prototype.constructor = Creature;
 
-    Creature.prototype.takeTurn = function (turn) {
-        if (this.dead) {
-            turn.removeThing();
-        } else {
-            var didEat, gaveBirth, didHump;
-            if (this.pregnant) {
-                gaveBirth = giveBirth.call(this, turn);
-            }
-            else if (this.vitality < this.MAX_VITALITY) {
-                didEat = eatIfPossible.call(this, turn);
-            }
-            else {
-                didHump = tryHumping.call(this, turn);
-            }
-            this.adjustHealthBasedOnVitality.call(this, turn);
-            if (!didEat && !gaveBirth && !didHump) {
-                moveIfPossible.call(this, turn);
-                decrementVitality.call(this);
-            }
+    Creature.prototype.doYourTurnThings = function (turn) {
+        var didEat, gaveBirth, didHump;
+        if (this.pregnant) {
+            gaveBirth = giveBirth.call(this, turn);
+        }
+        else if (this.vitality < this.MAX_VITALITY) {
+            didEat = eatIfPossible.call(this, turn);
+        }
+        else {
+            didHump = tryHumping.call(this, turn);
+        }
+        if (!didEat && !gaveBirth && !didHump) {
+            moveIfPossible.call(this, turn);
         }
     };
 
@@ -85,10 +79,6 @@ function Creature(type) {
         if (placeToMoveTo) {
             turn.moveThing(placeToMoveTo);
         }
-    }
-
-    function decrementVitality() {
-        this.vitality = Math.max(--this.vitality, 0);
     }
 
     function findPlacesToMoveTo(turn) {
