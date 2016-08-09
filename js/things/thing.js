@@ -14,7 +14,7 @@ Thing.prototype.die = function (turnContext) {
 Thing.prototype.adjustHealthBasedOnVitality = function (turnContext) {
     if (this.vitality === 0) {
         this.hp = Math.max(0, this.hp - 1);
-    }else if(this.vitality === this.MAX_VITALITY) {
+    } else if (this.vitality === this.MAX_VITALITY) {
         this.hp = Math.min(this.MAX_HP, this.hp + 1);
     }
     if (this.hp <= 0) {
@@ -23,9 +23,5 @@ Thing.prototype.adjustHealthBasedOnVitality = function (turnContext) {
 };
 
 Thing.prototype.takeTurn = function (turnContext) {
-    if(this.dead) {
-        turnContext.removeThing();
-    }else {
-        this.adjustHealthBasedOnVitality(turnContext);
-    }
+    this.adjustHealthBasedOnVitality(turnContext);
 };

@@ -5,6 +5,9 @@ function TurnContext(world, actor, actorLocation) {
 }
 
 TurnContext.prototype.takeTurn = function () {
+    if(this.actor.dead) {
+        this.removeThing();
+    }
     this.actor.takeTurn(this);
 };
 TurnContext.prototype.hasThingAt = function (delta) {
