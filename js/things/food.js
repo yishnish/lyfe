@@ -11,7 +11,3 @@ Food.prototype.getEaten = function () {
         this.die(null);
     }
 };
-
-Food.prototype.doYourTurnThings = function (turn) {
-    //food doesn't do anything except sit there and get eaten
-};
