@@ -3,8 +3,8 @@ describe('TurnContext', function () {
         jasmine.addMatchers(customMatchers);
     });
     it('should tell you if there are things at some delta from the location of a Thing', function () {
-        var thing1 = new Thing('vole');
-        var thing2 = new Thing('vole');
+        var thing1 = new Creature('vole');
+        var thing2 = new Creature('vole');
         var world = new World([
             [null, thing1, null],
             [null, thing2, null],
@@ -23,8 +23,8 @@ describe('TurnContext', function () {
     });
 
     it('should tell you if there are things at some delta that fulfil a criteria', function () {
-        var thing1 = new Thing('vole');
-        var thing2 = new Thing('vole');
+        var thing1 = new Creature('vole');
+        var thing2 = new Creature('vole');
         var food = new Food();
         var world = new World([
             [null, thing1, null],
@@ -42,8 +42,8 @@ describe('TurnContext', function () {
     });
 
     it('can tell you if a location is possible to move to', function () {
-        var thing1 = new Thing('vole');
-        var thing2 = new Thing('vole');
+        var thing1 = new Creature('vole');
+        var thing2 = new Creature('vole');
         var world = new World([
             [null, thing1, null],
             [null, thing2, null],
@@ -62,7 +62,7 @@ describe('TurnContext', function () {
     });
 
     it('can provide coordinates given a Thing and a Delta', function () {
-        var thing = new Thing('vole');
+        var thing = new Creature('vole');
         var world = new World([
             [null, null, null],
             [null, thing, null],
@@ -80,7 +80,7 @@ describe('TurnContext', function () {
         expect(turnContext.coordinatesForDelta(new Delta(1, 1))).toBeSameCoordinates(new Coordinates(2, 2));
     });
     it('can move things in the world', function () {
-        var thing = new Thing('vole');
+        var thing = new Creature('vole');
         var world = new World([
             [null, null, null],
             [null, thing, null],
@@ -91,7 +91,7 @@ describe('TurnContext', function () {
         expect(world.thingAt(1, 2)).toBe(thing);
     });
     it('should update location after moving a thing', function () {
-        var thing = new Thing('vole');
+        var thing = new Creature('vole');
         var world = new World([
             [null, null, null],
             [null, thing, null],
@@ -104,7 +104,7 @@ describe('TurnContext', function () {
         expect(turnContext.coordinatesForThing()).toBeSameCoordinates(new Coordinates(1, 2));
     });
     it('can get the coordinates for the Thing in context', function () {
-        var thing = new Thing('vole');
+        var thing = new Creature('vole');
         var world = new World([
             [null, null, null],
             [null, thing, null],
@@ -115,17 +115,17 @@ describe('TurnContext', function () {
     });
     describe('adding things to the world', function () {
         it('should be able to add things to the world', function () {
-            var thing = new Thing('vole');
+            var thing = new Creature('vole');
             var world = new World([[null, thing]]);
             var turnContext = new TurnContext(world, thing, new Coordinates(0, 1));
-            turnContext.addThing(new Thing('bird'), new Delta(0, -1));
+            turnContext.addThing(new Creature('bird'), new Delta(0, -1));
             expect(turnContext.hasMatchingThingAt(new Delta(0, -1), function (thing) {
                 return thing.iAmA === 'bird'
             })).toBe(true);
         });
     });
     it('should be able to remove things from the world', function () {
-        var thing = new Thing('vole');
+        var thing = new Creature('vole');
         var world = new World([
             [thing]
         ]);
