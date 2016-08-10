@@ -5,7 +5,7 @@ function Copulates(){}
     var dy = [-1, 0, 1];
 
     Copulates.prototype.tryHumping = function (turn) {
-        var humpableDeltas = this.findPlaces(turn, this.isHumpable);
+        var humpableDeltas = this.findPlaces(turn, this.isHumpable.bind(this));
         var humpeeDelta = this.pickRandomLocation(humpableDeltas);
         if (humpeeDelta) {
             turn.doThisToThatThere(this.hump, humpeeDelta);

@@ -1,10 +1,10 @@
 describe("things that copulate to reproduce", function () {
     beforeAll(function () {
-        Thing.prototype.mixin(Copulates);
+        MyThing.prototype.mixin(Copulates);
     });
 
     it('should only try to hump things of the same type', function () {
-        var thing = new Thing('whatever');
+        var thing = new MyThing('whatever');
         var fruti = new FruitBush();
         var world = new World([
             [thing, fruti]
@@ -16,20 +16,20 @@ describe("things that copulate to reproduce", function () {
         expect(thing.hump).not.toHaveBeenCalled();
 
         world.remove(0, 1);
-        world.add(new Thing('whatever'), new Coordinates(0, 1));
+        world.add(new MyThing('whatever'), new Coordinates(0, 1));
         thing.tryHumping(turn);
         expect(thing.hump).toHaveBeenCalled();
     });
 
     it('should only look in adjacent squares for copulatees', function () {
-        var thing = new Thing('whatever');
+        var thing = new MyThing('whatever');
 
         var world = new World([
-            [new Thing('whatever'), new Thing('whatever'), new Thing('whatever'), new Thing('whatever'), new Thing('whatever')],
-            [new Thing('whatever'), null,                   null,                   null,                new Thing('whatever')],
-            [new Thing('whatever'), null,                   thing,                  null,                new Thing('whatever')],
-            [new Thing('whatever'), null,                   null,                   null,                new Thing('whatever')],
-            [new Thing('whatever'), new Thing('whatever'), new Thing('whatever'), new Thing('whatever'), new Thing('whatever')]
+            [new MyThing('whatever'), new MyThing('whatever'), new MyThing('whatever'), new MyThing('whatever'), new MyThing('whatever')],
+            [new MyThing('whatever'), null,                   null,                   null,                new MyThing('whatever')],
+            [new MyThing('whatever'), null,                   thing,                  null,                new MyThing('whatever')],
+            [new MyThing('whatever'), null,                   null,                   null,                new MyThing('whatever')],
+            [new MyThing('whatever'), new MyThing('whatever'), new MyThing('whatever'), new MyThing('whatever'), new MyThing('whatever')]
         ]);
 
         spyOn(thing, 'hump');
@@ -40,8 +40,8 @@ describe("things that copulate to reproduce", function () {
 
     describe('getting pregnant', function () {
         it('should get pregnant only if vitality is maxed out', function () {
-            var thing1 = new Thing('whatever');
-            var thing2 = new Thing('whatever');
+            var thing1 = new MyThing('whatever');
+            var thing2 = new MyThing('whatever');
             var world = new World([
                 [thing1, thing2]
             ]);

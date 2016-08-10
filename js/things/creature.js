@@ -7,8 +7,10 @@ function Creature(type) {
 
     Creature.prototype = Object.create(Thing.prototype);
     Creature.prototype.constructor = Creature;
+
     Creature.prototype.mixin(Birthing);
     Creature.prototype.mixin(Copulates);
+    Creature.prototype.mixin(Vegetarian);
 
     Creature.prototype.doYourTurnThings = function (turn) {
         var didEat, gaveBirth, didHump;
@@ -16,7 +18,7 @@ function Creature(type) {
             gaveBirth = this.giveBirth(turn);
         }
         else if (this.vitality < this.MAX_VITALITY) {
-            didEat = eatIfPossible.call(this, turn);
+            didEat = this.eatIfPossible.call(this, turn);
         }
         else {
             didHump = this.tryHumping(turn);
@@ -30,18 +32,6 @@ function Creature(type) {
         this.vitality++;
         food.getEaten();
     };
-
-    function eatIfPossible(turn) {
-        var placesWithFood = findPlaces(turn, function (thing) {
-            return thing instanceof Food;
-        });
-        var placeToEatAt = pickRandomLocation(placesWithFood);
-        if (placeToEatAt) {
-            turn.doThisToThatThere(this.eat, placeToEatAt);
-            return true;
-        }
-        return false;
-    }
 
     function moveIfPossible(turn) {
         var placesToMoveTo = findPlacesToMoveTo.call(this, turn);
@@ -64,21 +54,6 @@ function Creature(type) {
             });
         });
         return placesToMoveTo;
-    }
-
-    function findPlaces(turn, criteria) {
-        var places = [];
-        dy.forEach(function (rowChange) {
-            dx.forEach(function (colChange) {
-                if (rowChange + colChange !== 0) {
-                    var delta = new Delta(rowChange, colChange);
-                    if (turn.hasMatchingThingAt(delta, criteria)) {
-                        places.push(delta);
-                    }
-                }
-            });
-        });
-        return places;
     }
 
     function pickRandomLocation(locations) {

@@ -78,7 +78,7 @@ describe("Creatures", function () {
         describe("Eating", function () {
             var food, creature;
             beforeEach(function () {
-                food = new Food();
+                food = new FruitBush();
                 creature = new Creature('bird');
             });
             it('should raise vitality by one when eating food', function () {

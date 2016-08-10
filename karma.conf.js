@@ -17,6 +17,8 @@ module.exports = function (config) {
         files: [
             'js/things/thing.js',
             'js/**/*.js',
+            'test/js/helpers/myThing.js',
+            'test/js/helpers/myCreature.js',
             'test/js/**/*.js'
         ],
 
