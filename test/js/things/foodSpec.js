@@ -1,7 +1,7 @@
 describe("Food", function () {
     var food, creature;
     beforeEach(function () {
-        food = new Food()
+        food = new Food();
         creature = new Creature('bird');
     });
     describe("being eaten", function () {

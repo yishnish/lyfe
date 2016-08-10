@@ -5,6 +5,6 @@ function FruitBush(){
 FruitBush.prototype = Object.create(Food.prototype);
 FruitBush.prototype.constructor = FruitBush;
 
-FruitBush.prototype.takeTurn = function () {
-    this.hp = Math.min(this.MAX_HP, this.hp + 1);
+FruitBush.prototype.doYourTurnThings = function () {
+    this.vitality = Math.min(this.MAX_VITALITY, this.vitality + 1);
 };
