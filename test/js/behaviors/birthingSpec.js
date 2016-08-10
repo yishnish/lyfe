@@ -43,4 +43,26 @@ describe("things that give birth", function () {
         expect(world.thingAt(0, 1).getIamA()).toBe('whatever');
         expect(world.thingAt(0, 2).getIamA()).toBe('whatever');
     });
+
+    it('should give birth to a child with the same vitality as the parent', function () {
+        var thing = new MyThing();
+        var world = new World([
+            [null, thing]
+        ]);
+        var turn = new TurnContext(world, thing, new Coordinates(0, 1));
+        thing.vitality = 2;
+        thing.giveBirth(turn);
+        expect(world.thingAt(0, 0).vitality).toBe(2);
+    });
+
+    it('should give birth to a child with the same health as the parent', function () {
+        var thing = new MyThing();
+        var world = new World([
+            [null, thing]
+        ]);
+        var turn = new TurnContext(world, thing, new Coordinates(0, 1));
+        thing.hp = 2;
+        thing.giveBirth(turn);
+        expect(world.thingAt(0, 0).hp).toBe(2);
+    });
 });
