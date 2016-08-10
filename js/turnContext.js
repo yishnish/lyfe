@@ -19,7 +19,7 @@ TurnContext.prototype.hasMatchingThingAt = function (delta, criteria) {
     var row = this.location.getRow() + delta.dy();
     var col = this.location.getColumn() + delta.dx();
     var thingAt = this.world.thingAt(row, col);
-    return thingAt !== null && criteria(thingAt);
+    return criteria(thingAt);
 };
 TurnContext.prototype.canMoveTo = function (delta) {
     return this.isOnMap(delta) && !this.hasThingAt(delta);
