@@ -8,6 +8,7 @@ function Creature(type) {
     Creature.prototype = Object.create(Thing.prototype);
     Creature.prototype.constructor = Creature;
     Creature.prototype.mixin(Birthing);
+    Creature.prototype.mixin(Copulates);
 
     Creature.prototype.doYourTurnThings = function (turn) {
         var didEat, gaveBirth, didHump;
@@ -18,7 +19,7 @@ function Creature(type) {
             didEat = eatIfPossible.call(this, turn);
         }
         else {
-            didHump = tryHumping.call(this, turn);
+            didHump = this.tryHumping(turn);
         }
         if (!didEat && !gaveBirth && !didHump) {
             moveIfPossible.call(this, turn);
@@ -29,38 +30,6 @@ function Creature(type) {
         this.vitality++;
         food.getEaten();
     };
-
-
-    Creature.prototype.getHumped = function () {
-        if (this.vitality === this.MAX_VITALITY) {
-            this.pregnant = true;
-        }
-    };
-
-    function giveBirth(turn) {
-        var placesToGiveBirthAt = findPlacesToMoveTo(turn);
-        var birthingSpot = pickRandomLocation(placesToGiveBirthAt);
-        if (birthingSpot) {
-            turn.addThing(new Creature(this.iAmA), birthingSpot);
-            return true;
-        } else return false;
-    }
-
-    function tryHumping(turn) {
-        var humpableDeltas = findPlaces(turn, isHumpable);
-        var humpeeDelta = pickRandomLocation(humpableDeltas);
-        if (humpeeDelta) {
-            turn.doThisToThatThere(hump, humpeeDelta);
-        }
-    }
-
-    function hump(creature) {
-        creature.getHumped();
-    }
-
-    function isHumpable(thing) {
-        return thing instanceof Creature;
-    }
 
     function eatIfPossible(turn) {
         var placesWithFood = findPlaces(turn, function (thing) {

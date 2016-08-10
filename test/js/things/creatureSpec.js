@@ -18,7 +18,7 @@ describe("Creatures", function () {
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
             var thing = new Creature('vole');
-            expect(thing.iAmA).toEqual('vole');
+            expect(thing.getIamA()).toEqual('vole');
         });
     });
 
@@ -121,7 +121,7 @@ describe("Creatures", function () {
 
     describe("porking", function () {
         it('two adjacent creatures should create a new creature if their vitality is full', function () {
-            var thing1 = new Creature('bird');
+            var thing1 = new Creature('vole');
             var thing2 = new Creature('vole');
 
             var dataGrid = [
@@ -139,7 +139,7 @@ describe("Creatures", function () {
 
         it('two adjacent creatures should not create a new creature if their vitality is not full', function () {
             var thing1 = new Creature('bird');
-            var thing2 = new Creature('vole');
+            var thing2 = new Creature('bird');
 
             var dataGrid = [
                 [thing1, thing2]

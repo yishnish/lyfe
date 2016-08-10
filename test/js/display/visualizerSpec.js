@@ -31,49 +31,40 @@ describe('Visualizers', function () {
         });
     });
     describe("updating a display", function () {
+        var vole, bird, voleColor, birdColor;
+        beforeEach(function () {
+            vole = new Creature("vole");
+            bird = new Creature('bird');
+            voleColor = ColorMapping[vole.getIamA()];
+            birdColor = ColorMapping[bird.getIamA()];
+        });
         it('should update the display nodes when the backing world changes', function () {
             var dataGrid = [
-                [new Creature("vole"), new Creature("bird")],
-                [new Creature("bird"), new Creature("vole")]
+                [vole]
             ];
             var world = new World(dataGrid);
             var viz = new Visualizer(world, ColorMapping);
-            expect(viz.thingAt(0, 0).color()).toBe("brown");
-            expect(viz.thingAt(0, 1).color()).toBe("blue");
-            expect(viz.thingAt(1, 0).color()).toBe("blue");
-            expect(viz.thingAt(1, 1).color()).toBe("brown");
-            world.getGrid()[0][0].iAmA = "bird";
-            world.getGrid()[0][1].iAmA = "vole";
-            world.getGrid()[1][0].iAmA = "vole";
-            world.getGrid()[1][1].iAmA = "bird";
+            expect(viz.thingAt(0, 0).color()).toBe(voleColor);
+            world.remove(0, 0);
+            world.add(bird, new Coordinates(0, 0));
             world.turn();
-            expect(viz.thingAt(0, 0).color()).toBe("blue");
-            expect(viz.thingAt(0, 1).color()).toBe("brown");
-            expect(viz.thingAt(1, 0).color()).toBe("brown");
-            expect(viz.thingAt(1, 1).color()).toBe("blue");
+            expect(viz.thingAt(0, 0).color()).toBe(birdColor);
         });
 
         it('should update the display HTML when the backing world changes', function () {
+            expect(voleColor).not.toEqual(birdColor);
             var dataGrid = [
-                [new Creature("vole"), new Creature("bird")],
-                [new Creature("bird"), new Creature("vole")]
+                [vole]
             ];
             var world = new World(dataGrid);
             var viz = new Visualizer(world, ColorMapping);
             var table = new TableAccessor(viz.getDisplayHtml());
-            expect(table.cellColorAt(0, 0)).toBe("brown");
-            expect(table.cellColorAt(0, 1)).toBe("blue");
-            expect(table.cellColorAt(1, 0)).toBe("blue");
-            expect(table.cellColorAt(1, 1)).toBe("brown");
-            world.getGrid()[0][0].iAmA = "bird";
-            world.getGrid()[0][1].iAmA = "vole";
-            world.getGrid()[1][0].iAmA = "vole";
-            world.getGrid()[1][1].iAmA = "bird";
+
+            expect(table.cellColorAt(0, 0)).toBe(voleColor);
+            world.remove(0, 0);
+            world.add(bird, new Coordinates(0, 0));
             world.turn();
-            expect(table.cellColorAt(0, 0)).toBe("blue");
-            expect(table.cellColorAt(0, 1)).toBe("brown");
-            expect(table.cellColorAt(1, 0)).toBe("brown");
-            expect(table.cellColorAt(1, 1)).toBe("blue");
+            expect(table.cellColorAt(0, 0)).toBe(birdColor);
         });
     });
 });

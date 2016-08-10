@@ -70,7 +70,7 @@ describe("A World", function () {
                     [new Creature("vole"), new Creature("vole")],
                     [new Creature("vole"), null]
                 ]);
-            expect(world.thingAt(0, 0).iAmA).toBe('vole');
+            expect(world.thingAt(0, 0).getIamA()).toBe('vole');
             expect(world.thingAt(1, 1)).toBeNull();
         });
         describe("activating Things that live in it", function () {
@@ -129,7 +129,7 @@ describe("A World", function () {
                     [
                         [thing1]
                     ]);
-                expect(function(){world.add(thing2, new Coordinates(0, 0))}).toThrowError();
+                expect(function(){world.add(thing2, new Coordinates(0, 0));}).toThrowError();
             });
         });
     });

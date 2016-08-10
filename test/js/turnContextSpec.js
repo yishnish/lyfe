@@ -120,7 +120,7 @@ describe('TurnContext', function () {
             var turnContext = new TurnContext(world, thing, new Coordinates(0, 1));
             turnContext.addThing(new Creature('bird'), new Delta(0, -1));
             expect(turnContext.hasMatchingThingAt(new Delta(0, -1), function (thing) {
-                return thing.iAmA === 'bird'
+                return thing.getIamA() === 'bird';
             })).toBe(true);
         });
     });
