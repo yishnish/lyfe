@@ -36,7 +36,7 @@ function Copulates(){}
     };
 
     Copulates.prototype.getHumped = function () {
-        if (this.vitality === this.MAX_VITALITY) {
+        if (this.vitality > 0) {
             this.pregnant = true;
         }
     };

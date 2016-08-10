@@ -17,10 +17,10 @@ function VegetarianCreature(type) {
         if (this.pregnant) {
             gaveBirth = this.giveBirth(turn);
         }
-        else if (this.vitality < this.MAX_VITALITY) {
+        if (!gaveBirth && this.vitality < this.MAX_VITALITY) {
             didEat = this.eatIfPossible.call(this, turn);
         }
-        else {
+        if(!gaveBirth && !didEat && this.vitality > 0){
             didHump = this.tryHumping(turn);
         }
         if (!didEat && !gaveBirth && !didHump) {

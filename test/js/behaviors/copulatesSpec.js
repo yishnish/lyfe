@@ -39,18 +39,18 @@ describe("things that copulate to reproduce", function () {
     });
 
     describe('getting pregnant', function () {
-        it('should get pregnant only if vitality is maxed out', function () {
+        it('should get pregnant only if vitality is abov zero', function () {
             var thing1 = new MyThing('whatever');
             var thing2 = new MyThing('whatever');
             var world = new World([
                 [thing1, thing2]
             ]);
             var turn = new TurnContext(world, thing1, new Coordinates(0, 0));
-            thing2.vitality = thing2.MAX_VITALITY - 1;
+            thing2.vitality = 0;
             thing1.tryHumping(turn);
             expect(thing2.pregnant).toBeFalsy();
 
-            thing2.vitality = thing2.MAX_VITALITY;
+            thing2.vitality = 1;
             thing1.tryHumping(turn);
             expect(thing2.pregnant).toBe(true);
         });

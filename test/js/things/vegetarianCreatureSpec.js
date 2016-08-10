@@ -137,7 +137,7 @@ describe("Creatures", function () {
             expect(world.thingAt(0, 2)).toBeACreature();
         });
 
-        it('two adjacent creatures should not create a new creature if their vitality is not full', function () {
+        it('two adjacent creatures should not have carnal relations if their vitality is not full', function () {
             var thing1 = new VegetarianCreature('bird');
             var thing2 = new VegetarianCreature('bird');
 
@@ -145,15 +145,18 @@ describe("Creatures", function () {
                 [thing1, thing2]
             ];
 
+
             var world = new World(dataGrid);
+            spyOn(thing1, 'getHumped');
             spyOn(thing2, 'getHumped');
 
-            thing1.vitality -= 1;
+            thing1.vitality = 0;
+            thing2.vitality = 0;
             world.turn();
             expect(thing2.getHumped).not.toHaveBeenCalled();
 
-            thing1.vitality = VegetarianCreature.MAX_VITALITY;
-            thing2.vitality = VegetarianCreature.MAX_VITALITY;
+            thing1.vitality = 1;
+            thing2.vitality = 1;
             world.turn();
             expect(thing2.getHumped).toHaveBeenCalled();
         });
