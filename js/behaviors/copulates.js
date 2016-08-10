@@ -1,8 +1,8 @@
 function Copulates(){}
 
 (function () {
-    var dx = [-1, 0, 1];
-    var dy = [-1, 0, 1];
+    Copulates.prototype = Object.create(BaseBehavior.prototype);
+    Copulates.prototype.constructor = Birthing;
 
     Copulates.prototype.tryHumping = function (turn) {
         var humpableDeltas = this.findPlaces(turn, this.isHumpable.bind(this));
@@ -10,25 +10,6 @@ function Copulates(){}
         if (humpeeDelta) {
             turn.doThisToThatThere(this.hump, humpeeDelta);
         }
-    };
-
-    Copulates.prototype.findPlaces = function (turn, criteria) {
-        var places = [];
-        dy.forEach(function (rowChange) {
-            dx.forEach(function (colChange) {
-                if (rowChange + colChange !== 0) {
-                    var delta = new Delta(rowChange, colChange);
-                    if (turn.hasMatchingThingAt(delta, criteria.bind(this))) {
-                        places.push(delta);
-                    }
-                }
-            }, this);
-        }, this);
-        return places;
-    };
-
-    Copulates.prototype.pickRandomLocation = function (locations) {
-        return locations[Math.floor(Math.random() * locations.length)];
     };
 
     Copulates.prototype.hump = function (creature) {

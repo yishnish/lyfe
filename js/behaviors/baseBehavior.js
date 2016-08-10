@@ -19,6 +19,22 @@ function BaseBehavior(){}
         return placesToMoveTo;
     };
 
+    BaseBehavior.prototype.findPlaces = function (turn, criteria) {
+        var places = [];
+        dy.forEach(function (rowChange) {
+            dx.forEach(function (colChange) {
+                if (rowChange + colChange !== 0) {
+                    var delta = new Delta(rowChange, colChange);
+                    if (turn.hasMatchingThingAt(delta, criteria.bind(this))) {
+                        places.push(delta);
+                    }
+                }
+            }, this);
+        }, this);
+        return places;
+    };
+
+
     BaseBehavior.prototype.pickRandomLocation = function (locations) {
         return locations[Math.floor(Math.random() * locations.length)];
     };
