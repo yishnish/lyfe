@@ -17,19 +17,20 @@ function VegetarianCreature(type) {
         if (this.pregnant) {
             gaveBirth = this.giveBirth(turn);
         }
-        if (!gaveBirth && this.vitality < this.MAX_VITALITY) {
-            didEat = this.eatIfPossible.call(this, turn);
-        }
-        if(!gaveBirth && !didEat && this.vitality > 0){
+        if(!gaveBirth && this.vitality > 0){
             didHump = this.tryHumping(turn);
         }
-        if (!didEat && !gaveBirth && !didHump) {
+        if (!gaveBirth && !didHump && this.vitality < this.MAX_VITALITY) {
+            didEat = this.eatIfPossible(turn);
+        }
+        if (!gaveBirth && !didHump && !didEat ) {
             moveIfPossible.call(this, turn);
         }
+        this.maybePoopAPlant(turn);
     };
 
     VegetarianCreature.prototype.eat = function (food) {
-        this.vitality++;
+        this.vitality += 2;
         food.getEaten();
     };
 

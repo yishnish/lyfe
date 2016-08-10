@@ -1,6 +1,7 @@
 describe("Vegetarians", function () {
     beforeAll(function () {
         MyCreature.prototype.mixin(Vegetarian);
+        jasmine.addMatchers(customMatchers);
     });
 
     it('should eat fruit', function () {
@@ -24,4 +25,31 @@ describe("Vegetarians", function () {
         thing.eatIfPossible(turn);
         expect(thing.eat).not.toHaveBeenCalled();
     });
+
+    it('should recover two vitality when eating food so that there is a net gain at the end of the turn', function () {
+        var thing = new MyCreature();
+        thing.vitality = 1;
+        thing.eat(new FruitBush());
+        expect(thing.vitality).toBe(3);
+    });
+
+    it('should occasionally poop out a fruit bush', function(){
+        var fruited = false, counter = 0;
+        var thing = new MyCreature();
+        var existingFood = new FruitBush();
+        var world = new World([
+            [thing, existingFood],
+            [null, existingFood]
+        ]);
+        while(!fruited){
+            fruited = world.thingAt(1, 0) instanceof FruitBush;
+            thing.vitality = 1;
+            existingFood.hp = 10;
+            world.turn();
+            if(++counter > 500) {
+                throw new Error("Expected the creature to poop a bush out within 500 tries");
+            }
+        }
+        expect(world.thingAt(1, 0)).toBeAFruitBush();
+    })
 });

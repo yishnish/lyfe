@@ -81,10 +81,10 @@ describe("Creatures", function () {
                 food = new FruitBush();
                 creature = new VegetarianCreature('bird');
             });
-            it('should raise vitality by one when eating food', function () {
+            it('should raise vitality by two when eating food', function () {
                 var startingVitality = creature.vitality;
-                creature.vitality--;
-                expect(creature.vitality).toEqual(startingVitality - 1);
+                creature.vitality -= 2;
+                expect(creature.vitality).toEqual(startingVitality - 2);
                 creature.eat(food);
                 expect(creature.vitality).toEqual(startingVitality);
 
@@ -144,7 +144,6 @@ describe("Creatures", function () {
             var dataGrid = [
                 [thing1, thing2]
             ];
-
 
             var world = new World(dataGrid);
             spyOn(thing1, 'getHumped');

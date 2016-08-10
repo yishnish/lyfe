@@ -28,5 +28,20 @@ var customMatchers = {
             }
         }
 
+    },
+
+    toBeAFruitBush: function (util, customEqualityTesters) {
+        return {
+            compare: function (actual, expected) {
+                var result = {pass: false};
+                if (actual instanceof FruitBush) {
+                    result.pass = true;
+                } else {
+                    result.message = 'Expected a FruitBush';
+                }
+                return result;
+            }
+        }
+
     }
 };

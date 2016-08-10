@@ -15,4 +15,17 @@ function Vegetarian(){}
         }
         return false;
     };
+
+    Vegetarian.prototype.maybePoopAPlant = function(turn) {
+        if(shouldPoopAPlant()) {
+            var placeToPoop = this.pickRandomLocation(this.findAdjacentEmptySpaces(turn));
+            if(placeToPoop) {
+                turn.addThing(new FruitBush(), placeToPoop);
+            }
+        }
+    };
+
+    function shouldPoopAPlant(){
+        return Math.floor(Math.random() * 50) === 0;
+    }
 })();
