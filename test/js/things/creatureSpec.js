@@ -5,7 +5,7 @@ describe("Creatures", function () {
 
     describe("Movement", function () {
         it('should be able to move around in the world', function () {
-            var creature = new Creature('bird');
+            var creature = new VegetarianCreature('bird');
             var dataGrid = [
                 [creature, null]
             ];
@@ -17,7 +17,7 @@ describe("Creatures", function () {
     });
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
-            var thing = new Creature('vole');
+            var thing = new VegetarianCreature('vole');
             expect(thing.getIamA()).toEqual('vole');
         });
     });
@@ -26,7 +26,7 @@ describe("Creatures", function () {
         var creature;
 
         beforeEach(function () {
-            creature = new Creature();
+            creature = new VegetarianCreature();
         });
 
         it('has health', function () {
@@ -79,7 +79,7 @@ describe("Creatures", function () {
             var food, creature;
             beforeEach(function () {
                 food = new FruitBush();
-                creature = new Creature('bird');
+                creature = new VegetarianCreature('bird');
             });
             it('should raise vitality by one when eating food', function () {
                 var startingVitality = creature.vitality;
@@ -105,7 +105,7 @@ describe("Creatures", function () {
 
     describe("Death", function () {
         it('Things should be removed from the world when their health reaches zero', function () {
-            var thing = new Creature('bird');
+            var thing = new VegetarianCreature('bird');
 
             var dataGrid = [
                 [thing]
@@ -121,8 +121,8 @@ describe("Creatures", function () {
 
     describe("porking", function () {
         it('two adjacent creatures should create a new creature if their vitality is full', function () {
-            var thing1 = new Creature('vole');
-            var thing2 = new Creature('vole');
+            var thing1 = new VegetarianCreature('vole');
+            var thing2 = new VegetarianCreature('vole');
 
             var dataGrid = [
                 [thing1, thing2, null]
@@ -138,8 +138,8 @@ describe("Creatures", function () {
         });
 
         it('two adjacent creatures should not create a new creature if their vitality is not full', function () {
-            var thing1 = new Creature('bird');
-            var thing2 = new Creature('bird');
+            var thing1 = new VegetarianCreature('bird');
+            var thing2 = new VegetarianCreature('bird');
 
             var dataGrid = [
                 [thing1, thing2]
@@ -152,8 +152,8 @@ describe("Creatures", function () {
             world.turn();
             expect(thing2.getHumped).not.toHaveBeenCalled();
 
-            thing1.vitality = Creature.MAX_VITALITY;
-            thing2.vitality = Creature.MAX_VITALITY;
+            thing1.vitality = VegetarianCreature.MAX_VITALITY;
+            thing2.vitality = VegetarianCreature.MAX_VITALITY;
             world.turn();
             expect(thing2.getHumped).toHaveBeenCalled();
         });

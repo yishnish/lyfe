@@ -19,7 +19,7 @@ var customMatchers = {
         return {
             compare: function (actual, expected) {
                 var result = {pass: false};
-                if (actual instanceof Creature) {
+                if (actual instanceof VegetarianCreature) {
                     result.pass = true;
                 } else {
                     result.message = 'Expected a creature';

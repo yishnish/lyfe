@@ -9,7 +9,7 @@
     <script src="js/things/thing.js"></script>
     <script src="js/things/food.js"></script>
     <script src="js/things/fruitBush.js"></script>
-    <script src="js/things/creature.js"></script>
+    <script src="js/things/vegetarianCreature.js"></script>
     <script src="js/display/worldNode.js"></script>
     <script src="js/world.js"></script>
     <script src="js/turnContext.js"></script>
@@ -29,9 +29,9 @@
 
         function createGrid(){
             var makers = [function () {
-                return new Creature('vole')
+                return new VegetarianCreature('vole')
             }, function () {
-                return new Creature('bird');
+                return new VegetarianCreature('bird');
             }, function(){
                 return new FruitBush()
             }];

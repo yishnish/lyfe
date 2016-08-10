@@ -8,7 +8,7 @@ function Birthing() { }
         var placesToGiveBirthAt = this.findAdjacentEmptySpaces(turn);
         var birthingSpot = this.pickRandomLocation(placesToGiveBirthAt);
         if (birthingSpot) {
-            turn.addThing(new Creature(this.getIamA()), birthingSpot);
+            turn.addThing(new VegetarianCreature(this.getIamA()), birthingSpot);
             return true;
         } else return false;
     };
