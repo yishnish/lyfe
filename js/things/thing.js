@@ -7,6 +7,12 @@ function Thing(type) {
     this.dead = false;
 }
 
+Thing.prototype.mixin = function(mixinClass) {
+    for(var methodName in mixinClass.prototype) {
+        this[methodName] = mixinClass.prototype[methodName];
+    }
+};
+
 Thing.prototype.takeTurn = function (turnContext) {
     this.doYourTurnThings(turnContext);
     adjustHealthBasedOnVitality.call(this, turnContext);

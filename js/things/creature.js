@@ -7,11 +7,12 @@ function Creature(type) {
 
     Creature.prototype = Object.create(Thing.prototype);
     Creature.prototype.constructor = Creature;
+    Creature.prototype.mixin(Birthing);
 
     Creature.prototype.doYourTurnThings = function (turn) {
         var didEat, gaveBirth, didHump;
         if (this.pregnant) {
-            gaveBirth = giveBirth.call(this, turn);
+            gaveBirth = this.giveBirth(turn);
         }
         else if (this.vitality < this.MAX_VITALITY) {
             didEat = eatIfPossible.call(this, turn);
