@@ -2,6 +2,9 @@ describe("things that copulate to reproduce", function () {
     beforeAll(function () {
         MyThing.prototype.mixin(Copulates);
     });
+    afterAll(function () {
+        MyThing.prototype.removeMixin(Copulates);
+    });
 
     it('should only try to hump things of the same type', function () {
         var thing = new MyThing('whatever');

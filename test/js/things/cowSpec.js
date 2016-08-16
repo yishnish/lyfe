@@ -1,5 +1,5 @@
 describe("Creatures", function () {
-    beforeEach(function () {
+    beforeAll(function () {
         jasmine.addMatchers(customMatchers);
     });
 

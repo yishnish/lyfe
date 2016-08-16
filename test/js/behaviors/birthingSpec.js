@@ -2,6 +2,9 @@ describe("things that give birth", function () {
     beforeAll(function () {
         MyThing.prototype.mixin(Birthing);
     });
+    afterAll(function () {
+        MyThing.prototype.removeMixin(Birthing);
+    });
 
     it('looks for empty adjacent locations to give birth at', function () {
         var thing = new MyThing();

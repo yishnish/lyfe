@@ -56,4 +56,26 @@ describe("Things", function () {
         });
     });
 
+    describe("mixins", function () {
+        function MyMixin() { }
+
+        MyMixin.prototype.foo = function () {
+            return 'foo';
+        };
+
+        it('should be able to have behaviors mixed in', function () {
+            var thing = new Thing('fart');
+            thing.mixin(MyMixin);
+            expect(thing.foo()).toEqual('foo');
+        });
+
+        it('should be able to remove mixins', function () {
+            var thing = new Thing('whatever');
+            thing.mixin(MyMixin);
+            expect(thing.foo()).toEqual('foo');
+            thing.removeMixin(MyMixin);
+            expect(thing.foo).toBeUndefined();
+        });
+    });
+
 });

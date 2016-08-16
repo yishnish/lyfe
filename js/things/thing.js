@@ -16,6 +16,12 @@ Thing.prototype.mixin = function(mixinClass) {
     }
 };
 
+Thing.prototype.removeMixin = function(mixinClass) {
+    for(var methodName in mixinClass.prototype) {
+        this[methodName] = undefined;
+    }
+};
+
 Thing.prototype.takeTurn = function (turnContext) {
     this.doYourTurnThings(turnContext);
     adjustHealthBasedOnVitality.call(this, turnContext);

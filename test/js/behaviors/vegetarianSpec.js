@@ -3,6 +3,9 @@ describe("Vegetarians", function () {
         MyCreature.prototype.mixin(Vegetarian);
         jasmine.addMatchers(customMatchers);
     });
+    afterAll(function () {
+        MyCreature.prototype.removeMixin(Vegetarian);
+    });
 
     it('should eat fruit', function () {
         var thing = new MyCreature();

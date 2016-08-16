@@ -1,5 +1,5 @@
 describe('TurnContext', function () {
-    beforeEach(function () {
+    beforeAll(function () {
         jasmine.addMatchers(customMatchers);
     });
     it('should tell you if there are things at some delta from the location of a Thing', function () {
