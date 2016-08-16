@@ -11,12 +11,4 @@ describe("Food", function () {
             expect(food.hp).toEqual(initialHealth - 1);
         });
     });
-    describe('Death', function () {
-        it('should die when health reaches zero', function () {
-            spyOn(food, 'die');
-            food.hp = 1;
-            creature.eat(food);
-            expect(food.die).toHaveBeenCalled();
-        });
-    });
 });

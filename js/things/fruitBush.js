@@ -1,10 +1,14 @@
 function FruitBush(){
-    Food.call(this, 'fruitBush');
+    Thing.call(this, 'fruitBush');
 }
 
-FruitBush.prototype = Object.create(Food.prototype);
-FruitBush.prototype.constructor = FruitBush;
+(function(){
+    FruitBush.prototype = Object.create(Thing.prototype);
+    FruitBush.prototype.constructor = FruitBush;
 
-FruitBush.prototype.doYourTurnThings = function () {
-    this.vitality = Math.min(this.MAX_VITALITY, this.vitality + 1);
-};
+    FruitBush.prototype.mixin(Food);
+
+    FruitBush.prototype.doYourTurnThings = function () {
+        this.vitality = Math.min(this.MAX_VITALITY, this.vitality + 1);
+    };
+})();
