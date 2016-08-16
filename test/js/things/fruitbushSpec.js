@@ -2,7 +2,7 @@ describe('FruitBushes', function () {
     var fruitBush, creature;
     beforeEach(function () {
         fruitBush = new FruitBush();
-        creature = new VegetarianCreature('bird');
+        creature = new Cow('bird');
     });
     describe("being eaten", function () {
         it("should lower the fruitBush's health by one", function () {

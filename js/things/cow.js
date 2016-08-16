@@ -1,18 +1,18 @@
-function VegetarianCreature(type) {
+function Cow(type) {
     Thing.call(this, type);
 }
 (function () {
     var dx = [-1, 0, 1];
     var dy = [-1, 0, 1];
 
-    VegetarianCreature.prototype = Object.create(Thing.prototype);
-    VegetarianCreature.prototype.constructor = VegetarianCreature;
+    Cow.prototype = Object.create(Thing.prototype);
+    Cow.prototype.constructor = Cow;
 
-    VegetarianCreature.prototype.mixin(Birthing);
-    VegetarianCreature.prototype.mixin(Copulates);
-    VegetarianCreature.prototype.mixin(Vegetarian);
+    Cow.prototype.mixin(Birthing);
+    Cow.prototype.mixin(Copulates);
+    Cow.prototype.mixin(Vegetarian);
 
-    VegetarianCreature.prototype.doYourTurnThings = function (turn) {
+    Cow.prototype.doYourTurnThings = function (turn) {
         var didEat, gaveBirth, didHump;
         if (this.pregnant) {
             gaveBirth = this.giveBirth(turn);
@@ -29,7 +29,7 @@ function VegetarianCreature(type) {
         this.maybePoopAPlant(turn);
     };
 
-    VegetarianCreature.prototype.eat = function (food) {
+    Cow.prototype.eat = function (food) {
         this.vitality += 2;
         food.getEaten();
     };

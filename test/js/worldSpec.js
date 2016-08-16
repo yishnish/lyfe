@@ -1,7 +1,7 @@
 describe("A World", function () {
     var dataGrid, world;
     beforeEach(function () {
-        dataGrid = [[new VegetarianCreature("vole")]];
+        dataGrid = [[new Cow("vole")]];
         world = new World(dataGrid);
     });
     describe("validations", function () {
@@ -19,8 +19,8 @@ describe("A World", function () {
             expect(function () {
                 new World(
                     [
-                        [new VegetarianCreature("vole"), new VegetarianCreature("vole")],
-                        [new VegetarianCreature("vole")]
+                        [new Cow("vole"), new Cow("vole")],
+                        [new Cow("vole")]
                     ]);
             }).toThrowError("Can't create a non-rectangular world");
         });
@@ -67,15 +67,15 @@ describe("A World", function () {
         it('should tell you what is at a location', function () {
             var world = new World(
                 [
-                    [new VegetarianCreature("vole"), new VegetarianCreature("vole")],
-                    [new VegetarianCreature("vole"), null]
+                    [new Cow("vole"), new Cow("vole")],
+                    [new Cow("vole"), null]
                 ]);
             expect(world.thingAt(0, 0).getIamA()).toBe('vole');
             expect(world.thingAt(1, 1)).toBeNull();
         });
         describe("activating Things that live in it", function () {
             it('should notifiy Things when they can move', function () {
-                var thing = new VegetarianCreature("vole");
+                var thing = new Cow("vole");
                 var world = new World(
                     [
                         [thing, null],
@@ -89,9 +89,9 @@ describe("A World", function () {
         });
         describe("moving contents", function () {
             it('should move a Thing to another requested location', function () {
-                var thing1 = new VegetarianCreature("vole");
-                var thing2 = new VegetarianCreature("vole");
-                var thing3 = new VegetarianCreature("vole");
+                var thing1 = new Cow("vole");
+                var thing2 = new Cow("vole");
+                var thing3 = new Cow("vole");
                 var world = new World(
                     [
                         [thing1, thing2],
@@ -103,7 +103,7 @@ describe("A World", function () {
         });
         describe('removing Things', function () {
             it('should let you remove things', function () {
-                var thing = new VegetarianCreature("vole");
+                var thing = new Cow("vole");
                 var world = new World(
                     [
                         [thing]
@@ -114,7 +114,7 @@ describe("A World", function () {
         });
         describe('adding Things', function () {
             it('should let you add things', function () {
-                var thing = new VegetarianCreature("vole");
+                var thing = new Cow("vole");
                 var world = new World(
                     [
                         [null]
@@ -123,8 +123,8 @@ describe("A World", function () {
                 expect(world.thingAt(0, 0)).not.toBeNull();
             });
             it('should raise an error if you try to add a thing where there already is a thing', function () {
-                var thing1 = new VegetarianCreature("vole");
-                var thing2 = new VegetarianCreature("vole");
+                var thing1 = new Cow("vole");
+                var thing2 = new Cow("vole");
                 var world = new World(
                     [
                         [thing1]

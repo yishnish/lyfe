@@ -1,6 +1,6 @@
 function MyCreature() {
-    VegetarianCreature.call(this, 'whatever');
+    Cow.call(this, 'whatever');
 }
 
-MyCreature.prototype = Object.create(VegetarianCreature.prototype);
+MyCreature.prototype = Object.create(Cow.prototype);
 MyCreature.prototype.constructor = MyCreature;

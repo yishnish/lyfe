@@ -9,7 +9,7 @@ function Birthing() { }
         var placesToGiveBirthAt = this.findAdjacentEmptySpaces(turn);
         var birthingSpot = this.pickRandomLocation(placesToGiveBirthAt);
         if (birthingSpot) {
-            var baby = new VegetarianCreature(this.getIamA());
+            var baby = new Cow(this.getIamA());
             baby.vitality = this.vitality;
             baby.hp = this.hp;
             turn.addThing(baby, birthingSpot);
