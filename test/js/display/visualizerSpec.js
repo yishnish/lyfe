@@ -5,25 +5,25 @@ describe('Visualizers', function () {
             describe("validations", function () {
                 it('should fail when there is no color mapping', function () {
                     expect(function () {
-                        new Visualizer(new World([[new Cow('vole'), new Cow('bird')]]), null);
+                        new Visualizer(new World([[new Cow(), new Cow()]]), null);
                     }).toThrowError("You need a non-empty color mapping");
                 });
             });
             it('should create a DOM table with the same number of rows and columns as the data', function () {
-                var viz = new Visualizer(new World([[new Cow("vole")]]), ColorMapping);
+                var viz = new Visualizer(new World([[new Cow()]]), ColorMapping);
                 var table = new TableAccessor(viz.getDisplayHtml());
                 expect(table.rows()).toEqual(1);
                 expect(table.columns()).toEqual(1);
             });
             it('should create a 2D array of worldNodes with the same number of rows and columns as the data', function () {
-                var viz = new Visualizer(new World([[new Cow("vole")]]), ColorMapping);
+                var viz = new Visualizer(new World([[new Cow()]]), ColorMapping);
                 var tableAccessor = new TableAccessor(viz.getDisplayHtml());
                 expect(tableAccessor.rows()).toEqual(1);
                 expect(tableAccessor.columns()).toEqual(1);
             });
             describe('color mapping', function () {
                 it('should have table elements colored according to their matching type', function () {
-                    var viz = new Visualizer(new World([[new Cow("vole"), new Cow("bird")]]), ColorMapping);
+                    var viz = new Visualizer(new World([[new Cow(), new Wolf()]]), ColorMapping);
                     expect(viz.thingAt(0, 0).color()).toBe("brown");
                     expect(viz.thingAt(0, 1).color()).toBe("blue");
                 });
@@ -31,40 +31,40 @@ describe('Visualizers', function () {
         });
     });
     describe("updating a display", function () {
-        var vole, bird, voleColor, birdColor;
+        var cow, wolf, cowColor, wolfColor;
         beforeEach(function () {
-            vole = new Cow("vole");
-            bird = new Cow('bird');
-            voleColor = ColorMapping[vole.getIamA()];
-            birdColor = ColorMapping[bird.getIamA()];
+            cow = new Cow();
+            wolf = new Wolf();
+            cowColor = ColorMapping[cow.getIamA()];
+            wolfColor = ColorMapping[wolf.getIamA()];
         });
         it('should update the display nodes when the backing world changes', function () {
             var dataGrid = [
-                [vole]
+                [cow]
             ];
             var world = new World(dataGrid);
             var viz = new Visualizer(world, ColorMapping);
-            expect(viz.thingAt(0, 0).color()).toBe(voleColor);
+            expect(viz.thingAt(0, 0).color()).toBe(cowColor);
             world.remove(0, 0);
-            world.add(bird, new Coordinates(0, 0));
+            world.add(wolf, new Coordinates(0, 0));
             world.turn();
-            expect(viz.thingAt(0, 0).color()).toBe(birdColor);
+            expect(viz.thingAt(0, 0).color()).toBe(wolfColor);
         });
 
         it('should update the display HTML when the backing world changes', function () {
-            expect(voleColor).not.toEqual(birdColor);
+            expect(cowColor).not.toEqual(wolfColor);
             var dataGrid = [
-                [vole]
+                [cow]
             ];
             var world = new World(dataGrid);
             var viz = new Visualizer(world, ColorMapping);
             var table = new TableAccessor(viz.getDisplayHtml());
 
-            expect(table.cellColorAt(0, 0)).toBe(voleColor);
+            expect(table.cellColorAt(0, 0)).toBe(cowColor);
             world.remove(0, 0);
-            world.add(bird, new Coordinates(0, 0));
+            world.add(wolf, new Coordinates(0, 0));
             world.turn();
-            expect(table.cellColorAt(0, 0)).toBe(birdColor);
+            expect(table.cellColorAt(0, 0)).toBe(wolfColor);
         });
     });
 });

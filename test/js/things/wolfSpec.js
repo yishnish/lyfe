@@ -1,11 +1,11 @@
-describe("Creatures", function () {
-    beforeAll(function () {
+describe("wolves", function () {
+    beforeEach(function () {
         jasmine.addMatchers(customMatchers);
     });
 
     describe("Movement", function () {
         it('should be able to move around in the world', function () {
-            var creature = new Cow();
+            var creature = new Wolf();
             var dataGrid = [
                 [creature, null]
             ];
@@ -17,8 +17,8 @@ describe("Creatures", function () {
     });
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
-            var thing = new Cow();
-            expect(thing.getIamA()).toEqual('cow');
+            var thing = new Wolf();
+            expect(thing.getIamA()).toEqual('wolf');
         });
     });
 
@@ -26,7 +26,7 @@ describe("Creatures", function () {
         var creature;
 
         beforeEach(function () {
-            creature = new Cow();
+            creature = new Wolf();
         });
 
         it('has health', function () {
@@ -76,22 +76,22 @@ describe("Creatures", function () {
             expect(creature.hp).toBe(2);
         });
         describe("Eating", function () {
-            var food, creature;
+            var cow, creature;
             beforeEach(function () {
-                food = new FruitBush();
-                creature = new Cow();
+                cow = new Cow();
+                creature = new Wolf();
             });
             it('should raise vitality by two when eating food', function () {
                 var startingVitality = creature.vitality;
                 creature.vitality -= 2;
                 expect(creature.vitality).toEqual(startingVitality - 2);
-                creature.eat(food);
+                creature.eat(cow);
                 expect(creature.vitality).toEqual(startingVitality);
 
             });
             it('should eat food if food is adjacent and vitality is less than full', function () {
                 var world = new World([
-                    [food, creature]
+                    [cow, creature]
                 ]);
                 spyOn(creature, 'eat');
                 world.turn();
@@ -105,7 +105,7 @@ describe("Creatures", function () {
 
     describe("Death", function () {
         it('Things should be removed from the world when their health reaches zero', function () {
-            var thing = new Cow();
+            var thing = new Wolf();
 
             var dataGrid = [
                 [thing]
@@ -121,8 +121,8 @@ describe("Creatures", function () {
 
     describe("porking", function () {
         it('two adjacent creatures should create a new creature if their vitality is full', function () {
-            var thing1 = new Cow();
-            var thing2 = new Cow();
+            var thing1 = new Wolf();
+            var thing2 = new Wolf();
 
             var dataGrid = [
                 [thing1, thing2, null]
@@ -132,14 +132,14 @@ describe("Creatures", function () {
 
             world.turn();
 
-            expect(world.thingAt(0, 0)).toBeACow();
-            expect(world.thingAt(0, 1)).toBeACow();
-            expect(world.thingAt(0, 2)).toBeACow();
+            expect(world.thingAt(0, 0)).toBeAWolf();
+            expect(world.thingAt(0, 1)).toBeAWolf();
+            expect(world.thingAt(0, 2)).toBeAWolf();
         });
 
         it('two adjacent creatures should not have carnal relations if their vitality is not full', function () {
-            var thing1 = new Cow();
-            var thing2 = new Cow();
+            var thing1 = new Wolf();
+            var thing2 = new Wolf();
 
             var dataGrid = [
                 [thing1, thing2]

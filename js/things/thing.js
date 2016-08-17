@@ -34,6 +34,8 @@ Thing.prototype.die = function (turnContext) {
 
 Thing.prototype.doYourTurnThings = function (turn) { };
 
+Thing.prototype.newInstance = function () { };
+
 function adjustHealthBasedOnVitality(turn) {
     if (this.vitality === 0) {
         this.hp = Math.max(0, this.hp - 1);

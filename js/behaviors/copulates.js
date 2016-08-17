@@ -10,6 +10,9 @@ function Copulates(){}
         if (humpeeDelta) {
             turn.doThisToThatThere(this.hump, humpeeDelta);
         }
+        if(humpeeDelta) {
+            return true;
+        }else return false;
     };
 
     Copulates.prototype.hump = function (creature) {

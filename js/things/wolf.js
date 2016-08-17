@@ -1,43 +1,41 @@
-function Cow() {
-    Thing.call(this, 'cow');
+function Wolf(){
+    Thing.call(this, 'wolf');
 }
 
-(function () {
+(function(){
     var dx = [-1, 0, 1];
     var dy = [-1, 0, 1];
 
-    Cow.prototype = Object.create(Thing.prototype);
-    Cow.prototype.constructor = Cow;
+    Wolf.prototype = Object.create(Thing.prototype);
+    Wolf.prototype.constructor = Wolf.constructor;
 
-    Cow.prototype.mixin(Birthing);
-    Cow.prototype.mixin(Copulates);
-    Cow.prototype.mixin(Vegetarian);
-    Cow.prototype.mixin(Food);
+    Wolf.prototype.mixin(Copulates);
+    Wolf.prototype.mixin(Birthing);
+    Wolf.prototype.mixin(Carnivore);
 
-    Cow.prototype.doYourTurnThings = function (turn) {
+    Wolf.prototype.doYourTurnThings = function (turn) {
         var didEat, gaveBirth, didHump;
         if (this.pregnant) {
             gaveBirth = this.giveBirth(turn);
         }
-        if(!gaveBirth && this.vitality > 0){
+        if (!gaveBirth && this.vitality > 0) {
             didHump = this.tryHumping(turn);
         }
         if (!gaveBirth && !didHump && this.vitality < this.MAX_VITALITY) {
             didEat = this.eatIfPossible(turn);
         }
-        if (!gaveBirth && !didHump && !didEat ) {
+        if (!gaveBirth && !didHump && !didEat) {
             moveIfPossible.call(this, turn);
         }
-        this.maybePoopAPlant(turn);
     };
 
-    Cow.prototype.eat = function (food) {
+    Wolf.prototype.newInstance = function () {
+        return new Wolf();
+    };
+
+    Wolf.prototype.eat = function (food) {
         this.vitality += 2;
         food.getEaten();
-    };
-
-    Cow.prototype.newInstance = function () {
-        return new Cow();
     };
 
     function moveIfPossible(turn) {

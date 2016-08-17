@@ -1,6 +1,6 @@
 var ColorMapping = {
-    vole : 'brown',
-    bird : 'blue',
+    cow : 'brown',
+    wolf : 'blue',
     fruitBush : 'green',
     empty : 'white'
 };

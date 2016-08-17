@@ -15,14 +15,29 @@ var customMatchers = {
         }
     },
 
-    toBeACreature: function (util, customEqualityTesters) {
+    toBeACow: function (util, customEqualityTesters) {
         return {
             compare: function (actual, expected) {
                 var result = {pass: false};
                 if (actual instanceof Cow) {
                     result.pass = true;
                 } else {
-                    result.message = 'Expected a creature';
+                    result.message = 'Expected a cow';
+                }
+                return result;
+            }
+        }
+
+    },
+
+    toBeAWolf: function (util, customEqualityTesters) {
+        return {
+            compare: function (actual, expected) {
+                var result = {pass: false};
+                if (actual instanceof Wolf) {
+                    result.pass = true;
+                } else {
+                    result.message = 'Expected a wolf got a ' + actual.constructor.name;
                 }
                 return result;
             }

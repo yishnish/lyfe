@@ -23,7 +23,7 @@ function BaseBehavior(){}
         var places = [];
         dy.forEach(function (rowChange) {
             dx.forEach(function (colChange) {
-                if (rowChange + colChange !== 0) {
+                if (!(rowChange === 0 && colChange === 0)) {
                     var delta = new Delta(rowChange, colChange);
                     if (turn.hasMatchingThingAt(delta, criteria.bind(this))) {
                         places.push(delta);
