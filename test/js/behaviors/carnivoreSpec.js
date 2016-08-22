@@ -1,14 +1,6 @@
-describe("Vegetarians", function () {
-    beforeAll(function () {
-        MyCreature.prototype.mixin(Carnivore);
-        jasmine.addMatchers(customMatchers);
-    });
-    afterAll(function () {
-        MyCreature.prototype.removeMixin(Carnivore);
-    });
-
+describe("Carnivores", function () {
     it('should eat animals', function () {
-        var thing = new MyCreature();
+        var thing = new Wolf();
         var world = new World([
             [thing, new Cow()]
         ]);
@@ -18,10 +10,21 @@ describe("Vegetarians", function () {
         expect(thing.eat).toHaveBeenCalled();
     });
 
-    it('should not eat non-fruit', function () {
-        var thing = new MyCreature();
+    it('should not eat non-animals', function () {
+        var thing = new Wolf();
         var world = new World([
-            [thing, new Food()]
+            [thing, new FruitBush()]
+        ]);
+        spyOn(thing, 'eat');
+        var turn = new TurnContext(world, thing, new Coordinates(0, 0));
+        thing.eatIfPossible(turn);
+        expect(thing.eat).not.toHaveBeenCalled();
+    });
+
+    it('should not be a cannibal', function () {
+        var thing = new Wolf();
+        var world = new World([
+            [thing, new Wolf()]
         ]);
         spyOn(thing, 'eat');
         var turn = new TurnContext(world, thing, new Coordinates(0, 0));

@@ -1,5 +1,5 @@
 function MyCreature() {
-    Cow.call(this, 'whatever');
+    Cow.call(this);
 }
 
 MyCreature.prototype = Object.create(Cow.prototype);
