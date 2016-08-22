@@ -29,7 +29,7 @@ describe("Vegetarians", function () {
         expect(thing.eat).not.toHaveBeenCalled();
     });
 
-    it('should occasionally poop out a fruit bush', function(){
+    it('should occasionally poop out a fruit bush', function () {
         var fruited = false, counter = 0;
         var thing = new MyCreature();
         var existingFood = new FruitBush();
@@ -37,15 +37,15 @@ describe("Vegetarians", function () {
             [thing, existingFood],
             [null, existingFood]
         ]);
-        while(!fruited){
-            fruited = world.thingAt(1, 0) instanceof FruitBush;
-            thing.vitality = 1;
+        while (!fruited) {
+            fruited = world.thingAt(1, 0) instanceof FruitBush || world.thingAt(0, 0) instanceof FruitBush;
+            thing.vitality = 100;
             existingFood.hp = 10;
             world.turn();
-            if(++counter > 500) {
+            if (++counter > 500) {
                 throw new Error("Expected the creature to poop a bush out within 500 tries");
             }
         }
-        expect(world.thingAt(1, 0)).toBeAFruitBush();
-    })
+        expect(fruited).toBeTruthy();
+    });
 });
