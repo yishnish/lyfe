@@ -6,6 +6,7 @@
     <script src="js/delta.js"></script>
     <script src="js/behaviors/baseBehavior.js"></script>
     <script src="js/behaviors/birthing.js"></script>
+    <script src="js/behaviors/cannibal.js"></script>
     <script src="js/behaviors/carnivore.js"></script>
     <script src="js/behaviors/copulates.js"></script>
     <script src="js/behaviors/food.js"></script>
@@ -16,6 +17,7 @@
     <script src="js/things/vegetable.js"></script>
     <script src="js/things/fruitBush.js"></script>
     <script src="js/things/cow.js"></script>
+    <script src="js/things/polarBear.js"></script>
     <script src="js/things/wolf.js"></script>
     <script src="js/display/worldNode.js"></script>
     <script src="js/world.js"></script>
@@ -39,6 +41,8 @@
                 return new Cow()
             }, function () {
                 return new Wolf();
+            }, function(){
+                return new PolarBear()
             }, function(){
                 return new FruitBush()
             }];
