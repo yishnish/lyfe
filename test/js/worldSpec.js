@@ -35,7 +35,7 @@ describe("A World", function () {
         });
 
         it('performs a callback on a registered object', function () {
-            world.onChange(thing, function () {
+            world.eachTurn(thing, function () {
                 this.value = 69;
                 this.otherValue = 2;
             });
@@ -43,10 +43,10 @@ describe("A World", function () {
             expect(thing.value).toEqual(69);
         });
         it('performs multiple callbacks on a registered listener', function () {
-            world.onChange(thing, function () {
+            world.eachTurn(thing, function () {
                 this.value = 69;
             });
-            world.onChange(thing, function () {
+            world.eachTurn(thing, function () {
                 this.otherValue = 42;
             });
             world.turn();
@@ -55,10 +55,10 @@ describe("A World", function () {
         });
         it('performs callbacks on multiple listeners', function () {
             var otherThing = {value: null};
-            world.onChange(thing, function () {
+            world.eachTurn(thing, function () {
                 this.value = 69;
             });
-            world.onChange(otherThing, function () {
+            world.eachTurn(otherThing, function () {
                 this.value = 42;
             });
             world.turn();

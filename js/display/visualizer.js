@@ -36,7 +36,7 @@ function Visualizer(world, colorMapping) {
         var nodeStuff = createNodeStuff();
         nodes = nodeStuff.nodeCollection;
         nodeHTML = nodeStuff.nodeHTML;
-        world.onChange(this, function () {
+        world.eachTurn(this, function () {
             this.update();
         });
     }

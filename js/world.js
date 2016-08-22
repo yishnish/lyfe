@@ -12,7 +12,7 @@ function World(dataGrid){
     this.getGrid = function () {
         return dataGrid;
     };
-    this.onChange = function(obj, callback) {
+    this.eachTurn = function(obj, callback) {
         callbacks.push({_object : obj, _callback : callback});
     };
     this.turn = function(){
