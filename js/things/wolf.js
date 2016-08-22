@@ -4,7 +4,7 @@ function Wolf(){
 
 (function(){
     Wolf.prototype = Object.create(Thing.prototype);
-    Wolf.prototype.constructor = Wolf.constructor;
+    Wolf.prototype.constructor = Wolf;
 
     Wolf.prototype.mixin(Copulates);
     Wolf.prototype.mixin(Birthing);
