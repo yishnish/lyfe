@@ -1,15 +1,8 @@
 describe("Cannibals", function () {
-    beforeAll(function () {
-        Wolf.prototype.mixin(Cannibal);
-    });
-    afterAll(function () {
-        Wolf.prototype.removeMixin(Cannibal);
-        Wolf.prototype.mixin(Carnivore);
-    });
     it("should eat it's own type of creature", function () {
-        var thing = new Wolf();
+        var thing = new PolarBear();
         var world = new World([
-            [thing, new Wolf()]
+            [thing, new PolarBear()]
         ]);
         spyOn(thing, 'eat');
         var turn = new TurnContext(world, thing, new Coordinates(0, 0));
@@ -18,7 +11,7 @@ describe("Cannibals", function () {
     });
 
     it('should not eat non-itself type of thing', function () {
-        var thing = new Wolf();
+        var thing = new PolarBear();
         var world = new World([
             [thing, new FruitBush()]
         ]);

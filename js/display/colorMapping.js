@@ -3,5 +3,6 @@ var ColorMapping = {
     Wolf : 'blue',
     PolarBear : 'yellow',
     FruitBush : 'green',
+    Civet : 'red',
     empty : 'white'
 };

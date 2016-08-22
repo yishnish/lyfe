@@ -11,6 +11,7 @@
     <script src="js/behaviors/copulates.js"></script>
     <script src="js/behaviors/food.js"></script>
     <script src="js/behaviors/moves.js"></script>
+    <script src="js/behaviors/omnivore.js"></script>
     <script src="js/behaviors/vegetarian.js"></script>
     <script src="js/things/thing.js"></script>
     <script src="js/things/animal.js"></script>
@@ -19,6 +20,7 @@
     <script src="js/things/cow.js"></script>
     <script src="js/things/polarBear.js"></script>
     <script src="js/things/wolf.js"></script>
+    <script src="js/things/civet.js"></script>
     <script src="js/display/worldNode.js"></script>
     <script src="js/world.js"></script>
     <script src="js/turnContext.js"></script>
@@ -45,6 +47,8 @@
                 return new PolarBear()
             }, function(){
                 return new FruitBush()
+            }, function(){
+                return new Civet()
             }];
             var grid = [];
             for(var i = 0; i < 100; i++) {

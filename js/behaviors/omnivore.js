@@ -1,12 +1,12 @@
-function Carnivore(){}
+function Omnivore(){}
 
 (function(){
-    Carnivore.prototype = Object.create(BaseBehavior.prototype);
-    Carnivore.prototype.constructor = Carnivore;
+    Omnivore.prototype = Object.create(BaseBehavior.prototype);
+    Omnivore.prototype.constructor = Omnivore;
 
-    Carnivore.prototype.eatIfPossible = function (turn) {
+    Omnivore.prototype.eatIfPossible = function (turn) {
         var placesWithFood = this.findPlaces(turn, function (thing) {
-            return thing instanceof Animal && thing.getType() !== this.getType();
+            return thing && thing.getType() !== this.getType();
         });
         var placeToEatAt = this.pickRandomLocation(placesWithFood);
         if (placeToEatAt) {

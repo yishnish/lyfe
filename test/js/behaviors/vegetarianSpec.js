@@ -29,13 +29,6 @@ describe("Vegetarians", function () {
         expect(thing.eat).not.toHaveBeenCalled();
     });
 
-    it('should recover two vitality when eating food so that there is a net gain at the end of the turn', function () {
-        var thing = new MyCreature();
-        thing.vitality = 1;
-        thing.eat(new FruitBush());
-        expect(thing.vitality).toBe(3);
-    });
-
     it('should occasionally poop out a fruit bush', function(){
         var fruited = false, counter = 0;
         var thing = new MyCreature();

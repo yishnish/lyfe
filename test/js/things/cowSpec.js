@@ -55,6 +55,7 @@ describe("Creatures", function () {
             expect(creature.vitality).toBe(0);
             expect(creature.hp).toBe(10);
             world.turn();
+
             expect(creature.vitality).toBe(0);
             expect(creature.hp).toBe(9);
         });

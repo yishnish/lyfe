@@ -1,4 +1,6 @@
+var cownumber = 1;
 function Cow() {
+    this.id = cownumber++;
     Animal.call(this, Cow);
 }
 
