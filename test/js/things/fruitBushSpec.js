@@ -8,23 +8,23 @@ describe('FruitBushes', function () {
         it("should lower the fruitBush's health by one", function () {
             var initialHealth = fruitBush.hp;
             creature.eat(fruitBush);
-            expect(fruitBush.hp).toEqual(initialHealth - 1);
+            expect(fruitBush.hp).toEqual(initialHealth - 10);
         });
     });
     describe('Death', function () {
         it('should die when health reaches zero', function () {
             spyOn(fruitBush, 'die');
-            fruitBush.hp = 1;
+            fruitBush.hp = 10;
             creature.eat(fruitBush);
             expect(fruitBush.die).toHaveBeenCalled();
         });
     });
     describe('health replenishment', function () {
-        it('should increase every turn', function(){
+        it('should increase at half the normal rate', function () {
             var world = new World([[fruitBush]]);
-            fruitBush.hp = 1;
+            fruitBush.hp = 10;
             world.turn();
-            expect(fruitBush.hp).toEqual(2);
-        })
+            expect(fruitBush.hp).toEqual(15);
+        });
     });
 });

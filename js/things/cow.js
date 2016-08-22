@@ -1,6 +1,4 @@
-var cownumber = 1;
 function Cow() {
-    this.id = cownumber++;
     Animal.call(this, Cow);
 }
 
@@ -32,7 +30,7 @@ function Cow() {
     };
 
     Cow.prototype.eat = function (food) {
-        this.vitality += 2;
+        this.vitality += 20;
         food.getEaten();
     };
 

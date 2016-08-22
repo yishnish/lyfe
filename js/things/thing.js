@@ -1,8 +1,8 @@
 function Thing(clazz) {
-    this.MAX_VITALITY = 10;
-    this.MAX_HP = 10;
-    this.hp = 10;
-    this.vitality = 10;
+    this.MAX_VITALITY = 100;
+    this.MAX_HP = 100;
+    this.hp = 100;
+    this.vitality = 100;
     this.dead = false;
 
     this.getType = function(){
@@ -24,7 +24,7 @@ Thing.prototype.removeMixin = function(mixinClass) {
 
 Thing.prototype.takeTurn = function (turnContext) {
     this.doYourTurnThings(turnContext);
-    adjustHealthBasedOnVitality.call(this, turnContext);
+    this.adjustHealthBasedOnVitality.call(this, turnContext);
     decrementVitality.call(this);
 };
 
@@ -36,17 +36,17 @@ Thing.prototype.doYourTurnThings = function (turn) { };
 
 Thing.prototype.newInstance = function () { };
 
-function adjustHealthBasedOnVitality(turn) {
+Thing.prototype.adjustHealthBasedOnVitality = function (turn) {
     if (this.vitality === 0) {
-        this.hp = Math.max(0, this.hp - 1);
+        this.hp = Math.max(0, this.hp - 10);
     } else if (this.vitality === this.MAX_VITALITY) {
-        this.hp = Math.min(this.MAX_HP, this.hp + 1);
+        this.hp = Math.min(this.MAX_HP, this.hp + 10);
     }
     if (this.hp <= 0) {
         this.die(turn);
     }
-}
+};
 
 function decrementVitality() {
-    this.vitality = Math.max(--this.vitality, 0);
+    this.vitality = Math.max(this.vitality - 10, 0);
 }

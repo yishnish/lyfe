@@ -40,40 +40,40 @@ describe("wolves", function () {
                 [creature, null]
             ];
             var world = new World(dataGrid);
-            creature.vitality = 10;
+            creature.vitality = 100;
             world.turn();
-            expect(creature.vitality).toBe(9);
+            expect(creature.vitality).toBe(90);
         });
         it('loses health every turn once its vitality reaches zero', function () {
             var dataGrid = [
                 [creature, null]
             ];
             var world = new World(dataGrid);
-            creature.hp = 10;
-            creature.vitality = 1;
+            creature.hp = 100;
+            creature.vitality = 10;
             world.turn();
             expect(creature.vitality).toBe(0);
-            expect(creature.hp).toBe(10);
+            expect(creature.hp).toBe(100);
             world.turn();
             expect(creature.vitality).toBe(0);
-            expect(creature.hp).toBe(9);
+            expect(creature.hp).toBe(90);
         });
         it('gains health every turn once its vitality reaches maximum', function () {
             var dataGrid = [
                 [creature]
             ];
             var world = new World(dataGrid);
-            creature.hp = 1;
-            creature.vitality = 9;
+            creature.hp = 10;
+            creature.vitality = 90;
             world.turn();
-            expect(creature.vitality).toBe(8);
-            expect(creature.hp).toBe(1);
-            creature.vitality = 10;
+            expect(creature.vitality).toBe(80);
+            expect(creature.hp).toBe(10);
+            creature.vitality = 100;
             world.turn();
-            expect(creature.hp).toBe(2);
+            expect(creature.hp).toBe(20);
             world.turn();
-            expect(creature.vitality).toBe(8);
-            expect(creature.hp).toBe(2);
+            expect(creature.vitality).toBe(80);
+            expect(creature.hp).toBe(20);
         });
         describe("Eating", function () {
             var cow, creature;
@@ -83,8 +83,8 @@ describe("wolves", function () {
             });
             it('should raise vitality by two when eating food', function () {
                 var startingVitality = creature.vitality;
-                creature.vitality -= 2;
-                expect(creature.vitality).toEqual(startingVitality - 2);
+                creature.vitality -= 20;
+                expect(creature.vitality).toEqual(startingVitality - 20);
                 creature.eat(cow);
                 expect(creature.vitality).toEqual(startingVitality);
 

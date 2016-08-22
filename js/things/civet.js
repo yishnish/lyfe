@@ -33,7 +33,7 @@ function Civet(){
     };
 
     Civet.prototype.eat = function (food) {
-        this.vitality += 2;
+        this.vitality += 20;
         food.getEaten();
     };
 })();

@@ -141,9 +141,9 @@ describe('TurnContext', function () {
         ]);
         var turnContext = new TurnContext(world, creature, new Coordinates(0, 0));
         spyOn(creature, 'eat').and.callThrough();
-        creature.vitality = 1;
+        creature.vitality = 10;
         turnContext.doThisToThatThere(creature.eat, new Delta(0, 1));
         expect(creature.eat).toHaveBeenCalled();
-        expect(creature.vitality).toEqual(3);
+        expect(creature.vitality).toEqual(30);
     });
 });

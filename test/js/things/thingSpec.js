@@ -31,12 +31,12 @@ describe("Things", function () {
                 [thing, null]
             ];
             var world = new World(dataGrid);
-            thing.hp = 10;
+            thing.hp = 100;
             thing.vitality = 0;
             world.turn();
-            expect(thing.hp).toBe(9);
+            expect(thing.hp).toBe(90);
             world.turn();
-            expect(thing.hp).toBe(8);
+            expect(thing.hp).toBe(80);
         });
     });
 

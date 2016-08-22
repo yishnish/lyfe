@@ -5,7 +5,7 @@ function Food(type) { }
     Food.prototype.constructor = Food;
 
     Food.prototype.getEaten = function () {
-        this.hp--;
+        this.hp -= 10;
         if (this.hp <= 0) {
             this.die(null);
         }

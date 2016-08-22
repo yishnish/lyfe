@@ -1,8 +1,8 @@
 var ColorMapping = {
-    Cow : 'brown',
-    Wolf : 'blue',
-    PolarBear : 'yellow',
+    Cow : 'brown',              //vegetarian
+    Wolf : 'blue',              //carnivore
+    PolarBear : 'yellow',       //cannibal
+    Civet : 'red',              //omnivore
     FruitBush : 'green',
-    Civet : 'red',
     empty : 'white'
 };
