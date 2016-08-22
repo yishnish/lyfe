@@ -1,5 +1,5 @@
 function FruitBush(){
-    Thing.call(this, 'fruitBush');
+    Thing.call(this, FruitBush);
 }
 
 (function(){

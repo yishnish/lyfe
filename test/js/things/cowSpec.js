@@ -18,7 +18,7 @@ describe("Creatures", function () {
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
             var thing = new Cow();
-            expect(thing.getIamA()).toEqual('cow');
+            expect(thing.getType()).toEqual(Cow);
         });
     });
 

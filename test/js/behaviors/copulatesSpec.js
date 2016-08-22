@@ -7,7 +7,7 @@ describe("things that copulate to reproduce", function () {
     });
 
     it('should only try to hump things of the same type', function () {
-        var thing = new MyThing('whatever');
+        var thing = new MyThing();
         var fruti = new FruitBush();
         var world = new World([
             [thing, fruti]

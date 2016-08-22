@@ -1,5 +1,5 @@
 function Wolf(){
-    Thing.call(this, 'wolf');
+    Thing.call(this, Wolf);
 }
 
 (function(){
@@ -9,6 +9,7 @@ function Wolf(){
     Wolf.prototype.mixin(Copulates);
     Wolf.prototype.mixin(Birthing);
     Wolf.prototype.mixin(Carnivore);
+    Wolf.prototype.mixin(Food);
     Wolf.prototype.mixin(Moves);
 
     Wolf.prototype.doYourTurnThings = function (turn) {

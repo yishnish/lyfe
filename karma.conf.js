@@ -19,6 +19,7 @@ module.exports = function (config) {
             'js/**/*.js',
             'test/js/helpers/myThing.js',
             'test/js/helpers/myCreature.js',
+            'test/js/helpers/cow.js',
             'test/js/**/*.js'
         ],
 

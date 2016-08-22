@@ -6,7 +6,7 @@ function Carnivore(){}
 
     Carnivore.prototype.eatIfPossible = function (turn) {
         var placesWithFood = this.findPlaces(turn, function (thing) {
-            return thing instanceof Cow;
+            return thing instanceof Thing;
         });
         var placeToEatAt = this.pickRandomLocation(placesWithFood);
         if (placeToEatAt) {

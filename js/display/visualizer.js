@@ -22,7 +22,7 @@ function Visualizer(world, colorMapping) {
         world.getGrid().forEach(function (row, rowNum) {
             row.forEach(function (thing, colNum) {
                 if(thing) {
-                    nodes[rowNum][colNum].setColor(colorMapping[thing.getIamA()]);
+                    nodes[rowNum][colNum].setColor(colorMapping[thing.getType().name]);
                 }else{
                     nodes[rowNum][colNum].setColor(colorMapping.empty);
                 }
@@ -60,7 +60,7 @@ function Visualizer(world, colorMapping) {
             row.forEach(function (thing) {
                 var worldNode = new WorldNode();
                 if(thing) {
-                    worldNode.setColor(colorMapping[thing.getIamA()]);
+                    worldNode.setColor(colorMapping[thing.getType().name]);
                 }else{
                     worldNode.setColor(colorMapping.empty);
                 }

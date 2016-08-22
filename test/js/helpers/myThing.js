@@ -1,5 +1,5 @@
 function MyThing() {
-    Thing.call(this, 'whatever');
+    Thing.call(this, MyThing);
 }
 
 MyThing.prototype = Object.create(Thing.prototype);

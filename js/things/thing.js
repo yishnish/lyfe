@@ -1,12 +1,12 @@
-function Thing(type) {
+function Thing(clazz) {
     this.MAX_VITALITY = 10;
     this.MAX_HP = 10;
     this.hp = 10;
     this.vitality = 10;
     this.dead = false;
 
-    this.getIamA = function(){
-        return type;
+    this.getType = function(){
+        return clazz;
     };
 }
 

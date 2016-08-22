@@ -35,8 +35,8 @@ describe('Visualizers', function () {
         beforeEach(function () {
             cow = new Cow();
             wolf = new Wolf();
-            cowColor = ColorMapping[cow.getIamA()];
-            wolfColor = ColorMapping[wolf.getIamA()];
+            cowColor = ColorMapping[cow.getType().name];
+            wolfColor = ColorMapping[wolf.getType().name];
         });
         it('should update the display nodes when the backing world changes', function () {
             var dataGrid = [

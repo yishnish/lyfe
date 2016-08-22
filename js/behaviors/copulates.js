@@ -9,8 +9,6 @@ function Copulates(){}
         var humpeeDelta = this.pickRandomLocation(humpableDeltas);
         if (humpeeDelta) {
             turn.doThisToThatThere(this.hump, humpeeDelta);
-        }
-        if(humpeeDelta) {
             return true;
         }else return false;
     };
@@ -26,6 +24,6 @@ function Copulates(){}
     };
 
     Copulates.prototype.isHumpable = function (thing) {
-        return thing && thing.getIamA() === this.getIamA();
+        return thing && thing.getType() === this.getType();
     };
 })();

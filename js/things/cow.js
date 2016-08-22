@@ -1,5 +1,5 @@
 function Cow() {
-    Thing.call(this, 'cow');
+    Thing.call(this, Cow);
 }
 
 (function () {
