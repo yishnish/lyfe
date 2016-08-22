@@ -1,9 +1,9 @@
 function Cow() {
-    Thing.call(this, Cow);
+    Animal.call(this, Cow);
 }
 
 (function () {
-    Cow.prototype = Object.create(Thing.prototype);
+    Cow.prototype = Object.create(Animal.prototype);
     Cow.prototype.constructor = Cow;
 
     Cow.prototype.mixin(Birthing);

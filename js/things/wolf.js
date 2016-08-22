@@ -1,9 +1,9 @@
 function Wolf(){
-    Thing.call(this, Wolf);
+    Animal.call(this, Wolf);
 }
 
 (function(){
-    Wolf.prototype = Object.create(Thing.prototype);
+    Wolf.prototype = Object.create(Animal.prototype);
     Wolf.prototype.constructor = Wolf;
 
     Wolf.prototype.mixin(Copulates);

@@ -16,10 +16,10 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             'js/things/thing.js',
+            'js/things/vegetable.js',
             'js/**/*.js',
             'test/js/helpers/myThing.js',
             'test/js/helpers/myCreature.js',
-            'test/js/helpers/cow.js',
             'test/js/**/*.js'
         ],
 

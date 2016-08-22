@@ -6,7 +6,7 @@ function Vegetarian(){}
 
     Vegetarian.prototype.eatIfPossible = function (turn) {
         var placesWithFood = this.findPlaces(turn, function (thing) {
-            return thing instanceof FruitBush;
+            return thing instanceof Vegetable;
         });
         var placeToEatAt = this.pickRandomLocation(placesWithFood);
         if (placeToEatAt) {

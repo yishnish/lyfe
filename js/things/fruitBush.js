@@ -1,9 +1,9 @@
 function FruitBush(){
-    Thing.call(this, FruitBush);
+    Vegetable.call(this, FruitBush);
 }
 
 (function(){
-    FruitBush.prototype = Object.create(Thing.prototype);
+    FruitBush.prototype = Object.create(Vegetable.prototype);
     FruitBush.prototype.constructor = FruitBush;
 
     FruitBush.prototype.mixin(Food);
