@@ -1,23 +1,9 @@
-function BaseBehavior(){}
+function BaseBehavior() {
+}
 
-(function(){
+(function () {
     var dx = [-1, 0, 1];
     var dy = [-1, 0, 1];
-
-    BaseBehavior.prototype.findAdjacentEmptySpaces = function (turn) {
-        var placesToMoveTo = [];
-        dy.forEach(function (rowChange) {
-            dx.forEach(function (colChange) {
-                if (rowChange + colChange !== 0) {
-                    var delta = new Delta(rowChange, colChange);
-                    if (turn.canMoveTo(delta)) {
-                        placesToMoveTo.push(delta);
-                    }
-                }
-            });
-        });
-        return placesToMoveTo;
-    };
 
     BaseBehavior.prototype.findPlaces = function (turn, criteria) {
         var places = [];
@@ -32,6 +18,12 @@ function BaseBehavior(){}
             }, this);
         }, this);
         return places;
+    };
+
+    BaseBehavior.prototype.findAdjacentEmptySpaces = function (turn) {
+        return this.findPlaces(turn, function (thing) {
+            return thing === null;
+        });
     };
 
 
