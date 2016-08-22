@@ -22,3 +22,12 @@ td[color="yellow"] {
 td[color="green"] {
     background-color: green;
 }
+
+#world-goes-here {
+    display: inline-block;
+    width: auto;
+    float: left;
+}
+
+#controls {
+}

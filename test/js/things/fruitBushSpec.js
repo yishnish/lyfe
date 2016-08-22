@@ -24,7 +24,7 @@ describe('FruitBushes', function () {
             var world = new World([[fruitBush]]);
             fruitBush.hp = 10;
             world.turn();
-            expect(fruitBush.hp).toEqual(15);
+            expect(fruitBush.hp).toEqual(20);
         });
     });
 });

@@ -16,7 +16,7 @@ function FruitBush(){
         if (this.vitality === 0) {
             this.hp = Math.max(0, this.hp - 10);
         } else if (this.vitality === this.MAX_VITALITY) {
-            this.hp = Math.min(this.MAX_HP, this.hp + 5);
+            this.hp = Math.min(this.MAX_HP, this.hp + 10);
         }
         if (this.hp <= 0) {
             this.die(turn);

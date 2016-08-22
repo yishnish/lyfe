@@ -21,6 +21,7 @@
     <script src="js/things/polarBear.js"></script>
     <script src="js/things/wolf.js"></script>
     <script src="js/things/civet.js"></script>
+    <script src="js/display/controlPanel.js"></script>
     <script src="js/display/worldNode.js"></script>
     <script src="js/world.js"></script>
     <script src="js/turnContext.js"></script>
@@ -30,13 +31,18 @@
 </head>
 <body>
     <div id="world-goes-here"></div>
+    <div id="controls">
+        <button id="pause"></button>
+    </div>
     <script>
         var dataGrid = createGrid();
         var world = new World(dataGrid);
         var viz = new Visualizer(world, ColorMapping);
         document.getElementById("world-goes-here").appendChild(viz.getDisplayHtml());
+        var controlPanel = ControlPanel();
+        controlPanel.addPauseButton();
 
-        window.setInterval(function(){world.turn();}, 100);
+        window.setInterval(function(){if(!controlPanel.isPaused()){world.turn();}}, 100);
 
         function createGrid(){
             var makers = [function () {
