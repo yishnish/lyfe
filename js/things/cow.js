@@ -3,9 +3,6 @@ function Cow() {
 }
 
 (function () {
-    var dx = [-1, 0, 1];
-    var dy = [-1, 0, 1];
-
     Cow.prototype = Object.create(Thing.prototype);
     Cow.prototype.constructor = Cow;
 
@@ -13,6 +10,7 @@ function Cow() {
     Cow.prototype.mixin(Copulates);
     Cow.prototype.mixin(Vegetarian);
     Cow.prototype.mixin(Food);
+    Cow.prototype.mixin(Moves);
 
     Cow.prototype.doYourTurnThings = function (turn) {
         var didEat, gaveBirth, didHump;
@@ -26,7 +24,7 @@ function Cow() {
             didEat = this.eatIfPossible(turn);
         }
         if (!gaveBirth && !didHump && !didEat ) {
-            moveIfPossible.call(this, turn);
+            this.moveIfPossible.call(this, turn);
         }
         this.maybePoopAPlant(turn);
     };
@@ -39,32 +37,4 @@ function Cow() {
     Cow.prototype.newInstance = function () {
         return new Cow();
     };
-
-    function moveIfPossible(turn) {
-        var placesToMoveTo = findPlacesToMoveTo.call(this, turn);
-        var placeToMoveTo = pickRandomLocation(placesToMoveTo);
-        if (placeToMoveTo) {
-            turn.moveThing(placeToMoveTo);
-        }
-    }
-
-    function findPlacesToMoveTo(turn) {
-        var placesToMoveTo = [];
-        dy.forEach(function (rowChange) {
-            dx.forEach(function (colChange) {
-                if (rowChange + colChange !== 0) {
-                    var delta = new Delta(rowChange, colChange);
-                    if (turn.canMoveTo(delta)) {
-                        placesToMoveTo.push(delta);
-                    }
-                }
-            });
-        });
-        return placesToMoveTo;
-    }
-
-    function pickRandomLocation(locations) {
-        return locations[Math.floor(Math.random() * locations.length)];
-    }
-
 })();
