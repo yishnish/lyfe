@@ -1,17 +1,24 @@
 describe('WorldNode', function () {
     describe('wraps the DOM node for an item in the world', function () {
-        describe('accessing attributes', function () {
-            var node;
-            beforeEach(function () {
-                node = new WorldNode();
-                node.setColor("blue");
+        describe("setting attributes", function () {
+            it('should use a color mapping to set color attribute when initialized', function () {
+                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
+                var cow = new Cow();
+                var wolf = new Wolf();
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var cowNode = nodeFactory.newNode(cow);
+                var wolfNode = nodeFactory.newNode(wolf);
+                expect(cowNode.color()).toBe(colorMapping.Cow);
+                expect(wolfNode.color()).toBe(colorMapping.Wolf);
             });
-            it('should provide the color of a node', function () {
-                expect(node.color()).toEqual("blue");
-            });
-            it('should update the color of a node', function () {
-                node.setColor("green");
-                expect(node.color()).toEqual("green");
+
+            it('should update color when contents change', function () {
+                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var node = nodeFactory.newNode(new Cow());
+                expect(node.color()).toBe(colorMapping.Cow);
+                node.update(new Wolf());
+                expect(node.color()).toBe(colorMapping.Wolf);
             });
         });
     });

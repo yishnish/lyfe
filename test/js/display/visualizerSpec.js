@@ -23,9 +23,10 @@ describe('Visualizers', function () {
             });
             describe('color mapping', function () {
                 it('should have table elements colored according to their matching type', function () {
-                    var viz = new Visualizer(new World([[new Cow(), new Wolf()]]), ColorMapping);
+                    var viz = new Visualizer(new World([[new Cow(), new Wolf(), null]]), ColorMapping);
                     expect(viz.thingAt(0, 0).color()).toBe("brown");
                     expect(viz.thingAt(0, 1).color()).toBe("blue");
+                    expect(viz.thingAt(0, 2).color()).toBe('white');
                 });
             });
         });
@@ -35,8 +36,8 @@ describe('Visualizers', function () {
         beforeEach(function () {
             cow = new Cow();
             wolf = new Wolf();
-            cowColor = ColorMapping[cow.getType().name];
-            wolfColor = ColorMapping[wolf.getType().name];
+            cowColor = ColorMapping[cow.getTypeName()];
+            wolfColor = ColorMapping[wolf.getTypeName()];
         });
         it('should update the display nodes when the backing world changes', function () {
             var dataGrid = [

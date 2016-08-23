@@ -8,6 +8,10 @@ function Thing(clazz) {
     this.getType = function(){
         return clazz;
     };
+
+    this.getTypeName = function () {
+        return clazz.name;
+    };
 }
 
 Thing.prototype.mixin = function(mixinClass) {

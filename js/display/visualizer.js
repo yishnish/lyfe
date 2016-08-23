@@ -21,17 +21,13 @@ function Visualizer(world, colorMapping) {
     this.update = function () {
         world.getGrid().forEach(function (row, rowNum) {
             row.forEach(function (thing, colNum) {
-                if(thing) {
-                    nodes[rowNum][colNum].setColor(colorMapping[thing.getType().name]);
-                }else{
-                    nodes[rowNum][colNum].setColor(colorMapping.empty);
-                }
+                nodes[rowNum][colNum].update(thing);
             });
         });
     };
 
 //private
-    function init(){
+    function init() {
         validate();
         var nodeStuff = createNodeStuff();
         nodes = nodeStuff.nodeCollection;
@@ -45,25 +41,21 @@ function Visualizer(world, colorMapping) {
         return nodes;
     }
 
-    function validate(){
+    function validate() {
         validateColorMapping();
     }
 
-    function createNodeStuff(){
-        var tableNode  = document.createElement("table");
+    function createNodeStuff() {
+        var tableNode = document.createElement("table");
         tableNode.setAttribute("id", "the-world");
         var nodeCollection = [];
+        var nodeFactory = new WorldNodeFactory(colorMapping);
 
         world.getGrid().forEach(function (row) {
             var r = [];
             var rowNode = document.createElement("tr");
             row.forEach(function (thing) {
-                var worldNode = new WorldNode();
-                if(thing) {
-                    worldNode.setColor(colorMapping[thing.getType().name]);
-                }else{
-                    worldNode.setColor(colorMapping.empty);
-                }
+                var worldNode = nodeFactory.newNode(thing);
                 var tdNode = worldNode.getTableCell();
                 rowNode.appendChild(tdNode);
                 r.push(worldNode);
@@ -74,8 +66,8 @@ function Visualizer(world, colorMapping) {
         return {nodeHTML: tableNode, nodeCollection: nodeCollection};
     }
 
-    function validateColorMapping(){
-        if(colorMapping === null || isEmptyObject(colorMapping)) {
+    function validateColorMapping() {
+        if (colorMapping === null || isEmptyObject(colorMapping)) {
             throw new Error("You need a non-empty color mapping");
         }
     }
