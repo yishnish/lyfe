@@ -27,6 +27,7 @@ describe("Creatures", function () {
 
         beforeEach(function () {
             creature = new Cow();
+            creature.maybePoopAPlant = function(){};
         });
 
         it('has health', function () {
@@ -138,7 +139,7 @@ describe("Creatures", function () {
             expect(world.thingAt(0, 2)).toBeACow();
         });
 
-        it('two adjacent creatures should not have carnal relations if their vitality is not full', function () {
+        it('two adjacent cows should not have carnal relations if their vitality is not full', function () {
             var thing1 = new Cow();
             var thing2 = new Cow();
 
