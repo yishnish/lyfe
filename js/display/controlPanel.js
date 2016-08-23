@@ -2,7 +2,7 @@ var ControlPanel = function () {
     var paused = false;
     return {
         isPaused: function () {
-            return paused
+            return paused;
         },
         addPauseButton: function () {
             var pauseButton = document.getElementById("pause");

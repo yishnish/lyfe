@@ -11,7 +11,7 @@ describe("Creatures", function () {
             ];
             var world = new World(dataGrid);
             world.turn();
-            expect(world.thingAt(0, 0)).toBeNull();
+            expect(world.thingAt(0, 0)).not.toBeACow();
             expect(world.thingAt(0, 1)).toBe(creature);
         });
     });
