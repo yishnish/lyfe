@@ -3,11 +3,14 @@ function ThingDetails(thing) {
 }
 
 (function () {
+    var hpClass = 'hpValue', vitalityClass = 'vitalityValue';
     var detailsContainer = createDetailsContainer();
 
     ThingDetails.prototype.display = function () {
         var hpText = this.thing ? this.thing.hp : "empty";
-        detailsContainer.getElementsByClassName("hpvalue")[0].innerHTML = hpText;
+        var vitalityText = this.thing ? this.thing.vitality : "empty";
+        detailsContainer.getElementsByClassName(hpClass)[0].innerHTML = hpText;
+        detailsContainer.getElementsByClassName(vitalityClass)[0].innerHTML = vitalityText;
         return detailsContainer;
     };
 
@@ -20,14 +23,19 @@ function ThingDetails(thing) {
         detailsContainer.setAttribute("class", "details");
         var attributes = document.createElement("ul");
         detailsContainer.appendChild(attributes);
+        attributes.appendChild(createStatRow("HP", hpClass));
+        attributes.appendChild(createStatRow("Vitality", vitalityClass));
+        return detailsContainer;
+    }
+
+    function createStatRow(label, className){
         var hp = document.createElement("li");
-        attributes.appendChild(hp);
         var hpInfo = document.createElement("label");
-        hpInfo.innerHTML = "HP: ";
+        hpInfo.innerHTML = label + ": ";
         var hpValue = document.createElement("span");
-        hpValue.setAttribute("class", "hpvalue");
+        hpValue.setAttribute("class", className);
         hpInfo.appendChild(hpValue);
         hp.appendChild(hpInfo);
-        return detailsContainer;
+        return hp;
     }
 })();
