@@ -26,6 +26,13 @@ describe("thing details", function () {
         displayHtml = details.display().outerHTML;
         expect(displayHtml).toMatch(thing.vitality.toString());
     });
+    it('should show the how many turns a thing has been alive for', function () {
+        var thing = new Cow();
+        var details = new ThingDetails(thing);
+        var displayHtml = details.display().outerHTML;
+        expect(displayHtml).toMatch("Age");
+        expect(displayHtml).toMatch(thing.age.toString());
+    });
     it('displays "empty" if there is no thing', function () {
         var details = new ThingDetails(null);
         var displayHtml = details.display().outerHTML;

@@ -40,6 +40,17 @@ describe("Things", function () {
         });
     });
 
+    describe("age", function () {
+        it('should know how old it is', function () {
+            var thing = new Thing('bird');
+            expect(thing.age).toBe(0);
+            var world = new World([[thing]]);
+            var turnContext = new TurnContext(world, thing, new Coordinates(0, 0));
+            thing.takeTurn(turnContext);
+            expect(thing.age).toBe(1);
+        });
+    });
+
     describe("Death", function () {
         it('Things should be removed from the world when their health reaches zero', function () {
             var thing = new Thing('bird');

@@ -3,14 +3,16 @@ function ThingDetails(thing) {
 }
 
 (function () {
-    var hpClass = 'hpValue', vitalityClass = 'vitalityValue';
+    var hpClass = 'hpValue', vitalityClass = 'vitalityValue', ageClass = 'ageValue';
     var detailsContainer = createDetailsContainer();
 
     ThingDetails.prototype.display = function () {
         var hpText = this.thing ? this.thing.hp : "empty";
         var vitalityText = this.thing ? this.thing.vitality : "empty";
+        var ageText = this.thing ? this.thing.age : "empty";
         detailsContainer.getElementsByClassName(hpClass)[0].innerHTML = hpText;
         detailsContainer.getElementsByClassName(vitalityClass)[0].innerHTML = vitalityText;
+        detailsContainer.getElementsByClassName(ageClass)[0].innerHTML = ageText;
         return detailsContainer;
     };
 
@@ -25,6 +27,7 @@ function ThingDetails(thing) {
         detailsContainer.appendChild(attributes);
         attributes.appendChild(createStatRow("HP", hpClass));
         attributes.appendChild(createStatRow("Vitality", vitalityClass));
+        attributes.appendChild(createStatRow("Age", ageClass));
         return detailsContainer;
     }
 

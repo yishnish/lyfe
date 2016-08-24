@@ -4,6 +4,7 @@ function Thing(clazz) {
     this.hp = 100;
     this.vitality = 100;
     this.dead = false;
+    this.age = 0;
 
     this.getType = function(){
         return clazz;
@@ -30,6 +31,7 @@ Thing.prototype.takeTurn = function (turnContext) {
     this.doYourTurnThings(turnContext);
     this.adjustHealthBasedOnVitality.call(this, turnContext);
     decrementVitality.call(this);
+    this.age++;
 };
 
 Thing.prototype.die = function (turnContext) {
