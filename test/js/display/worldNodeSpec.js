@@ -20,6 +20,16 @@ describe('WorldNode', function () {
                 node.setContents(new Wolf());
                 expect(node.color()).toBe(colorMapping.Wolf);
             });
+
+            it('should highlight a cell when right clicked', function () {
+                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var node = nodeFactory.newNode(new Cow());
+                expect(node.getTableCell().classList).not.toContain('temp-highlight');
+                var rightClick = new MouseEvent('mousedown', {button : 2});
+                node.getTableCell().dispatchEvent(rightClick);
+                expect(node.getTableCell().classList).toContain('temp-highlight');
+            });
         });
     });
 });

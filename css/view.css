@@ -56,5 +56,8 @@ td[color="green"] {
 }
 
 table#the-world td.highlight {
-    border: 1px solid crimson;
+    border: 1px solid orange;
+}
+table#the-world td.temp-highlight {
+    border: 1px solid orange;
 }
