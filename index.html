@@ -35,46 +35,13 @@
 <body>
     <div id="world-goes-here"></div>
     <div id="controls">
+        <button id="start"></button>
         <button id="pause"></button>
     </div>
     <script>
-        var dataGrid = createGrid();
-        var world = new World(dataGrid);
-        var viz = new Visualizer(world, ColorMapping);
-        document.getElementById("world-goes-here").appendChild(viz.getDisplayHtml());
         var controlPanel = ControlPanel();
         controlPanel.addPauseButton();
-
-        window.setInterval(function(){if(!controlPanel.isPaused()){world.turn();}}, 100);
-
-        function createGrid(){
-            var makers = [function () {
-                return new Cow()
-            }, function () {
-                return new Wolf();
-            }, function(){
-                return new PolarBear()
-            }, function(){
-                return new FruitBush()
-            }, function(){
-                return new Civet()
-            }];
-            var grid = [];
-            for(var i = 0; i < 100; i++) {
-                var row = [];
-                for(var j = 0; j < 100; j++) {
-                    row.push(null);
-                }
-                grid.push(row);
-            }
-            for(i = 0; i < 10; i++) {
-                for(j = 0; j < 10; j++) {
-                    grid[i][j] = makers[Math.floor(Math.random() * makers.length)]();
-                }
-            }
-
-            return grid;
-        }
+        controlPanel.addStartButton();
     </script>
 </body>
 </html>
