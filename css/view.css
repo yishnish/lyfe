@@ -3,8 +3,14 @@ html, body{
 }
 
 table#the-world{
-    width: 45em;
-    height: 45em;
+    width: auto;
+    height: auto;
+}
+
+table#the-world td {
+    border: 1px solid white;
+    height: 5px;
+    width: 5px;
 }
 
 td[color="brown"] {
@@ -41,4 +47,14 @@ td[color="green"] {
 
 #pause {
     margin-left: 2em;
+}
+
+.details {
+    position: fixed;
+    background-color: wheat;
+    opacity: 0.7;
+}
+
+table#the-world td.highlight {
+    border: 1px solid crimson;
 }

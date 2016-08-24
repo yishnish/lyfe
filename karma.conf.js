@@ -35,6 +35,9 @@ module.exports = function (config) {
             'test/js/**/*.js': ['jshint']
         },
 
+        jshintPreprocessor: {
+            jshintrc: './.jshintrc'
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'

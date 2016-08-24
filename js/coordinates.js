@@ -3,10 +3,10 @@ function Coordinates(row, col) {
     this._column = col;
 }
 
-Coordinates.prototype.getRow = function(){
+Coordinates.prototype.getRow = function () {
     return this._row;
-}
+};
 
-Coordinates.prototype.getColumn = function(){
+Coordinates.prototype.getColumn = function () {
     return this._column;
-}
+};
