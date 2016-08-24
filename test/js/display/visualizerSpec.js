@@ -39,7 +39,7 @@ describe('Visualizers', function () {
             cowColor = ColorMapping[cow.getTypeName()];
             wolfColor = ColorMapping[wolf.getTypeName()];
         });
-        it('should update the display nodes when the backing world changes', function () {
+        it('should setContents the display nodes when the backing world changes', function () {
             var dataGrid = [
                 [cow]
             ];
@@ -52,7 +52,7 @@ describe('Visualizers', function () {
             expect(viz.thingAt(0, 0).color()).toBe(wolfColor);
         });
 
-        it('should update the display HTML when the backing world changes', function () {
+        it('should setContents the display HTML when the backing world changes', function () {
             expect(cowColor).not.toEqual(wolfColor);
             var dataGrid = [
                 [cow]

@@ -90,7 +90,7 @@ describe('TurnContext', function () {
         turnContext.moveThing(new Delta(0, 1));
         expect(world.thingAt(1, 2)).toBe(thing);
     });
-    it('should update location after moving a thing', function () {
+    it('should setContents location after moving a thing', function () {
         var thing = new Cow();
         var world = new World([
             [null, null, null],

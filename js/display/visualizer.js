@@ -18,10 +18,10 @@ function Visualizer(world, colorMapping) {
         return nodeHTML;
     };
 
-    this.update = function () {
+    this.setContents = function () {
         world.getGrid().forEach(function (row, rowNum) {
             row.forEach(function (thing, colNum) {
-                nodes[rowNum][colNum].update(thing);
+                nodes[rowNum][colNum].setContents(thing);
             });
         });
     };
@@ -33,7 +33,7 @@ function Visualizer(world, colorMapping) {
         nodes = nodeStuff.nodeCollection;
         nodeHTML = nodeStuff.nodeHTML;
         world.eachTurn(this, function () {
-            this.update();
+            this.setContents();
         });
     }
 

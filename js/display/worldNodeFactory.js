@@ -1,7 +1,7 @@
 function WorldNodeFactory(colorMapping) {
     this.newNode = function(thing) {
         var worldNode = new WorldNode(colorMapping);
-        worldNode.update(thing);
+        worldNode.setContents(thing);
         return worldNode;
     };
 }

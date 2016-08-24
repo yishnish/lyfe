@@ -6,7 +6,7 @@ function WorldNode(colorMapping){
     this.getTableCell = function(){
         return td;
     };
-    this.update = function(thing) {
+    this.setContents = function(thing) {
         var color = thing ? colorMapping[thing.getTypeName()] : colorMapping.empty;
         td.setAttribute("color", color);
     };

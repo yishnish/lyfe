@@ -12,12 +12,12 @@ describe('WorldNode', function () {
                 expect(wolfNode.color()).toBe(colorMapping.Wolf);
             });
 
-            it('should update color when contents change', function () {
+            it('should setContents color when contents change', function () {
                 var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var nodeFactory = new WorldNodeFactory(colorMapping);
                 var node = nodeFactory.newNode(new Cow());
                 expect(node.color()).toBe(colorMapping.Cow);
-                node.update(new Wolf());
+                node.setContents(new Wolf());
                 expect(node.color()).toBe(colorMapping.Wolf);
             });
         });
