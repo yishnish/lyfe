@@ -30,6 +30,17 @@ describe('WorldNode', function () {
                 node.getTableCell().dispatchEvent(rightClick);
                 expect(node.getTableCell().classList).toContain('temp-highlight');
             });
+            it('should clear highlights for a cell when the contents change', function () {
+                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var node = nodeFactory.newNode(new Cow());
+                expect(node.getTableCell().classList).not.toContain('temp-highlight');
+                var rightClick = new MouseEvent('mousedown', {button : 2});
+                node.getTableCell().dispatchEvent(rightClick);
+                expect(node.getTableCell().classList).toContain('temp-highlight');
+                node.setContents(new Cow());
+                expect(node.getTableCell().classList).not.toContain('temp-highlight');
+            });
         });
     });
 });
