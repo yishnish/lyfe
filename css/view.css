@@ -56,8 +56,11 @@ td[color="green"] {
 }
 
 table#the-world td.highlight {
-    border: 1px solid orange;
+    border: 1px solid deepskyblue;
+}
+table#the-world td.tagged {
+    border: 1px solid deepskyblue;
 }
 table#the-world td.temp-highlight {
-    border: 1px solid orange;
+    border: 1px solid deepskyblue;
 }

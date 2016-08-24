@@ -1,8 +1,7 @@
 function WorldNode(colorMapping, thing){
-    var td = document.createElement("td");
     var thingDetails = new ThingDetails(thing);
-
-    setUpStatsDisplay(td);
+    var td = CellFactory.createCell(this, thingDetails);
+    var _thing = thing;
 
     this.color = function () {
         return td.getAttribute("color");
@@ -11,52 +10,20 @@ function WorldNode(colorMapping, thing){
         return td;
     };
     this.setContents = function(thing) {
+        _thing = thing;
         td.classList.remove('temp-highlight');
+        if(thing && thing.isTagged()) {
+            td.classList.add('tagged');
+        }else{td.classList.remove('tagged');}
+
         var color = thing ? colorMapping[thing.getTypeName()] : colorMapping.empty;
         td.setAttribute("color", color);
         thingDetails.setContents(thing);
     };
+    this.toggleTag = function () {
+        if(_thing) {
+            _thing.toggleTag();
+        }
+    };
     this.setContents(thing);
-
-    function setUpStatsDisplay(td) {
-        preventDefaultContextMenu();
-        hilightOnMouseover();
-        showStatsOnClick();
-
-        function showStatsOnClick() {
-            td.onmousedown = function (event) {
-                if (event.button === 0) {
-                    stats = thingDetails.display();
-                    td.appendChild(stats);
-                } else if (event.button === 2) {
-                    td.classList.toggle('temp-highlight');
-                }
-                return false;
-            };
-        }
-
-        function hilightOnMouseover() {
-            var stats;
-            td.onmouseover = function () {
-                td.classList.add('highlight');
-            };
-
-            td.onmouseout = function () {
-                if(stats) {
-                    td.removeChild(stats);
-                    stats = null;
-
-                }
-                var highlighted = document.getElementsByClassName('highlight');
-                for(let hilited of highlighted) {
-                    hilited.classList.remove('highlight');
-                }
-            };
-        }
-        function preventDefaultContextMenu() {
-            document.oncontextmenu = function () {
-                return false;
-            };
-        }
-    }
 }

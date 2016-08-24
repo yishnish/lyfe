@@ -30,6 +30,38 @@ describe('WorldNode', function () {
                 node.getTableCell().dispatchEvent(rightClick);
                 expect(node.getTableCell().classList).toContain('temp-highlight');
             });
+
+            it('should highlight a cell when a tagged thing is added', function () {
+                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var cow = new Cow();
+                cow.tag();
+                var node = nodeFactory.newNode(cow);
+                expect(node.getTableCell().classList).toContain('tagged');
+            });
+
+            it('should clear highlight from a cell when a tagged thing is replaced by a not tagged thing', function () {
+                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var cow = new Cow();
+                cow.tag();
+                var node = nodeFactory.newNode(cow);
+                expect(node.getTableCell().classList).toContain('tagged');
+                node.setContents(new Cow());
+                expect(node.getTableCell().classList).not.toContain('tagged');
+            });
+
+            it('should clear highlight from a cell when a tagged thing is removed', function () {
+                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var cow = new Cow();
+                cow.tag();
+                var node = nodeFactory.newNode(cow);
+                expect(node.getTableCell().classList).toContain('tagged');
+                node.setContents(null);
+                expect(node.getTableCell().classList).not.toContain('tagged');
+            });
+
             it('should clear highlights for a cell when the contents change', function () {
                 var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var nodeFactory = new WorldNodeFactory(colorMapping);

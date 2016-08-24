@@ -5,6 +5,7 @@ function Thing(clazz) {
     this.vitality = 100;
     this.dead = false;
     this.age = 0;
+    this.tagged = false;
 
     this.getType = function(){
         return clazz;
@@ -14,6 +15,18 @@ function Thing(clazz) {
         return clazz.name;
     };
 }
+
+Thing.prototype.tag = function () {
+    this.tagged = true;
+};
+
+Thing.prototype.isTagged = function () {
+    return this.tagged;
+};
+
+Thing.prototype.toggleTag = function () {
+    this.tagged = !this.tagged;
+};
 
 Thing.prototype.mixin = function(mixinClass) {
     for(var methodName in mixinClass.prototype) {
