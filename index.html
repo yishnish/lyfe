@@ -37,11 +37,14 @@
     <div id="controls">
         <button id="start"></button>
         <button id="pause"></button>
+        <input id="speed" type="range" min="0" max="1000" value="100">
     </div>
+
     <script>
         var controlPanel = ControlPanel();
         controlPanel.addPauseButton();
         controlPanel.addStartButton();
+        controlPanel.addSpeedSlider();
     </script>
 </body>
 </html>

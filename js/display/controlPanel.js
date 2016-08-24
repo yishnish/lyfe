@@ -1,6 +1,6 @@
 var ControlPanel = function () {
     var paused = true,
-        display;
+        world, display, turnFunction;
 
     createAndStartWorld();
 
@@ -35,14 +35,14 @@ var ControlPanel = function () {
 
     function createAndStartWorld() {
         var dataGrid = createGrid();
-        var world = new World(dataGrid);
+        world = new World(dataGrid);
         var viz = new Visualizer(world, ColorMapping);
         var spotForWorld = document.getElementById("world-goes-here");
         display = viz.getDisplayHtml();
         spotForWorld.innerHTML = null;
         spotForWorld.appendChild(display);
-        window.setInterval(function () {
-            if (!controlPanel.isPaused()) {
+        turnFunction = window.setInterval(function () {
+            if (!paused) {
                 world.turn();
             }
         }, 100);
@@ -58,12 +58,26 @@ var ControlPanel = function () {
             startButton.onclick = function () {
                 createAndStartWorld();
             };
-        }, addPauseButton: function () {
+        },
+        addPauseButton: function () {
             var pauseButton = document.getElementById("pause");
             pauseButton.innerText = "Start";
             pauseButton.onclick = function () {
                 paused = !paused;
                 pauseButton.innerText = paused ? "Start" : "Pause";
+            };
+        },
+        addSpeedSlider: function () {
+            var slider = document.getElementById("speed");
+            slider.onchange = function () {
+                var rate = slider.value;
+                console.log('rate: ' + rate);
+                window.clearInterval(turnFunction);
+                turnFunction = window.setInterval(function () {
+                    if (!paused) {
+                        world.turn();
+                    }
+                }, rate);
             };
         }
     };
