@@ -17,9 +17,9 @@ var ControlPanel = function () {
             return new Civet();
         }];
         var grid = [];
-        for(var i = 0; i < 100; i++) {
+        for(var i = 0; i < 75 ; i++) {
             var row = [];
-            for(var j = 0; j < 100; j++) {
+            for(var j = 0; j < 75; j++) {
                 row.push(null);
             }
             grid.push(row);
