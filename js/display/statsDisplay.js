@@ -2,8 +2,18 @@ function StatsDisplay(worldStats){
     var stats = createDisplayList();
     var turnsRow = createTurnsRow();
     var cowsRow = createThingRow('Cow');
+    var wolvesRow = createThingRow('Wolf');
+    var fruitBushRow = createThingRow('FruitBush');
+    var civetRow = createThingRow('Civet');
+    var polarBearRow = createThingRow('PolarBear');
+    var totalRow = createTotalRow();
     stats.appendChild(turnsRow);
     stats.appendChild(cowsRow);
+    stats.appendChild(wolvesRow);
+    stats.appendChild(fruitBushRow);
+    stats.appendChild(civetRow);
+    stats.appendChild(polarBearRow);
+    stats.appendChild(totalRow);
 
     this.getDisplay = function(){
         return stats;
@@ -12,8 +22,8 @@ function StatsDisplay(worldStats){
     function createThingRow(thingName){
         var builder = new DisplayRowBuilder(worldStats);
         return builder.createRow().addRowClass('stats-display-row')
-            .addDataLabel('Cows')
-            .addData('cow-count', worldStats.getTurnCount)
+            .addDataLabel(thingName + 's')
+            .addData(thingName.toLowerCase() + '-count', worldStats.getTurnCount)
             .subscribe('thing-added', function(thing){
                 if(thing === thingName){
                     this.displayDataElement.innerHTML = worldStats.getThingCount(thingName);
@@ -35,6 +45,32 @@ function StatsDisplay(worldStats){
             })
             .subscribe('reset', function(){
                 this.displayDataElement.innerHTML = '0';
+            })
+            .build();
+    }
+    function getTotals(){
+        var total = 0;
+        ['Cow', 'Civet', 'Wolf', 'PolarBear', 'FruitBush'].forEach(function(thing){
+            total += worldStats.getThingCount(thing);
+        });
+        return total;
+    }
+
+    function createTotalRow(){
+        var builder = new DisplayRowBuilder();
+
+
+        return builder.createRow().addRowClass('stats-display-row')
+            .addDataLabel('Total')
+            .addData('total-count', getTotals)
+            .subscribe('turn-stats-updated', function(){
+                this.displayDataElement.innerHTML = getTotals();
+            })
+            .subscribe('thing-added', function(){
+                this.displayDataElement.innerHTML = getTotals();
+            })
+            .subscribe('reset', function(){
+                this.displayDataElement.innerHTML = getTotals();
             })
             .build();
     }
