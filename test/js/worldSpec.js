@@ -66,6 +66,15 @@ describe("A World", function () {
             expect(otherThing.value).toEqual(42);
         });
     });
+    describe('notifications', function(){
+        it('publishes an event after turning', function(){
+            var pubsub = PubSub();
+            spyOn(pubsub, 'publish');
+            var world = new World([[]]);
+            world.turn();
+            expect(pubsub.publish).toHaveBeenCalledWith('turned');
+        });
+    });
     describe("Contents", function () {
         it('should tell you what is at a location', function () {
             var world = new World(

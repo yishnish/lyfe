@@ -6,6 +6,7 @@
 
 function World(dataGrid){
     var callbacks = [];
+    var pubsub = PubSub();
 
     init(this);
 
@@ -30,6 +31,7 @@ function World(dataGrid){
         callbacks.forEach(function (objectAndCallback) {
             objectAndCallback._callback.apply(objectAndCallback._object);
         });
+        pubsub.publish('turned');
     };
     this.thingAt = function(row, col) {
         var y = dataGrid[row];
