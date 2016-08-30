@@ -1,19 +1,12 @@
 function StatsDisplay(worldStats){
     var stats = createDisplayList();
-    var turnsRow = createTurnsRow();
-    var cowsRow = createThingRow('Cow');
-    var wolvesRow = createThingRow('Wolf');
-    var fruitBushRow = createThingRow('FruitBush');
-    var civetRow = createThingRow('Civet');
-    var polarBearRow = createThingRow('PolarBear');
-    var totalRow = createTotalRow();
-    stats.appendChild(turnsRow);
-    stats.appendChild(cowsRow);
-    stats.appendChild(wolvesRow);
-    stats.appendChild(fruitBushRow);
-    stats.appendChild(civetRow);
-    stats.appendChild(polarBearRow);
-    stats.appendChild(totalRow);
+    stats.appendChild(createTurnsRow());
+    stats.appendChild(createThingRow('Cow'));
+    stats.appendChild(createThingRow('Wolf'));
+    stats.appendChild(createThingRow('FruitBush'));
+    stats.appendChild(createThingRow('Civet'));
+    stats.appendChild(createThingRow('PolarBear'));
+    stats.appendChild(createTotalRow());
 
     this.getDisplay = function(){
         return stats;
@@ -25,6 +18,11 @@ function StatsDisplay(worldStats){
             .addDataLabel(thingName + 's')
             .addData(thingName.toLowerCase() + '-count', worldStats.getTurnCount)
             .subscribe('thing-added', function(thing){
+                if(thing === thingName){
+                    this.displayDataElement.innerHTML = worldStats.getThingCount(thingName);
+                }
+            })
+            .subscribe('thing-removed', function(thing){
                 if(thing === thingName){
                     this.displayDataElement.innerHTML = worldStats.getThingCount(thingName);
                 }
@@ -48,6 +46,7 @@ function StatsDisplay(worldStats){
             })
             .build();
     }
+
     function getTotals(){
         var total = 0;
         ['Cow', 'Civet', 'Wolf', 'PolarBear', 'FruitBush'].forEach(function(thing){
@@ -58,8 +57,6 @@ function StatsDisplay(worldStats){
 
     function createTotalRow(){
         var builder = new DisplayRowBuilder();
-
-
         return builder.createRow().addRowClass('stats-display-row')
             .addDataLabel('Total')
             .addData('total-count', getTotals)
@@ -81,7 +78,6 @@ function StatsDisplay(worldStats){
 }
 
 function DisplayRowBuilder(){
-
     var pubsub = PubSub();
 
     return {
