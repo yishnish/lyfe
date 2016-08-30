@@ -25,7 +25,7 @@ describe('TurnContext', function () {
     it('should tell you if there are things at some delta that fulfil a criteria', function () {
         var thing1 = new Cow();
         var thing2 = new Cow();
-        var food = new Food();
+        var food = new FruitBush();
         var world = new World([
             [null, thing1, null],
             [null, thing2, null],
@@ -33,7 +33,7 @@ describe('TurnContext', function () {
         ]);
         var turnContext = new TurnContext(world, thing2, new Coordinates(1, 1));
         var isFood = function (thing) {
-            return thing instanceof Food;
+            return thing instanceof FruitBush;
         };
         expect(turnContext.hasMatchingThingAt(new Delta(-1, 0), isFood)).toBe(false);
         expect(turnContext.hasMatchingThingAt(new Delta(0, 0), isFood)).toBe(false);
@@ -135,7 +135,7 @@ describe('TurnContext', function () {
     });
     it('should perform an arbitrary action on a thing at a location', function () {
         var creature = new Cow();
-        var food = new Food();
+        var food = new FruitBush();
         var world = new World([
             [creature, food]
         ]);

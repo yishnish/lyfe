@@ -21,7 +21,7 @@ describe("moves", function () {
         it('should not move to an occupied space', function () {
             var mover = new MyThing();
             var world = new World([
-                [mover, {}]
+                [mover, new Cow()]
             ]);
             var turn = new TurnContext(world, mover, new Coordinates(0, 0));
             mover.moveIfPossible(turn);

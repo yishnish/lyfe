@@ -21,7 +21,7 @@ describe("Vegetarians", function () {
     it('should not eat non-fruit', function () {
         var thing = new MyCreature();
         var world = new World([
-            [thing, new Food()]
+            [thing, new Wolf()]
         ]);
         spyOn(thing, 'eat');
         var turn = new TurnContext(world, thing, new Coordinates(0, 0));

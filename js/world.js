@@ -2,17 +2,17 @@ function World(dataGrid){
     var callbacks = [];
     var pubsub = PubSub();
 
-    init(this);
-
     this.getGrid = function () {
-        return dataGrid;
+        return this.dataGrid;
     };
+
     this.eachTurn = function(obj, callback) {
         callbacks.push({_object : obj, _callback : callback});
     };
+
     this.turn = function(){
         var thingsThatCanDoSomething = [];
-        dataGrid.forEach(function (row, rowNumber) {
+        this.dataGrid.forEach(function (row, rowNumber) {
             row.forEach(function (maybeThing, colNumber) {
                 if(maybeThing) {
                     thingsThatCanDoSomething.push(new TurnContext(this, maybeThing, new Coordinates(rowNumber, colNumber)));
@@ -27,39 +27,53 @@ function World(dataGrid){
         });
         pubsub.publish('turned');
     };
+
     this.thingAt = function(row, col) {
-        var y = dataGrid[row];
+        var y = this.dataGrid[row];
         if(y) {
             return y[col];
         }return null;
     };
 
     this.move = function(from, to) {
-        var thing = dataGrid[from.getRow()][from.getColumn()];
-        dataGrid[from.getRow()][from.getColumn()] = null;
-        dataGrid[to.getRow()][to.getColumn()] = thing;
+        var thing = this.dataGrid[from.getRow()][from.getColumn()];
+        this.dataGrid[from.getRow()][from.getColumn()] = null;
+        this.dataGrid[to.getRow()][to.getColumn()] = thing;
     };
 
     this.remove = function (row, col) {
-        var thingAt = dataGrid[row][col];
+        var thingAt = this.dataGrid[row][col];
         if(thingAt){
             pubsub.publish('thing-removed', thingAt.getTypeName());
         }
-        dataGrid[row][col] = null;
+        this.dataGrid[row][col] = null;
     };
 
     this.add = function(thing, coords) {
-        var thingAt = dataGrid[coords.getRow()][coords.getColumn()];
-        if(!thingAt) {
-            dataGrid[coords.getRow()][coords.getColumn()] = thing;
-            pubsub.publish('thing-added', thing.getTypeName());
-        }else{
-            throw new Error("Tried to add a thing to (" + coords.getRow() + "," + coords.getColumn() + ") but there was already something there");
+        if(!thing){
+            this.remove(coords.getRow(), coords.getColumn());
+        }else {
+            var thingAt = this.dataGrid[coords.getRow()][coords.getColumn()];
+            if(!thingAt) {
+                this.dataGrid[coords.getRow()][coords.getColumn()] = thing;
+                pubsub.publish('thing-added', thing.getTypeName());
+            }else{
+                throw new Error("Tried to add a thing to (" + coords.getRow() + "," + coords.getColumn() + ") but there was already something there");
+            }
         }
     };
 
+    init(this);
+
     function init(_this){
         validateDataShape();
+        _this.dataGrid = [];
+        dataGrid.forEach(function(rowData, rowNum){
+            _this.dataGrid[rowNum] = [];
+            rowData.forEach(function(colData, colNum){
+                _this.add(colData, new Coordinates(rowNum, colNum));
+            });
+        });
         _this.rows = dataGrid.length;
         _this.columns = dataGrid[0].length;
     }
