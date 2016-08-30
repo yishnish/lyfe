@@ -1,14 +1,5 @@
 describe("pubsub", function(){
-    it('should let you register a callback with a topic', function(){
-        var pubsub = new PubSub();
-        pubsub.subscribe('myEvent', function(){
-        }());
-    });
-    it('should be able to receive event notifictation', function(){
-        var pubsub = new PubSub();
-        pubsub.publish("myEvent");
-    });
-    it('publishing an event should call functions registered for that event', function(){
+    it('should let you subscribe to an event', function(){
         var updated = false;
         var pubsub = new PubSub();
         pubsub.subscribe('myEvent', function(){ updated = true });
