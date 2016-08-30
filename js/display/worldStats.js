@@ -4,6 +4,7 @@ function WorldStats(){
 
     function updateTurnCount(){
         turnCount++;
+        pubsub.publish('turn-stats-updated', turnCount);
     }
 
     this.getTurnCount = function(){

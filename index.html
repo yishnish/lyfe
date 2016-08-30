@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <script src="js/coordinates.js"></script>
     <script src="js/delta.js"></script>
+    <script src="js/pubsub.js"></script>
     <script src="js/behaviors/baseBehavior.js"></script>
     <script src="js/behaviors/birthing.js"></script>
     <script src="js/behaviors/cannibal.js"></script>
@@ -23,9 +24,11 @@
     <script src="js/things/civet.js"></script>
     <script src="js/display/cellFactory.js"></script>
     <script src="js/display/controlPanel.js"></script>
+    <script src="js/display/statsDisplay.js"></script>
     <script src="js/display/thingDetails.js"></script>
     <script src="js/display/worldNode.js"></script>
     <script src="js/display/worldNodeFactory.js"></script>
+    <script src="js/display/worldStats.js"></script>
     <script src="js/world.js"></script>
     <script src="js/turnContext.js"></script>
     <script src="js/display/visualizer.js"></script>
@@ -38,6 +41,7 @@
         <button id="start"></button>
         <button id="pause"></button>
         <input id="speed" type="range" min="0" max="1000" value="100">
+        <div id="world-stats"></div>
     </div>
 
     <script>
@@ -46,6 +50,7 @@
         controlPanel.addStartButton();
         controlPanel.addPauseButton();
         controlPanel.addSpeedSlider();
+        controlPanel.addWorldStats();
     </script>
 </body>
 </html>

@@ -56,5 +56,19 @@ var customMatchers = {
                 return result;
             }
         };
+    },
+    toDisplayNumberOfTurns: function(util, customEqualityTesters){
+        return {
+            compare: function(statsAccessor, expected){
+                var result = {pass: false};
+                var turnCount = statsAccessor.getTurnCount();
+                if(turnCount === expected){
+                    result.pass = true;
+                } else{
+                    result.message = 'Expected ' + expected + ' turns to have been displayed, got ' + statsAccessor.getTurnCount();
+                }
+                return result;
+            }
+        };
     }
 };

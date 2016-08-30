@@ -11,13 +11,13 @@ describe('Visualizers', function () {
             });
             it('should create a DOM table with the same number of rows and columns as the data', function () {
                 var viz = new Visualizer(new World([[new Cow()]]), ColorMapping);
-                var table = new TableAccessor(viz.getDisplayHtml());
+                var table = new TableAccessor(viz.getDisplay());
                 expect(table.rows()).toEqual(1);
                 expect(table.columns()).toEqual(1);
             });
             it('should create a 2D array of worldNodes with the same number of rows and columns as the data', function () {
                 var viz = new Visualizer(new World([[new Cow()]]), ColorMapping);
-                var tableAccessor = new TableAccessor(viz.getDisplayHtml());
+                var tableAccessor = new TableAccessor(viz.getDisplay());
                 expect(tableAccessor.rows()).toEqual(1);
                 expect(tableAccessor.columns()).toEqual(1);
             });
@@ -59,7 +59,7 @@ describe('Visualizers', function () {
             ];
             var world = new World(dataGrid);
             var viz = new Visualizer(world, ColorMapping);
-            var table = new TableAccessor(viz.getDisplayHtml());
+            var table = new TableAccessor(viz.getDisplay());
 
             expect(table.cellColorAt(0, 0)).toBe(cowColor);
             world.remove(0, 0);

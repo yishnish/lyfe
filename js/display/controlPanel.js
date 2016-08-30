@@ -7,7 +7,7 @@ var ControlPanel = function () {
         var dataGrid = createGrid();
         world = new World(dataGrid);
         var viz = new Visualizer(world, ColorMapping);
-        display = viz.getDisplayHtml();
+        display = viz.getDisplay();
         var spotForWorld = document.getElementById("world-goes-here");
         spotForWorld.innerHTML = null;
         spotForWorld.appendChild(display);
@@ -53,7 +53,7 @@ var ControlPanel = function () {
         },
         addStartButton: function () {
             var startButton = document.getElementById("start");
-            startButton.innerText = "Refresh";
+            startButton.innerText = "Reset";
             startButton.onclick = function () {
                 createAndStartWorld();
             };
@@ -70,7 +70,6 @@ var ControlPanel = function () {
             var slider = document.getElementById("speed");
             slider.onchange = function () {
                 var rate = slider.value;
-                console.log('rate: ' + rate);
                 window.clearInterval(turnFunction);
                 turnFunction = window.setInterval(function () {
                     if (!paused) {
@@ -78,6 +77,9 @@ var ControlPanel = function () {
                     }
                 }, rate);
             };
+        },
+        addWorldStats: function () {
+            document.getElementById("world-stats").appendChild(new StatsDisplay(new WorldStats()).getDisplay());
         },
         createAndStartWorld : createAndStartWorld
     };

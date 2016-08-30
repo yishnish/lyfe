@@ -1,10 +1,3 @@
-/**
- maybe visualizer does something like take a 2d array of objects that have
- an attribute that is like "iAmA" which says they are a type of creature
- then visualizer colors all the cells with their corresponding color
- maybe color comes from a color mapping somewhere
-
- */
 function Visualizer(world, colorMapping) {
     var nodes, nodeHTML;
 
@@ -14,7 +7,7 @@ function Visualizer(world, colorMapping) {
         return getDataNodes.call(this)[row][col];
     };
 
-    this.getDisplayHtml = function () {
+    this.getDisplay = function () {
         return nodeHTML;
     };
 
