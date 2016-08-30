@@ -1,9 +1,3 @@
-/**
- A world contains a grid containing all the items in the world.
- You can register an object with the world and a callback to have
- called each time the world finishes a 'turn'
- */
-
 function World(dataGrid){
     var callbacks = [];
     var pubsub = PubSub();
@@ -47,6 +41,10 @@ function World(dataGrid){
     };
 
     this.remove = function (row, col) {
+        var thingAt = dataGrid[row][col];
+        if(thingAt){
+            pubsub.publish('thing-removed', thingAt.getTypeName());
+        }
         dataGrid[row][col] = null;
     };
 
@@ -54,11 +52,11 @@ function World(dataGrid){
         var thingAt = dataGrid[coords.getRow()][coords.getColumn()];
         if(!thingAt) {
             dataGrid[coords.getRow()][coords.getColumn()] = thing;
+            pubsub.publish('thing-added', thing.getTypeName());
         }else{
             throw new Error("Tried to add a thing to (" + coords.getRow() + "," + coords.getColumn() + ") but there was already something there");
         }
     };
-    //private
 
     function init(_this){
         validateDataShape();

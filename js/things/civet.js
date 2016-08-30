@@ -28,10 +28,6 @@ function Civet(){
         }
     };
 
-    Civet.prototype.newInstance = function () {
-        return new Civet();
-    };
-
     Civet.prototype.eat = function (food) {
         this.vitality += 20;
         food.getEaten();

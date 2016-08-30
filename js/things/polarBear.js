@@ -28,10 +28,6 @@ function PolarBear(){
         }
     };
 
-    PolarBear.prototype.newInstance = function () {
-        return new PolarBear();
-    };
-
     PolarBear.prototype.eat = function (food) {
         this.vitality += 20;
         food.getEaten();

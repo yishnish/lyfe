@@ -17,7 +17,7 @@ describe("Things", function () {
         var thing;
 
         beforeEach(function () {
-            thing = new Thing();
+            thing = new Thing(Thing);
         });
 
         it('has health', function () {
@@ -42,7 +42,7 @@ describe("Things", function () {
 
     describe("age", function () {
         it('should know how old it is', function () {
-            var thing = new Thing();
+            var thing = new Thing(Thing);
             expect(thing.age).toBe(0);
             var world = new World([[thing]]);
             var turnContext = new TurnContext(world, thing, new Coordinates(0, 0));
@@ -51,9 +51,9 @@ describe("Things", function () {
         });
     });
 
-    describe("Death", function () {
+    describe("Life and Death", function () {
         it('Things should be removed from the world when their health reaches zero', function () {
-            var thing = new Thing();
+            var thing = new Thing(Thing);
 
             var dataGrid = [
                 [thing]
@@ -69,7 +69,7 @@ describe("Things", function () {
 
     describe("tracking beasts", function () {
         it('beast should be able to be tagged for tracking', function () {
-            var thing = new Thing();
+            var thing = new Thing(Thing);
             thing.tag();
             expect(thing.isTagged()).toBe(true);
         });
@@ -83,13 +83,13 @@ describe("Things", function () {
         };
 
         it('should be able to have behaviors mixed in', function () {
-            var thing = new Thing();
+            var thing = new Thing(Thing);
             thing.mixin(MyMixin);
             expect(thing.foo()).toEqual('foo');
         });
 
         it('should be able to remove mixins', function () {
-            var thing = new Thing();
+            var thing = new Thing(Thing);
             thing.mixin(MyMixin);
             expect(thing.foo()).toEqual('foo');
             thing.removeMixin(MyMixin);

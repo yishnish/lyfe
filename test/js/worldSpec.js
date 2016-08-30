@@ -1,25 +1,25 @@
-describe("A World", function () {
+describe("A World", function(){
     var dataGrid, world;
-    beforeAll(function () {
+    beforeAll(function(){
         jasmine.addMatchers(customMatchers);
     });
-    beforeEach(function () {
+    beforeEach(function(){
         dataGrid = [[new Cow()]];
         world = new World(dataGrid);
     });
-    describe("validations", function () {
-        it('should fail when there is no data', function () {
-            expect(function () {
+    describe("validations", function(){
+        it('should fail when there is no data', function(){
+            expect(function(){
                 new World();
             }).toThrowError("Can't create a world from empty data");
         });
-        it('should fail when there is empty data', function () {
-            expect(function () {
+        it('should fail when there is empty data', function(){
+            expect(function(){
                 new World([]);
             }).toThrowError("Can't create a world from empty data");
         });
-        it("should fail when the data isn't rectangular", function () {
-            expect(function () {
+        it("should fail when the data isn't rectangular", function(){
+            expect(function(){
                 new World(
                     [
                         [new Cow(), new Cow()],
@@ -28,37 +28,37 @@ describe("A World", function () {
             }).toThrowError("Can't create a non-rectangular world");
         });
     });
-    describe('callbacks', function () {
+    describe('callbacks', function(){
         var thing;
-        beforeEach(function () {
+        beforeEach(function(){
             thing = {value: null, otherValue: null};
         });
 
-        it('performs a callback on a registered object', function () {
-            world.eachTurn(thing, function () {
+        it('performs a callback on a registered object', function(){
+            world.eachTurn(thing, function(){
                 this.value = 69;
                 this.otherValue = 2;
             });
             world.turn();
             expect(thing.value).toEqual(69);
         });
-        it('performs multiple callbacks on a registered listener', function () {
-            world.eachTurn(thing, function () {
+        it('performs multiple callbacks on a registered listener', function(){
+            world.eachTurn(thing, function(){
                 this.value = 69;
             });
-            world.eachTurn(thing, function () {
+            world.eachTurn(thing, function(){
                 this.otherValue = 42;
             });
             world.turn();
             expect(thing.value).toEqual(69);
             expect(thing.otherValue).toEqual(42);
         });
-        it('performs callbacks on multiple listeners', function () {
+        it('performs callbacks on multiple listeners', function(){
             var otherThing = {value: null};
-            world.eachTurn(thing, function () {
+            world.eachTurn(thing, function(){
                 this.value = 69;
             });
-            world.eachTurn(otherThing, function () {
+            world.eachTurn(otherThing, function(){
                 this.value = 42;
             });
             world.turn();
@@ -74,9 +74,25 @@ describe("A World", function () {
             world.turn();
             expect(pubsub.publish).toHaveBeenCalledWith('turned');
         });
+        it('publishes an event when adding a thing', function(){
+            var pubsub = PubSub();
+            spyOn(pubsub, 'publish');
+            var world = new World([[]]);
+            var thing = new Thing(Thing);
+            world.add(thing, new Coordinates(0, 0));
+            expect(pubsub.publish).toHaveBeenCalledWith('thing-added', thing.getTypeName());
+        });
+        it('publishes an event when removing a thing', function(){
+            var pubsub = PubSub();
+            spyOn(pubsub, 'publish');
+            var thing = new Thing(Thing);
+            var world = new World([[thing]]);
+            world.remove(0, 0);
+            expect(pubsub.publish).toHaveBeenCalledWith('thing-removed', thing.getTypeName());
+        });
     });
-    describe("Contents", function () {
-        it('should tell you what is at a location', function () {
+    describe("Contents", function(){
+        it('should tell you what is at a location', function(){
             var world = new World(
                 [
                     [new Cow(), new Cow()],
@@ -85,8 +101,8 @@ describe("A World", function () {
             expect(world.thingAt(0, 0)).toBeACow();
             expect(world.thingAt(1, 1)).toBeNull();
         });
-        describe("activating Things that live in it", function () {
-            it('should notifiy Things when they can move', function () {
+        describe("activating Things that live in it", function(){
+            it('should notifiy Things when they can move', function(){
                 var thing = new Cow();
                 var world = new World(
                     [
@@ -99,8 +115,8 @@ describe("A World", function () {
                 expect(thing.takeTurn).toHaveBeenCalled();
             });
         });
-        describe("moving contents", function () {
-            it('should move a Thing to another requested location', function () {
+        describe("moving contents", function(){
+            it('should move a Thing to another requested location', function(){
                 var thing1 = new Cow();
                 var thing2 = new Cow();
                 var thing3 = new Cow();
@@ -113,8 +129,8 @@ describe("A World", function () {
                 expect(world.thingAt(0, 0)).toBeNull();
             });
         });
-        describe('removing Things', function () {
-            it('should let you remove things', function () {
+        describe('removing Things', function(){
+            it('should let you remove things', function(){
                 var thing = new Cow();
                 var world = new World(
                     [
@@ -124,8 +140,8 @@ describe("A World", function () {
                 expect(world.thingAt(0, 0)).toBeNull();
             });
         });
-        describe('adding Things', function () {
-            it('should let you add things', function () {
+        describe('adding Things', function(){
+            it('should let you add things', function(){
                 var thing = new Cow();
                 var world = new World(
                     [
@@ -134,14 +150,16 @@ describe("A World", function () {
                 world.add(thing, new Coordinates(0, 0));
                 expect(world.thingAt(0, 0)).not.toBeNull();
             });
-            it('should raise an error if you try to add a thing where there already is a thing', function () {
+            it('should raise an error if you try to add a thing where there already is a thing', function(){
                 var thing1 = new Cow();
                 var thing2 = new Cow();
                 var world = new World(
                     [
                         [thing1]
                     ]);
-                expect(function(){world.add(thing2, new Coordinates(0, 0));}).toThrowError();
+                expect(function(){
+                    world.add(thing2, new Coordinates(0, 0));
+                }).toThrowError();
             });
         });
     });

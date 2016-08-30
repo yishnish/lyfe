@@ -28,10 +28,6 @@ function Wolf(){
         }
     };
 
-    Wolf.prototype.newInstance = function () {
-        return new Wolf();
-    };
-
     Wolf.prototype.eat = function (food) {
         this.vitality += 20;
         food.getEaten();

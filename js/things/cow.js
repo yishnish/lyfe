@@ -34,7 +34,4 @@ function Cow() {
         food.getEaten();
     };
 
-    Cow.prototype.newInstance = function () {
-        return new Cow();
-    };
 })();

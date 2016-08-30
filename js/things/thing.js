@@ -53,7 +53,7 @@ Thing.prototype.die = function (turnContext) {
 
 Thing.prototype.doYourTurnThings = function (turn) { };
 
-Thing.prototype.newInstance = function () { };
+Thing.prototype.newInstance = function () { return new (this.getType())()};
 
 Thing.prototype.adjustHealthBasedOnVitality = function (turn) {
     if (this.vitality === 0) {
