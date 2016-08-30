@@ -1,21 +1,43 @@
 var ControlPanel = function () {
 
     var paused = true,
+        pubsub = PubSub(),
         world, display, turnFunction;
 
-    function createAndStartWorld() {
+    function clearWorld_soRemovalEventsGetFired(){
+        world.clear();
+    }
+
+    function resetWorld(){
+        clearWorld_soRemovalEventsGetFired();
+        createAndStartWorld();
+    }
+
+    function createWorld(){
         var dataGrid = createGrid();
         world = new World(dataGrid);
+    }
+
+    function displayWorld(){
         var viz = new Visualizer(world, ColorMapping);
         display = viz.getDisplay();
         var spotForWorld = document.getElementById("world-goes-here");
         spotForWorld.innerHTML = null;
         spotForWorld.appendChild(display);
-        turnFunction = window.setInterval(function () {
-            if (!paused) {
+    }
+
+    function startWorld(){
+        turnFunction = window.setInterval(function(){
+            if(!paused){
                 world.turn();
             }
         }, 100);
+    }
+
+    function createAndStartWorld() {
+        createWorld();
+        displayWorld();
+        startWorld();
     }
 
     function createGrid(){
@@ -51,11 +73,12 @@ var ControlPanel = function () {
         isPaused: function () {
             return paused;
         },
-        addStartButton: function () {
+        addResetButton: function () {
             var startButton = document.getElementById("start");
             startButton.innerText = "Reset";
             startButton.onclick = function () {
-                createAndStartWorld();
+                pubsub.publish('reset');
+                resetWorld();
             };
         },
         addPauseButton: function () {

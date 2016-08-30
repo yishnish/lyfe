@@ -139,6 +139,16 @@ describe("A World", function(){
                 world.remove(0, 0);
                 expect(world.thingAt(0, 0)).toBeNull();
             });
+            it('should be able to be cleared of all contents', function(){
+                var world = new World([
+                    [new Cow(), new Wolf()]
+                ]);
+                expect(world.thingAt(0, 0)).toBeACow();
+                expect(world.thingAt(0, 1)).toBeAWolf();
+                world.clear();
+                expect(world.thingAt(0, 0)).toBeNull();
+                expect(world.thingAt(0, 1)).toBeNull();
+            });
         });
         describe('adding Things', function(){
             it('should let you add things', function(){

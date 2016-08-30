@@ -63,6 +63,14 @@ function World(dataGrid){
         }
     };
 
+    this.clear = function(){
+        this.dataGrid.forEach(function(rowData, rowNum){
+            rowData.forEach(function(colData, colNum){
+                this.remove(rowNum, colNum);
+            }, this);
+        }, this);
+    };
+
     init(this);
 
     function init(_this){
