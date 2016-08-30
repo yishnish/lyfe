@@ -1,8 +1,22 @@
 var ControlPanel = function () {
+
     var paused = true,
         world, display, turnFunction;
 
-    createAndStartWorld();
+    function createAndStartWorld() {
+        var dataGrid = createGrid();
+        world = new World(dataGrid);
+        var viz = new Visualizer(world, ColorMapping);
+        display = viz.getDisplayHtml();
+        var spotForWorld = document.getElementById("world-goes-here");
+        spotForWorld.innerHTML = null;
+        spotForWorld.appendChild(display);
+        turnFunction = window.setInterval(function () {
+            if (!paused) {
+                world.turn();
+            }
+        }, 100);
+    }
 
     function createGrid(){
         var makers = [function () {
@@ -31,21 +45,6 @@ var ControlPanel = function () {
         }
 
         return grid;
-    }
-
-    function createAndStartWorld() {
-        var dataGrid = createGrid();
-        world = new World(dataGrid);
-        var viz = new Visualizer(world, ColorMapping);
-        var spotForWorld = document.getElementById("world-goes-here");
-        display = viz.getDisplayHtml();
-        spotForWorld.innerHTML = null;
-        spotForWorld.appendChild(display);
-        turnFunction = window.setInterval(function () {
-            if (!paused) {
-                world.turn();
-            }
-        }, 100);
     }
 
     return {
@@ -79,6 +78,7 @@ var ControlPanel = function () {
                     }
                 }, rate);
             };
-        }
+        },
+        createAndStartWorld : createAndStartWorld
     };
 };
