@@ -1,16 +1,27 @@
-function PubSub(){
-    var topics = {};
+var PubSub = (function(){
+    var pubsub;
 
-    this.subscribe = function(topic, fun){
-        topics[topic] = topics[topic] || [];
-        topics[topic].push(fun);
-    };
+    function init(){
+        pubsub = {};
+        var topics = {};
+        pubsub.subscribe = function(topic, fun){
+            topics[topic] = topics[topic] || [];
+            topics[topic].push(fun);
+        };
 
-    this.publish  = function(topic, args){
-        if(topics[topic]){
-            for(let fun of topics[topic]){
-                fun(args);
+        pubsub.publish = function(topic, args){
+            if(topics[topic]){
+                for(let fun of topics[topic]){
+                    fun(args);
+                }
             }
+        };
+    }
+
+    return function(){
+        if(!pubsub){
+            init();
         }
+        return pubsub;
     };
-}
+})();
