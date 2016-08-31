@@ -1,8 +1,8 @@
-html, body{
+html, body {
     height: 100%;
 }
 
-table#the-world{
+table#the-world {
     width: auto;
     height: auto;
 }
@@ -17,20 +17,40 @@ td[color="brown"] {
     background-color: brown;
 }
 
+label[for="Cows-count"]{
+    color: brown;
+}
+
 td[color="blue"] {
     background-color: blue;
+}
+
+label[for="Wolfs-count"]{
+    color: blue;
 }
 
 td[color="red"] {
     background-color: red;
 }
 
+label[for="Civets-count"]{
+    color: red;
+}
+
 td[color="yellow"] {
-    background-color: yellow;
+    background-color: orange;
+}
+
+label[for="PolarBears-count"]{
+    color: orange;
 }
 
 td[color="green"] {
     background-color: green;
+}
+
+label[for="FruitBushs-count"]{
+    color: green;
 }
 
 #world-goes-here {
@@ -58,9 +78,11 @@ td[color="green"] {
 table#the-world td.highlight {
     border: 1px solid deepskyblue;
 }
+
 table#the-world td.tagged {
     border: 1px solid deepskyblue;
 }
+
 table#the-world td.temp-highlight {
     border: 1px solid deepskyblue;
 }
