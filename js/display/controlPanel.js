@@ -6,6 +6,63 @@ function ControlPanel(){
 }
 
 (function(){
+
+    ControlPanel.prototype.addResetButton = function(){
+        var startButton = document.getElementById("start");
+        startButton.innerText = "Reset";
+        startButton.onclick = function(){
+            this.pubsub.publish('reset');
+            this.world = resetWorld(this.world);
+            if(!this.paused){
+                this.startWorld();
+            }
+        }.bind(this);
+    };
+
+    ControlPanel.prototype.addPauseButton = function(){
+        var pauseButton = document.getElementById("pause");
+        pauseButton.innerText = "Start";
+        pauseButton.onclick = function(){
+            this.pauseWorld();
+            this.paused = !this.paused;
+            if(!this.paused){
+                this.startWorld();
+            }
+            pauseButton.innerText = this.paused ? "Start" : "Pause";
+        }.bind(this);
+    };
+
+    ControlPanel.prototype.addSpeedSlider = function(){
+        var slider = document.getElementById("speed");
+        slider.onchange = function(){
+            if(!this.paused){
+                window.clearInterval(this.turnFunction);
+                this.turnFunction = window.setInterval(function(){
+                    this.world.turn();
+                }.bind(this), slider.value);
+            }
+        }.bind(this);
+    };
+
+    ControlPanel.prototype.addWorldStats = function(){
+        document.getElementById("world-stats").appendChild(new StatsDisplay(new WorldStats()).getDisplay());
+    };
+
+    ControlPanel.prototype.startWorld = function(){
+        window.clearInterval(this.turnFunction);
+        this.turnFunction = window.setInterval(function(){
+            this.world.turn();
+        }.bind(this), getTickRate());
+    };
+
+    ControlPanel.prototype.pauseWorld = function(){
+        window.clearInterval(this.turnFunction);
+    };
+
+    ControlPanel.prototype.createAndShowWorld = function(){
+        this.world = createAndShowWorld();
+    };
+
     function clearWorld_soRemovalEventsGetFired(world){
         world.clear();
     }
@@ -25,13 +82,6 @@ function ControlPanel(){
         var spotForWorld = document.getElementById("world-goes-here");
         spotForWorld.innerHTML = null;
         spotForWorld.appendChild(display);
-    }
-
-    function startWorld(turnFunction, world){
-        window.clearInterval(turnFunction);
-        return window.setInterval(function(){
-            world.turn();
-        }, getTickRate());
     }
 
     function createAndShowWorld(){
@@ -74,53 +124,4 @@ function ControlPanel(){
         var slider = document.getElementById("speed");
         return slider.value;
     }
-
-    function pauseWorld(turnFunction){
-        window.clearInterval(turnFunction);
-    }
-
-    ControlPanel.prototype.addResetButton = function(){
-        var startButton = document.getElementById("start");
-        startButton.innerText = "Reset";
-        startButton.onclick = function(){
-            this.pubsub.publish('reset');
-            this.world = resetWorld(this.world);
-            if(!this.paused){
-                this.turnFunction = startWorld(this.turnFunction, this.world);
-            }
-        }.bind(this);
-    };
-
-    ControlPanel.prototype.addPauseButton = function(){
-        var pauseButton = document.getElementById("pause");
-        pauseButton.innerText = "Start";
-        pauseButton.onclick = function(){
-            pauseWorld(this.turnFunction);
-            this.paused = !this.paused;
-            if(!this.paused){
-                this.turnFunction = startWorld(this.turnFunction, this.world);
-            }
-            pauseButton.innerText = this.paused ? "Start" : "Pause";
-        }.bind(this);
-    };
-
-    ControlPanel.prototype.addSpeedSlider = function(){
-        var slider = document.getElementById("speed");
-        slider.onchange = function(){
-            if(!this.paused){
-                window.clearInterval(this.turnFunction);
-                this.turnFunction = window.setInterval(function(){
-                    this.world.turn();
-                }.bind(this), slider.value);
-            }
-        }.bind(this);
-    };
-
-    ControlPanel.prototype.addWorldStats = function(){
-        document.getElementById("world-stats").appendChild(new StatsDisplay(new WorldStats()).getDisplay());
-    };
-
-    ControlPanel.prototype.createAndShowWorld = function(){
-        this.world = createAndShowWorld();
-    };
 })();
