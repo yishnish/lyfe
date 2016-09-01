@@ -1,4 +1,4 @@
-var ControlPanel = function () {
+var ControlPanel = function(){
 
     var paused = true,
         pubsub = PubSub(),
@@ -10,7 +10,7 @@ var ControlPanel = function () {
 
     function resetWorld(){
         clearWorld_soRemovalEventsGetFired();
-        createAndStartWorld();
+        createAndShowWorld();
     }
 
     function createWorld(){
@@ -27,23 +27,21 @@ var ControlPanel = function () {
     }
 
     function startWorld(){
+        window.clearInterval(turnFunction);
         turnFunction = window.setInterval(function(){
-            if(!paused){
-                world.turn();
-            }
-        }, 100);
+            world.turn();
+        }, getTickRate());
     }
 
-    function createAndStartWorld() {
+    function createAndShowWorld(){
         createWorld();
         displayWorld();
-        startWorld();
     }
 
     function createGrid(){
-        var makers = [function () {
+        var makers = [function(){
             return new Cow();
-        }, function () {
+        }, function(){
             return new Wolf();
         }, function(){
             return new PolarBear();
@@ -53,15 +51,15 @@ var ControlPanel = function () {
             return new Civet();
         }];
         var grid = [];
-        for(var i = 0; i < 75 ; i++) {
+        for(var i = 0; i < 75; i++){
             var row = [];
-            for(var j = 0; j < 75; j++) {
+            for(var j = 0; j < 75; j++){
                 row.push(null);
             }
             grid.push(row);
         }
-        for(var k = 0; k < 10; k++) {
-            for(var l = 0; l < 10; l++) {
+        for(var k = 0; k < 10; k++){
+            for(var l = 0; l < 10; l++){
                 grid[k][l] = makers[Math.floor(Math.random() * makers.length)]();
             }
         }
@@ -69,41 +67,53 @@ var ControlPanel = function () {
         return grid;
     }
 
+    function getTickRate(){
+        var slider = document.getElementById("speed");
+        return slider.value;
+    }
+
+    function pauseWorld(){
+        window.clearInterval(turnFunction);
+    }
+
     return {
-        isPaused: function () {
+        isPaused: function(){
             return paused;
         },
-        addResetButton: function () {
+        addResetButton: function(){
             var startButton = document.getElementById("start");
             startButton.innerText = "Reset";
-            startButton.onclick = function () {
+            startButton.onclick = function(){
                 pubsub.publish('reset');
                 resetWorld();
             };
         },
-        addPauseButton: function () {
+        addPauseButton: function(){
             var pauseButton = document.getElementById("pause");
             pauseButton.innerText = "Start";
-            pauseButton.onclick = function () {
+            pauseButton.onclick = function(){
+                pauseWorld();
                 paused = !paused;
+                if(!paused){
+                    startWorld();
+                }
                 pauseButton.innerText = paused ? "Start" : "Pause";
             };
         },
-        addSpeedSlider: function () {
+        addSpeedSlider: function(){
             var slider = document.getElementById("speed");
-            slider.onchange = function () {
-                var rate = slider.value;
-                window.clearInterval(turnFunction);
-                turnFunction = window.setInterval(function () {
-                    if (!paused) {
+            slider.onchange = function(){
+                if(!paused){
+                    window.clearInterval(turnFunction);
+                    turnFunction = window.setInterval(function(){
                         world.turn();
-                    }
-                }, rate);
+                    }, slider.value);
+                }
             };
         },
-        addWorldStats: function () {
+        addWorldStats: function(){
             document.getElementById("world-stats").appendChild(new StatsDisplay(new WorldStats()).getDisplay());
         },
-        createAndStartWorld : createAndStartWorld
+        createAndStartWorld: createAndShowWorld
     };
 };
