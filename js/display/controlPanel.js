@@ -1,41 +1,44 @@
-var ControlPanel = function(){
+function ControlPanel(){
+    this.paused = true;
+    this.pubsub = PubSub();
+    this.world = null;
+    this.turnFunction = null;
+}
 
-    var paused = true,
-        pubsub = PubSub(),
-        world, display, turnFunction;
-
-    function clearWorld_soRemovalEventsGetFired(){
+(function(){
+    function clearWorld_soRemovalEventsGetFired(world){
         world.clear();
     }
 
-    function resetWorld(){
-        clearWorld_soRemovalEventsGetFired();
-        createAndShowWorld();
+    function resetWorld(world){
+        clearWorld_soRemovalEventsGetFired(world);
+        return createAndShowWorld();
     }
 
     function createWorld(){
-        var dataGrid = createGrid();
-        world = new World(dataGrid);
+        return new World(createGrid());
     }
 
-    function displayWorld(){
+    function displayWorld(world){
         var viz = new Visualizer(world, ColorMapping);
-        display = viz.getDisplay();
+        var display = viz.getDisplay();
         var spotForWorld = document.getElementById("world-goes-here");
         spotForWorld.innerHTML = null;
         spotForWorld.appendChild(display);
     }
 
-    function startWorld(){
+    function startWorld(turnFunction, world){
         window.clearInterval(turnFunction);
-        turnFunction = window.setInterval(function(){
+        return window.setInterval(function(){
             world.turn();
         }, getTickRate());
     }
 
     function createAndShowWorld(){
-        createWorld();
-        displayWorld();
+        var world = createWorld();
+        displayWorld(world);
+
+        return world;
     }
 
     function createGrid(){
@@ -72,48 +75,52 @@ var ControlPanel = function(){
         return slider.value;
     }
 
-    function pauseWorld(){
+    function pauseWorld(turnFunction){
         window.clearInterval(turnFunction);
     }
 
-    return {
-        isPaused: function(){
-            return paused;
-        },
-        addResetButton: function(){
-            var startButton = document.getElementById("start");
-            startButton.innerText = "Reset";
-            startButton.onclick = function(){
-                pubsub.publish('reset');
-                resetWorld();
-            };
-        },
-        addPauseButton: function(){
-            var pauseButton = document.getElementById("pause");
-            pauseButton.innerText = "Start";
-            pauseButton.onclick = function(){
-                pauseWorld();
-                paused = !paused;
-                if(!paused){
-                    startWorld();
-                }
-                pauseButton.innerText = paused ? "Start" : "Pause";
-            };
-        },
-        addSpeedSlider: function(){
-            var slider = document.getElementById("speed");
-            slider.onchange = function(){
-                if(!paused){
-                    window.clearInterval(turnFunction);
-                    turnFunction = window.setInterval(function(){
-                        world.turn();
-                    }, slider.value);
-                }
-            };
-        },
-        addWorldStats: function(){
-            document.getElementById("world-stats").appendChild(new StatsDisplay(new WorldStats()).getDisplay());
-        },
-        createAndStartWorld: createAndShowWorld
+    ControlPanel.prototype.addResetButton = function(){
+        var startButton = document.getElementById("start");
+        startButton.innerText = "Reset";
+        startButton.onclick = function(){
+            this.pubsub.publish('reset');
+            this.world = resetWorld(this.world);
+            if(!this.paused){
+                this.turnFunction = startWorld(this.turnFunction, this.world);
+            }
+        }.bind(this);
     };
-};
+
+    ControlPanel.prototype.addPauseButton = function(){
+        var pauseButton = document.getElementById("pause");
+        pauseButton.innerText = "Start";
+        pauseButton.onclick = function(){
+            pauseWorld(this.turnFunction);
+            this.paused = !this.paused;
+            if(!this.paused){
+                this.turnFunction = startWorld(this.turnFunction, this.world);
+            }
+            pauseButton.innerText = this.paused ? "Start" : "Pause";
+        }.bind(this);
+    };
+
+    ControlPanel.prototype.addSpeedSlider = function(){
+        var slider = document.getElementById("speed");
+        slider.onchange = function(){
+            if(!this.paused){
+                window.clearInterval(this.turnFunction);
+                this.turnFunction = window.setInterval(function(){
+                    this.world.turn();
+                }.bind(this), slider.value);
+            }
+        }.bind(this);
+    };
+
+    ControlPanel.prototype.addWorldStats = function(){
+        document.getElementById("world-stats").appendChild(new StatsDisplay(new WorldStats()).getDisplay());
+    };
+
+    ControlPanel.prototype.createAndShowWorld = function(){
+        this.world = createAndShowWorld();
+    };
+})();
