@@ -75,6 +75,10 @@ label[for="FruitBushs-count"]{
     opacity: 0.7;
 }
 
+#player-controls {
+    padding-left: 15px;
+}
+
 table#the-world td.highlight {
     box-shadow: 0 0 10px 5px #c0c;
 }
