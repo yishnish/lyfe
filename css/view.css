@@ -76,13 +76,13 @@ label[for="FruitBushs-count"]{
 }
 
 table#the-world td.highlight {
-    border: 1px solid deepskyblue;
+    box-shadow: 0 0 10px 5px #c0c;
 }
 
 table#the-world td.tagged {
-    border: 1px solid deepskyblue;
+    box-shadow: 0 0 10px 5px #c0c;
 }
 
 table#the-world td.temp-highlight {
-    border: 1px solid deepskyblue;
+    box-shadow: 0 0 10px 5px #c0c;
 }
