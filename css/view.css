@@ -69,6 +69,10 @@ label[for="FruitBushs-count"]{
     margin-left: 2em;
 }
 
+#speed {
+    margin-bottom: -2%;
+}
+
 .details {
     position: fixed;
     background-color: wheat;
@@ -76,11 +80,17 @@ label[for="FruitBushs-count"]{
 }
 
 #player-controls {
-    padding-left: 15px;
+    margin-left: 5px;
+    padding: 10px 0 10px 15px;
+    border-radius: 5px;
 }
 
 table#the-world td.highlight {
     box-shadow: 0 0 10px 5px #c0c;
+}
+
+.content-header {
+    padding: 10px 0px 0px 15px;
 }
 
 table#the-world td.tagged {

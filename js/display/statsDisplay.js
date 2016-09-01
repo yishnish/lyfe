@@ -47,14 +47,6 @@ function StatsDisplay(worldStats){
             .build();
     }
 
-    function getTotals(){
-        var total = 0;
-        ['Cow', 'Civet', 'Wolf', 'PolarBear', 'FruitBush'].forEach(function(thing){
-            total += worldStats.getThingCount(thing);
-        });
-        return total;
-    }
-
     function createTotalRow(){
         var builder = new DisplayRowBuilder();
         return builder.createRow().addRowClass('stats-display-row')
@@ -70,6 +62,14 @@ function StatsDisplay(worldStats){
                 this.displayDataElement.innerHTML = getTotals();
             })
             .build();
+    }
+
+    function getTotals(){
+        var total = 0;
+        ['Cow', 'Civet', 'Wolf', 'PolarBear', 'FruitBush'].forEach(function(thing){
+            total += worldStats.getThingCount(thing);
+        });
+        return total;
     }
 
     function createDisplayList(){
