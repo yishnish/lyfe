@@ -18,7 +18,7 @@ TurnContext.prototype.hasThingAt = function (delta) {
 TurnContext.prototype.hasMatchingThingAt = function (delta, criteria) {
     var row = this.location.getRow() + delta.dy();
     var col = this.location.getColumn() + delta.dx();
-    if(row >= 0 && row < this.world.rows && col >= 0 && col < this.world.columns) {
+    if(this.isOnMap(delta)) {
         var thingAt = this.world.thingAt(row, col);
         return criteria(thingAt);
     }

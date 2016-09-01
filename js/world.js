@@ -50,15 +50,16 @@ function World(dataGrid){
     };
 
     this.add = function(thing, coords) {
+        var row = coords.getRow();
+        var column = coords.getColumn();
         if(!thing){
-            this.remove(coords.getRow(), coords.getColumn());
+            this.remove(row, column);
         }else {
-            var thingAt = this.dataGrid[coords.getRow()][coords.getColumn()];
-            if(!thingAt) {
-                this.dataGrid[coords.getRow()][coords.getColumn()] = thing;
+            if(!this.dataGrid[row][column]) {
+                this.dataGrid[row][column] = thing;
                 pubsub.publish('thing-added', thing.getTypeName());
             }else{
-                throw new Error("Tried to add a thing to (" + coords.getRow() + "," + coords.getColumn() + ") but there was already something there");
+                throw new Error("Tried to add a thing to (" + row + "," + column + ") but there was already something there");
             }
         }
     };
