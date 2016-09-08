@@ -44,7 +44,7 @@ function World(dataGrid){
     this.remove = function (row, col) {
         var thingAt = this.dataGrid[row][col];
         if(thingAt){
-            pubsub.publish('thing-removed', thingAt.getTypeName());
+            pubsub.publish('thing-removed', thingAt);
         }
         this.dataGrid[row][col] = null;
     };
@@ -57,7 +57,7 @@ function World(dataGrid){
         }else {
             if(!this.dataGrid[row][column]) {
                 this.dataGrid[row][column] = thing;
-                pubsub.publish('thing-added', thing.getTypeName());
+                pubsub.publish('thing-added', thing);
             }else{
                 throw new Error("Tried to add a thing to (" + row + "," + column + ") but there was already something there");
             }

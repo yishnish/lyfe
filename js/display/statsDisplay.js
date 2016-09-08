@@ -1,29 +1,30 @@
 function StatsDisplay(worldStats){
     var stats = createDisplayList();
     stats.appendChild(createTurnsRow());
-    stats.appendChild(createThingRow('Cow'));
-    stats.appendChild(createThingRow('Wolf'));
-    stats.appendChild(createThingRow('FruitBush'));
-    stats.appendChild(createThingRow('Civet'));
-    stats.appendChild(createThingRow('PolarBear'));
+    stats.appendChild(createThingRow(Cow));
+    stats.appendChild(createThingRow(Wolf));
+    stats.appendChild(createThingRow(FruitBush));
+    stats.appendChild(createThingRow(Civet));
+    stats.appendChild(createThingRow(PolarBear));
     stats.appendChild(createTotalRow());
 
     this.getDisplay = function(){
         return stats;
     };
 
-    function createThingRow(thingName){
+    function createThingRow(thing){
+        var thingName = thing.name;
         var builder = new DisplayRowBuilder(worldStats);
         return builder.createRow().addRowClass('stats-display-row')
             .addDataLabel(thingName + 's')
             .addData(thingName.toLowerCase() + '-count', worldStats.getTurnCount)
-            .subscribe('thing-added', function(thing){
-                if(thing === thingName){
+            .subscribe('thing-added', function(addedThing){
+                if(addedThing.getTypeName() === thingName){
                     this.displayDataElement.innerHTML = worldStats.getThingCount(thingName);
                 }
             })
-            .subscribe('thing-removed', function(thing){
-                if(thing === thingName){
+            .subscribe('thing-removed', function(removedThing){
+                if(removedThing.getTypeName() === thingName){
                     this.displayDataElement.innerHTML = worldStats.getThingCount(thingName);
                 }
             })

@@ -117,7 +117,7 @@ describe("A World", function(){
             var world = new World([[]]);
             var thing = new Thing(Thing);
             world.add(thing, new Coordinates(0, 0));
-            expect(pubsub.publish).toHaveBeenCalledWith('thing-added', thing.getTypeName());
+            expect(pubsub.publish).toHaveBeenCalledWith('thing-added', thing);
         });
         it('publishes an event when removing a thing', function(){
             var pubsub = PubSub();
@@ -125,7 +125,7 @@ describe("A World", function(){
             var thing = new Thing(Thing);
             var world = new World([[thing]]);
             world.remove(0, 0);
-            expect(pubsub.publish).toHaveBeenCalledWith('thing-removed', thing.getTypeName());
+            expect(pubsub.publish).toHaveBeenCalledWith('thing-removed', thing);
         });
     });
     describe("Contents", function(){
