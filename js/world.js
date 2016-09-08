@@ -2,7 +2,7 @@ function World(dataGrid){
     var callbacks = [];
     var pubsub = PubSub();
 
-    this.getGrid = function () {
+    this.getRows = function () {
         return this.dataGrid;
     };
 

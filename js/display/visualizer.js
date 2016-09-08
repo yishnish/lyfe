@@ -12,7 +12,7 @@ function Visualizer(world, colorMapping) {
     };
 
     this.setContents = function () {
-        world.getGrid().forEach(function (row, rowNum) {
+        world.getRows().forEach(function (row, rowNum) {
             row.forEach(function (thing, colNum) {
                 nodes[rowNum][colNum].setContents(thing);
             });
@@ -44,7 +44,7 @@ function Visualizer(world, colorMapping) {
         var nodeCollection = [];
         var nodeFactory = new WorldNodeFactory(colorMapping);
 
-        world.getGrid().forEach(function (row) {
+        world.getRows().forEach(function (row) {
             var r = [];
             var rowNode = document.createElement("tr");
             row.forEach(function (thing) {

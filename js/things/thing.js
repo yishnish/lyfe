@@ -1,4 +1,4 @@
-function Thing(clazz) {
+function Thing(clazz){
     this.MAX_VITALITY = 100;
     this.MAX_HP = 100;
     this.hp = 100;
@@ -6,66 +6,70 @@ function Thing(clazz) {
     this.dead = false;
     this.age = 0;
     this.tagged = false;
-
-    this.getType = function(){
-        return clazz;
-    };
-
-    this.getTypeName = function () {
-        return clazz.name;
-    };
+    this.clazz = clazz;
 }
 
-Thing.prototype.tag = function () {
+Thing.prototype.getType = function(){
+    return this.clazz;
+};
+
+Thing.prototype.getTypeName = function(){
+    return this.clazz.name;
+};
+
+Thing.prototype.tag = function(){
     this.tagged = true;
 };
 
-Thing.prototype.isTagged = function () {
+Thing.prototype.isTagged = function(){
     return this.tagged;
 };
 
-Thing.prototype.toggleTag = function () {
+Thing.prototype.toggleTag = function(){
     this.tagged = !this.tagged;
 };
 
-Thing.prototype.mixin = function(mixinClass) {
-    for(var methodName in mixinClass.prototype) {
+Thing.prototype.mixin = function(mixinClass){
+    for(var methodName in mixinClass.prototype){
         this[methodName] = mixinClass.prototype[methodName];
     }
 };
 
-Thing.prototype.removeMixin = function(mixinClass) {
-    for(var methodName in mixinClass.prototype) {
+Thing.prototype.removeMixin = function(mixinClass){
+    for(var methodName in mixinClass.prototype){
         this[methodName] = undefined;
     }
 };
 
-Thing.prototype.takeTurn = function (turnContext) {
+Thing.prototype.takeTurn = function(turnContext){
     this.doYourTurnThings(turnContext);
     this.adjustHealthBasedOnVitality.call(this, turnContext);
     decrementVitality.call(this);
     this.age++;
 };
 
-Thing.prototype.die = function (turnContext) {
+Thing.prototype.die = function(turnContext){
     this.dead = true;
 };
 
-Thing.prototype.doYourTurnThings = function (turn) { };
+Thing.prototype.doYourTurnThings = function(turn){
+};
 
-Thing.prototype.newInstance = function () { return new (this.getType())()};
+Thing.prototype.newInstance = function(){
+    return new (this.getType())();
+};
 
-Thing.prototype.adjustHealthBasedOnVitality = function (turn) {
-    if (this.vitality === 0) {
+Thing.prototype.adjustHealthBasedOnVitality = function(turn){
+    if(this.vitality === 0){
         this.hp = Math.max(0, this.hp - 10);
-    } else if (this.vitality === this.MAX_VITALITY) {
+    } else if(this.vitality === this.MAX_VITALITY){
         this.hp = Math.min(this.MAX_HP, this.hp + 10);
     }
-    if (this.hp <= 0) {
+    if(this.hp <= 0){
         this.die(turn);
     }
 };
 
-function decrementVitality() {
+function decrementVitality(){
     this.vitality = Math.max(this.vitality - 10, 0);
 }
