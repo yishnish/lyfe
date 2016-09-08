@@ -7,6 +7,43 @@ describe("A World", function(){
         dataGrid = [[new Cow()]];
         world = new World(dataGrid);
     });
+    describe('basic benchmark', function(){
+        //this adds a few seconds onto the build time so dont always run it. also these time are arbitrary and
+        //will vary based on machine running the tests so take it with a grain of cyanide
+        xit('should turn at at least a given rate', function(){
+            var gridsize = 100;
+            const ACCEPTABLE_CHROME_TIME = 300;
+            const ACCEPTABLE_FF_TIME = 100;
+            dataGrid = new Array(gridsize);
+            for(let i = 0; i < gridsize; i++){
+                dataGrid[i] = new Array(gridsize);
+                for(let j = 0; j < gridsize; j++){
+                    dataGrid[i][j] = new Cow();
+                }
+            }
+            var world = new World(dataGrid);
+            var start, end;
+            var starts = [], ends = [];
+            for(let t =0; t < 10; t++){
+                start = Date.now();
+                world.turn();
+                end = Date.now();
+                starts.push(start);
+                ends.push(end);
+            }
+            var totalDifferences = ends.reduce(function(prev, curr, indx){
+                return prev + curr - starts[indx];
+            }, 0);
+            var averageDiff = totalDifferences/starts.length;
+            if(window.chrome){
+                expect(averageDiff).toBeLessThan(ACCEPTABLE_CHROME_TIME);
+            }
+            if(typeof InstallTrigger === 'object'){
+                expect(averageDiff).toBeLessThan(ACCEPTABLE_FF_TIME);
+            }
+        });
+    });
+
     describe("validations", function(){
         it('should fail when there is no data', function(){
             expect(function(){
