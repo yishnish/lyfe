@@ -1,28 +1,31 @@
 describe('WorldNode', function () {
     describe('wraps the DOM node for an item in the world', function () {
         describe("setting attributes", function () {
+            var colorMapping;
+            beforeAll(function(){
+                colorMapping = ColorMapping();
+            });
             it('should use a color mapping to set color attribute when initialized', function () {
-                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var cow = new Cow();
                 var wolf = new Wolf();
                 var nodeFactory = new WorldNodeFactory(colorMapping);
                 var cowNode = nodeFactory.newNode(cow);
                 var wolfNode = nodeFactory.newNode(wolf);
-                expect(cowNode.color()).toBe(colorMapping.Cow);
-                expect(wolfNode.color()).toBe(colorMapping.Wolf);
+                expect(cowNode.color()).toBe(colorMapping.colorFor(cow));
+                expect(wolfNode.color()).toBe(colorMapping.colorFor(wolf));
             });
 
             it('should setContents color when contents change', function () {
-                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var nodeFactory = new WorldNodeFactory(colorMapping);
-                var node = nodeFactory.newNode(new Cow());
-                expect(node.color()).toBe(colorMapping.Cow);
-                node.setContents(new Wolf());
-                expect(node.color()).toBe(colorMapping.Wolf);
+                var cow = new Cow();
+                var node = nodeFactory.newNode(cow);
+                expect(node.color()).toBe(colorMapping.colorFor(cow));
+                var wolf = new Wolf();
+                node.setContents(wolf);
+                expect(node.color()).toBe(colorMapping.colorFor(wolf));
             });
 
             it('should highlight a cell when right clicked', function () {
-                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var nodeFactory = new WorldNodeFactory(colorMapping);
                 var node = nodeFactory.newNode(new Cow());
                 expect(node.getTableCell().classList).not.toContain('temp-highlight');
@@ -32,7 +35,6 @@ describe('WorldNode', function () {
             });
 
             it('should highlight a cell when a tagged thing is added', function () {
-                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var nodeFactory = new WorldNodeFactory(colorMapping);
                 var cow = new Cow();
                 cow.tag();
@@ -41,7 +43,6 @@ describe('WorldNode', function () {
             });
 
             it('should clear highlight from a cell when a tagged thing is replaced by a not tagged thing', function () {
-                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var nodeFactory = new WorldNodeFactory(colorMapping);
                 var cow = new Cow();
                 cow.tag();
@@ -52,7 +53,6 @@ describe('WorldNode', function () {
             });
 
             it('should clear highlight from a cell when a tagged thing is removed', function () {
-                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var nodeFactory = new WorldNodeFactory(colorMapping);
                 var cow = new Cow();
                 cow.tag();
@@ -63,7 +63,6 @@ describe('WorldNode', function () {
             });
 
             it('should clear highlights for a cell when the contents change', function () {
-                var colorMapping = {Cow: 'black', Wolf : 'yellow'};
                 var nodeFactory = new WorldNodeFactory(colorMapping);
                 var node = nodeFactory.newNode(new Cow());
                 expect(node.getTableCell().classList).not.toContain('temp-highlight');

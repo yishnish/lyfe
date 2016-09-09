@@ -21,7 +21,6 @@ function Visualizer(world, colorMapping) {
 
 //private
     function init() {
-        validate();
         var nodeStuff = createNodeStuff();
         nodes = nodeStuff.nodeCollection;
         nodeHTML = nodeStuff.nodeHTML;
@@ -32,10 +31,6 @@ function Visualizer(world, colorMapping) {
 
     function getDataNodes() {
         return nodes;
-    }
-
-    function validate() {
-        validateColorMapping();
     }
 
     function createNodeStuff() {
@@ -57,12 +52,6 @@ function Visualizer(world, colorMapping) {
             nodeCollection.push(r);
         });
         return {nodeHTML: tableNode, nodeCollection: nodeCollection};
-    }
-
-    function validateColorMapping() {
-        if (colorMapping === null || isEmptyObject(colorMapping)) {
-            throw new Error("You need a non-empty color mapping");
-        }
     }
 
     function isEmptyObject(object) {

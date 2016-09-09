@@ -77,7 +77,7 @@ function ControlPanel(){
     }
 
     function displayWorld(world){
-        var viz = new Visualizer(world, ColorMapping);
+        var viz = new Visualizer(world, ColorMapping());
         var display = viz.getDisplay();
         var spotForWorld = document.getElementById("world-goes-here");
         spotForWorld.innerHTML = null;

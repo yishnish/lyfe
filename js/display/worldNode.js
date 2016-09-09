@@ -16,7 +16,7 @@ function WorldNode(colorMapping, thing){
             td.classList.add('tagged');
         }else{td.classList.remove('tagged');}
 
-        var color = thing ? colorMapping[thing.getTypeName()] : colorMapping.empty;
+        var color = colorMapping.colorFor(thing);
         td.setAttribute("color", color);
         thingDetails.setContents(thing);
     };
