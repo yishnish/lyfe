@@ -6,7 +6,7 @@ function Cannibal(){}
 
     Cannibal.prototype.eatIfPossible = function (turn) {
         var placesWithFood = this.findPlaces(turn, function (thing) {
-            return thing && thing.getType() === this.getType();
+            return thing && thing.getClazz() === this.getClazz();
         });
         var placeToEatAt = this.pickRandomLocation(placesWithFood);
         if (placeToEatAt) {

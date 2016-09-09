@@ -1,5 +1,5 @@
 function StatsDisplay(worldStats){
-    var stats = createDisplayList();
+    var stats = createDisplayTable();
     stats.appendChild(createTurnsRow());
     stats.appendChild(createThingRow(Cow));
     stats.appendChild(createThingRow(Wolf));
@@ -12,15 +12,15 @@ function StatsDisplay(worldStats){
         return stats;
     };
 
-    function createThingRow(thing){
-        var thingType = thing.name;
-        var builder = new DisplayRowBuilder(worldStats);
+    function createThingRow(clazz){
+        var thingName = clazz.name;
+        var builder = new DisplayRowBuilder();
         return builder.createRow().addRowClass('stats-display-row')
-            .addDataLabel(thingType + 's')
-            .addData(thingType.toLowerCase() + '-count', worldStats.getTurnCount)
-            .subscribe('thing-added', displayThingCount(thing))
-            .subscribe('thing-removed', displayThingCount(thing))
-            .subscribe('reset', displayThingCount(thing))
+            .addDataLabel(thingName + 's')
+            .addData(thingName.toLowerCase() + '-count', worldStats.getTurnCount)
+            .subscribe('thing-added', displayThingCount(clazz))
+            .subscribe('thing-removed', displayThingCount(clazz))
+            .subscribe('reset', resetThingCount(clazz))
             .build();
     }
 
@@ -45,11 +45,17 @@ function StatsDisplay(worldStats){
             .build();
     }
 
-    function displayThingCount(thingType){
+    function displayThingCount(clazz){
         return function(addedThing){
-            if(addedThing.getType() === thingType){
-                this.displayDataElement.innerHTML = worldStats.getThingCount(thingType);
+            if(addedThing.getClazz() === clazz){
+                this.displayDataElement.innerHTML = worldStats.getThingCount(clazz);
             }
+        };
+    }
+
+    function resetThingCount(clazz){
+        return function(){
+            this.displayDataElement.innerHTML = worldStats.getThingCount(clazz);
         };
     }
 
@@ -63,14 +69,16 @@ function StatsDisplay(worldStats){
 
     function getTotals(){
         var total = 0;
-        [Cow, Civet, Wolf, PolarBear, FruitBush].forEach(function(thing){
-            total += worldStats.getThingCount(thing);
+        [Cow, Civet, Wolf, PolarBear, FruitBush].forEach(function(thingClass){
+            total += worldStats.getThingCount(thingClass);
         });
         return total;
     }
 
-    function createDisplayList(){
-        return document.createElement("ul");
+    function createDisplayTable(){
+        var table = document.createElement("table");
+        table.classList.add('stats-display');
+        return table;
     }
 }
 
@@ -79,7 +87,7 @@ function DisplayRowBuilder(){
 
     return {
         createRow: function(){
-            this.row = document.createElement('li');
+            this.row = document.createElement('tr');
             return this;
         },
         addRowClass: function(classToAdd){
@@ -87,13 +95,13 @@ function DisplayRowBuilder(){
             return this;
         },
         addDataLabel: function(label){
-            this.label = document.createElement("label");
+            this.label = document.createElement("td");
+            this.label.classList.add(label + '-color');
             this.label.innerHTML = label + ": ";
-            this.label.setAttribute('for', label + '-count');
             return this;
         },
         addData: function(id, dataGetter){
-            this.rowData = document.createElement("span");
+            this.rowData = document.createElement("td");
             this.displayDataElement = document.createElement("span");
             this.displayDataElement.setAttribute('id', id);
             this.displayDataElement.innerHTML = dataGetter();

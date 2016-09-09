@@ -13,9 +13,9 @@ describe("things that give birth", function () {
         ]);
         var turn = new TurnContext(world, thing, new Coordinates(0, 1));
         thing.giveBirth(turn);
-        expect(world.thingAt(0, 0).getType()).toBe(MyThing);
-        expect(world.thingAt(0, 1).getType()).toBe(MyThing);
-        expect(world.thingAt(0, 2).getType()).toBe(FruitBush);
+        expect(world.thingAt(0, 0).getClazz()).toBe(MyThing);
+        expect(world.thingAt(0, 1).getClazz()).toBe(MyThing);
+        expect(world.thingAt(0, 2).getClazz()).toBe(FruitBush);
     });
 
     it('should do nothing if there are no empty spaces', function () {
@@ -25,9 +25,9 @@ describe("things that give birth", function () {
         ]);
         var turn = new TurnContext(world, thing, new Coordinates(0, 1));
         thing.giveBirth(turn);
-        expect(world.thingAt(0, 0).getType()).toBe(FruitBush);
-        expect(world.thingAt(0, 1).getType()).toBe(MyThing);
-        expect(world.thingAt(0, 2).getType()).toBe(FruitBush);
+        expect(world.thingAt(0, 0).getClazz()).toBe(FruitBush);
+        expect(world.thingAt(0, 1).getClazz()).toBe(MyThing);
+        expect(world.thingAt(0, 2).getClazz()).toBe(FruitBush);
     });
 
     it('should give birth when a free space shows up', function () {
@@ -37,14 +37,14 @@ describe("things that give birth", function () {
         ]);
         var turn = new TurnContext(world, thing, new Coordinates(0, 1));
         thing.giveBirth(turn);
-        expect(world.thingAt(0, 0).getType()).toBe(FruitBush);
-        expect(world.thingAt(0, 1).getType()).toBe(MyThing);
-        expect(world.thingAt(0, 2).getType()).toBe(FruitBush);
+        expect(world.thingAt(0, 0).getClazz()).toBe(FruitBush);
+        expect(world.thingAt(0, 1).getClazz()).toBe(MyThing);
+        expect(world.thingAt(0, 2).getClazz()).toBe(FruitBush);
         world.remove(0, 2);
         thing.giveBirth(turn);
-        expect(world.thingAt(0, 0).getType()).toBe(FruitBush);
-        expect(world.thingAt(0, 1).getType()).toBe(MyThing);
-        expect(world.thingAt(0, 2).getType()).toBe(MyThing);
+        expect(world.thingAt(0, 0).getClazz()).toBe(FruitBush);
+        expect(world.thingAt(0, 1).getClazz()).toBe(MyThing);
+        expect(world.thingAt(0, 2).getClazz()).toBe(MyThing);
     });
 
     it('should give birth to a child with the same vitality as the parent', function () {

@@ -13,12 +13,25 @@ table#the-world td {
     width: 5px;
 }
 
+table.stats-display{
+    padding: 10px 0px 0px 15px;
+    border-spacing: 4px, 8px;
+}
+
+td.Cows-color {
+    color: brown;
+}
+
 td[color="brown"] {
     background-color: brown;
 }
 
 label[for="Cows-count"]{
     color: brown;
+}
+
+td.Wolfs-color {
+    color: blue;
 }
 
 td[color="blue"] {
@@ -29,6 +42,10 @@ label[for="Wolfs-count"]{
     color: blue;
 }
 
+td.Civets-color {
+    color: red;
+}
+
 td[color="red"] {
     background-color: red;
 }
@@ -37,12 +54,20 @@ label[for="Civets-count"]{
     color: red;
 }
 
+td.PolarBears-color {
+    color: orange;
+}
+
 td[color="yellow"] {
     background-color: orange;
 }
 
 label[for="PolarBears-count"]{
     color: orange;
+}
+
+td.FruitBushs-color {
+    color: green;
 }
 
 td[color="green"] {
@@ -87,10 +112,6 @@ label[for="FruitBushs-count"]{
 
 table#the-world td.highlight {
     box-shadow: 0 0 10px 5px #c0c;
-}
-
-.content-header {
-    padding: 10px 0px 0px 15px;
 }
 
 table#the-world td.tagged {

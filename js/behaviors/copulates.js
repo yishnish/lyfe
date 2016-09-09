@@ -24,6 +24,6 @@ function Copulates(){}
     };
 
     Copulates.prototype.isHumpable = function (thing) {
-        return thing && thing.getType() === this.getType();
+        return thing && thing.getClazz() === this.getClazz();
     };
 })();

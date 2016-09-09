@@ -17,7 +17,7 @@ function WorldStats(){
     };
 
     pubsub.subscribe('thing-added', function(thing){
-        var type = thing.getType();
+        var type = thing.getClazz();
         var oldValue = things.get(type);
         if(!oldValue){
             oldValue = 0;
@@ -27,7 +27,7 @@ function WorldStats(){
     });
 
     pubsub.subscribe('thing-removed', function(thing){
-        var type = thing.getType();
+        var type = thing.getClazz();
         things.set(type, things.get(type) - 1);
     });
 

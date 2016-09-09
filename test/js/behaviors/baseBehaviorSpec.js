@@ -20,7 +20,7 @@ describe('Base behavior', function () {
         var world = new World([ [new Cow(), myBaseThing, new Wolf()]]);
         var turn = new TurnContext(world, myBaseThing, new Coordinates(0, 1));
         var myCriteria = function(thing) {
-            return thing && thing.getType() === Cow;
+            return thing && thing.getClazz() === Cow;
         };
         var matchingPlaces = myBaseThing.findPlaces(turn, myCriteria);
         expect(matchingPlaces.length).toBe(1);

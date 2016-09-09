@@ -14,7 +14,7 @@ var ColorMapping = (function(){
                 if(!thing){
                     return colorMap.get('empty');
                 }
-                return colorMap.get(thing.getType());
+                return colorMap.get(thing.getClazz());
             }
         };
     }

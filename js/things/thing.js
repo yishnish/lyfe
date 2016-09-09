@@ -9,7 +9,7 @@ function Thing(clazz){
     this.clazz = clazz;
 }
 
-Thing.prototype.getType = function(){
+Thing.prototype.getClazz = function(){
     return this.clazz;
 };
 
@@ -52,7 +52,7 @@ Thing.prototype.doYourTurnThings = function(turn){
 };
 
 Thing.prototype.newInstance = function(){
-    return new (this.getType())();
+    return new (this.getClazz())();
 };
 
 Thing.prototype.adjustHealthBasedOnVitality = function(turn){

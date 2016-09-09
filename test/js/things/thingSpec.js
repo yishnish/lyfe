@@ -9,7 +9,7 @@ describe("Things", function () {
     describe("type awareness", function () {
         it('should know what type of thing it is', function () {
             var thing = new Thing(Thing);
-            expect(thing.getType()).toEqual(Thing);
+            expect(thing.getClazz()).toEqual(Thing);
         });
     });
 
