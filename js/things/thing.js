@@ -13,10 +13,6 @@ Thing.prototype.getType = function(){
     return this.clazz;
 };
 
-Thing.prototype.getTypeName = function(){
-    return this.clazz.name;
-};
-
 Thing.prototype.tag = function(){
     this.tagged = true;
 };
