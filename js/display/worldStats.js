@@ -12,22 +12,28 @@ function WorldStats(){
         return turnCount;
     };
 
-    this.getThingCount = function(thingName){
-        return things[thingName] || 0;
+    this.getThingCount = function(thingClass){
+        return things.get(thingClass) || 0;
     };
 
     pubsub.subscribe('thing-added', function(thing){
-        var thingName = thing.getTypeName();
-        if(!things[thingName]){
-            things[thingName] = 0;
+        var type = thing.getType();
+        var oldValue = things.get(type);
+        if(!oldValue){
+            oldValue = 0;
+            things.set(type, oldValue);
         }
-        things[thingName]++;
+        things.set(type, oldValue + 1);
     });
 
     pubsub.subscribe('thing-removed', function(thing){
-        things[thing.getTypeName()]--;
+        var type = thing.getType();
+        things.set(type, things.get(type) - 1);
     });
 
     pubsub.subscribe('turned', updateTurnCount.bind(this));
-    pubsub.subscribe('reset', function(){things = new Map(); turnCount = 0;});
+    pubsub.subscribe('reset', function(){
+        things = new Map();
+        turnCount = 0;
+    });
 }

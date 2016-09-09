@@ -13,23 +13,23 @@ function StatsDisplay(worldStats){
     };
 
     function createThingRow(thing){
-        var thingName = thing.name;
+        var thingType = thing.name;
         var builder = new DisplayRowBuilder(worldStats);
         return builder.createRow().addRowClass('stats-display-row')
-            .addDataLabel(thingName + 's')
-            .addData(thingName.toLowerCase() + '-count', worldStats.getTurnCount)
+            .addDataLabel(thingType + 's')
+            .addData(thingType.toLowerCase() + '-count', worldStats.getTurnCount)
             .subscribe('thing-added', function(addedThing){
-                if(addedThing.getTypeName() === thingName){
-                    this.displayDataElement.innerHTML = worldStats.getThingCount(thingName);
+                if(addedThing.getType() === thing){
+                    this.displayDataElement.innerHTML = worldStats.getThingCount(thing);
                 }
             })
             .subscribe('thing-removed', function(removedThing){
-                if(removedThing.getTypeName() === thingName){
-                    this.displayDataElement.innerHTML = worldStats.getThingCount(thingName);
+                if(removedThing.getType() === thing){
+                    this.displayDataElement.innerHTML = worldStats.getThingCount(thing);
                 }
             })
             .subscribe('reset', function(){
-                this.displayDataElement.innerHTML = '0';
+                this.displayDataElement.innerHTML = worldStats.getThingCount(thing);
             })
             .build();
     }
@@ -43,7 +43,7 @@ function StatsDisplay(worldStats){
                 this.displayDataElement.innerHTML = worldStats.getTurnCount();
             })
             .subscribe('reset', function(){
-                this.displayDataElement.innerHTML = '0';
+                this.displayDataElement.innerHTML = worldStats.getTurnCount();
             })
             .build();
     }
@@ -67,7 +67,7 @@ function StatsDisplay(worldStats){
 
     function getTotals(){
         var total = 0;
-        ['Cow', 'Civet', 'Wolf', 'PolarBear', 'FruitBush'].forEach(function(thing){
+        [Cow, Civet, Wolf, PolarBear, FruitBush].forEach(function(thing){
             total += worldStats.getThingCount(thing);
         });
         return total;

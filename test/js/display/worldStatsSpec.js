@@ -14,18 +14,18 @@ describe("world statistics", function(){
         var worldStats = new WorldStats(world);
         var cow = new Cow();
         world.add(cow, new Coordinates(0, 0));
-        expect(worldStats.getThingCount(cow.getTypeName())).toBe(1);
+        expect(worldStats.getThingCount(Cow)).toBe(1);
         var wolf = new Wolf();
         world.add(wolf, new Coordinates(0, 1));
-        expect(worldStats.getThingCount(wolf.getTypeName())).toBe(1);
+        expect(worldStats.getThingCount(Cow)).toBe(1);
     });
     it('removing a thing should lower the number of those things reported for the world', function(){
         var world = new World([[null, null]]);
         var worldStats = new WorldStats(world);
         var cow = new Cow();
         world.add(cow, new Coordinates(0, 0));
-        expect(worldStats.getThingCount(cow.getTypeName())).toBe(1);
+        expect(worldStats.getThingCount(Cow)).toBe(1);
         world.remove(0, 0);
-        expect(worldStats.getThingCount(cow.getTypeName())).toBe(0);
+        expect(worldStats.getThingCount(Cow)).toBe(0);
     });
 });
