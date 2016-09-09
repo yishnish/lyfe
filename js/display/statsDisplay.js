@@ -18,19 +18,9 @@ function StatsDisplay(worldStats){
         return builder.createRow().addRowClass('stats-display-row')
             .addDataLabel(thingType + 's')
             .addData(thingType.toLowerCase() + '-count', worldStats.getTurnCount)
-            .subscribe('thing-added', function(addedThing){
-                if(addedThing.getType() === thing){
-                    this.displayDataElement.innerHTML = worldStats.getThingCount(thing);
-                }
-            })
-            .subscribe('thing-removed', function(removedThing){
-                if(removedThing.getType() === thing){
-                    this.displayDataElement.innerHTML = worldStats.getThingCount(thing);
-                }
-            })
-            .subscribe('reset', function(){
-                this.displayDataElement.innerHTML = worldStats.getThingCount(thing);
-            })
+            .subscribe('thing-added', displayThingCount(thing))
+            .subscribe('thing-removed', displayThingCount(thing))
+            .subscribe('reset', displayThingCount(thing))
             .build();
     }
 
@@ -39,12 +29,8 @@ function StatsDisplay(worldStats){
         return builder.createRow().addRowClass('stats-display-row')
             .addDataLabel('Turns')
             .addData('turns-count', worldStats.getTurnCount)
-            .subscribe('turn-stats-updated', function(){
-                this.displayDataElement.innerHTML = worldStats.getTurnCount();
-            })
-            .subscribe('reset', function(){
-                this.displayDataElement.innerHTML = worldStats.getTurnCount();
-            })
+            .subscribe('turn-stats-updated', displayTurnCount)
+            .subscribe('reset', displayTurnCount)
             .build();
     }
 
@@ -53,16 +39,26 @@ function StatsDisplay(worldStats){
         return builder.createRow().addRowClass('stats-display-row')
             .addDataLabel('Total')
             .addData('total-count', getTotals)
-            .subscribe('turn-stats-updated', function(){
-                this.displayDataElement.innerHTML = getTotals();
-            })
-            .subscribe('thing-added', function(){
-                this.displayDataElement.innerHTML = getTotals();
-            })
-            .subscribe('reset', function(){
-                this.displayDataElement.innerHTML = getTotals();
-            })
+            .subscribe('turn-stats-updated', displayTotals)
+            .subscribe('thing-added', displayTotals)
+            .subscribe('reset', displayTotals)
             .build();
+    }
+
+    function displayThingCount(thingType){
+        return function(addedThing){
+            if(addedThing.getType() === thingType){
+                this.displayDataElement.innerHTML = worldStats.getThingCount(thingType);
+            }
+        };
+    }
+
+    function displayTurnCount(){
+        this.displayDataElement.innerHTML = worldStats.getTurnCount();
+    }
+
+    function displayTotals(){
+        this.displayDataElement.innerHTML = getTotals();
     }
 
     function getTotals(){
