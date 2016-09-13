@@ -38,6 +38,7 @@ describe("displaying world statistics", function(){
         world.add(new Civet(), new Coordinates(0, 0));
         expect(statsDisplay.getNumberOf('Civet')).toBe(1);
     });
+
     it('should show how many polar bears there are', function(){
         var stats = new WorldStats();
         var world = new World([[]]);

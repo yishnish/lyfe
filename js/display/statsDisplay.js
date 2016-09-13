@@ -15,19 +15,22 @@ function StatsDisplay(worldStats){
     function createThingRow(clazz){
         var thingName = clazz.name;
         var builder = new DisplayRowBuilder(worldStats);
+        var tdBuilder = new DisplayDataBuilder(worldStats);
+        var column = tdBuilder.withId(thingName.toLowerCase() + '-count')
+            .withInitialValue(69)
+            .subscribe('thing-added', tdBuilder.calculators.displayThingCount(clazz))
+            .subscribe('thing-removed', tdBuilder.calculators.displayThingCount(clazz))
+            .subscribe('reset', tdBuilder.calculators.resetThingCount(clazz));
         return builder.createRow().addRowClass('stats-display-row')
-            .addDataLabel(thingName + 's')
-            .addData(thingName.toLowerCase() + '-count', worldStats.getTurnCount)
-            .subscribe('thing-added', builder.calculators.displayThingCount(clazz))
-            .subscribe('thing-removed', builder.calculators.displayThingCount(clazz))
-            .subscribe('reset', builder.calculators.resetThingCount(clazz))
+            .addRowLabel(thingName + 's')
+            .addData2(column)
             .build();
     }
 
     function createTurnsRow(){
         var builder = new DisplayRowBuilder(worldStats);
         return builder.createRow().addRowClass('stats-display-row')
-            .addDataLabel('Turns')
+            .addRowLabel('Turns')
             .addData('turns-count', worldStats.getTurnCount)
             .subscribe('turn-stats-updated', builder.calculators.displayTurnCount)
             .subscribe('reset', builder.calculators.displayTurnCount)
@@ -37,7 +40,7 @@ function StatsDisplay(worldStats){
     function createTotalRow(){
         var builder = new DisplayRowBuilder(worldStats);
         return builder.createRow().addRowClass('stats-display-row')
-            .addDataLabel('Total')
+            .addRowLabel('Total')
             .addData('total-count', builder.calculators.displayTotals)
             .subscribe('turn-stats-updated', builder.calculators.displayTotals)
             .subscribe('thing-added', builder.calculators.displayTotals)
@@ -54,7 +57,9 @@ function StatsDisplay(worldStats){
 
 function DisplayRowBuilder(worldStats){
     var pubsub = PubSub();
-    var row, rowLabel, rowData, displayDataElement;
+    var rowDatas = [];
+    var rowDataBuilders = [];
+    var row, rowLabel, displayDataElement;
 
     function getTotals(){
         var total = 0;
@@ -73,18 +78,23 @@ function DisplayRowBuilder(worldStats){
             row.classList.add(classToAdd);
             return this;
         },
-        addDataLabel: function(label){
+        addRowLabel: function(label){
             rowLabel = document.createElement("td");
             rowLabel.classList.add(label + '-color');
             rowLabel.innerHTML = label + ": ";
             return this;
         },
-        addData: function(id, dataGetter){
-            rowData = document.createElement("td");
+        addData: function(id, initialValueSetter){
+            var rowData = document.createElement("td");
             displayDataElement = document.createElement("span");
             displayDataElement.setAttribute('id', id);
-            displayDataElement.innerHTML = dataGetter();
+            displayDataElement.innerHTML = initialValueSetter();
+            rowDatas.push(displayDataElement);
             rowData.appendChild(displayDataElement);
+            return this;
+        },
+        addData2: function(rowDataBuilder){
+            rowDataBuilders.push(rowDataBuilder);
             return this;
         },
         subscribe: function(event, fun){
@@ -92,8 +102,15 @@ function DisplayRowBuilder(worldStats){
             return this;
         },
         build: function(){
-            row.appendChild(rowLabel);
-            row.appendChild(rowData);
+            if(rowLabel){
+                row.appendChild(rowLabel);
+            }
+            rowDatas.forEach(function(datum){
+                row.appendChild(datum);
+            });
+            rowDataBuilders.forEach(function(builder){
+                row.appendChild(builder.build());
+            });
             return row;
         },
         calculators: {
@@ -114,6 +131,60 @@ function DisplayRowBuilder(worldStats){
             },
             displayTotals: function(){
                 displayDataElement.innerHTML = getTotals();
+            }
+        }
+    };
+}
+
+function DisplayDataBuilder(worldStats){
+    var td = document.createElement("td");
+    var id, initialValueSetter;
+
+    return {
+        withId: function(_id){
+            id = _id;
+            return this;
+        },
+        withInitialValue: function(_initialValueSetter){
+            initialValueSetter = _initialValueSetter;
+            return this;
+        },
+        subscribe: function(event, handler){
+            PubSub().subscribe(event, function(eventData){
+                handler(eventData);
+            });
+            return this;
+        },
+        build: function(){
+            if(id){
+                td.setAttribute("id", id);
+            }
+            if(initialValueSetter){
+                if(typeof initialValueSetter === 'function'){
+                    initialValueSetter = initialValueSetter();
+                }
+                td.innerHTML = initialValueSetter;
+            }
+            return td;
+        },
+        calculators: {
+            displayThingCount: function(clazz){
+                return function(addedThing){
+                    if(addedThing.getClazz() === clazz){
+                        td.innerHTML = worldStats.getThingCount(clazz);
+                    }
+                };
+            },
+            resetThingCount: function(clazz){
+                return function(){
+                    td.innerHTML = worldStats.getThingCount(clazz);
+                };
+            },
+            displayTurnCount: function(){
+                td.innerHTML = worldStats.getTurnCount();
+            },
+            displayTotals: function(){
+                td.innerHTML = getTotals();
             }
         }
     };

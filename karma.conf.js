@@ -18,8 +18,7 @@ module.exports = function (config) {
             'js/things/thing.js',
             'js/things/vegetable.js',
             'js/**/*.js',
-            'test/js/helpers/myThing.js',
-            'test/js/helpers/myCreature.js',
+            'test/js/helpers/*.js',
             'test/js/**/*.js'
         ],
 
