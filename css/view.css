@@ -15,7 +15,7 @@ table#the-world td {
 
 table.stats-display{
     padding: 10px 0px 0px 15px;
-    border-spacing: 4px, 8px;
+    border-spacing: 4px;
 }
 
 td.Cows-color {

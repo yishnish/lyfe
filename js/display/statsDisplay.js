@@ -14,37 +14,43 @@ function StatsDisplay(worldStats){
 
     function createThingRow(clazz){
         var thingName = clazz.name;
-        var builder = new DisplayRowBuilder(worldStats);
+        var builder = new DisplayRowBuilder();
         var tdBuilder = new DisplayDataBuilder(worldStats);
         var column = tdBuilder.withId(thingName.toLowerCase() + '-count')
-            .withInitialValue(69)
+            .withInitialValue(0)
             .subscribe('thing-added', tdBuilder.calculators.displayThingCount(clazz))
             .subscribe('thing-removed', tdBuilder.calculators.displayThingCount(clazz))
             .subscribe('reset', tdBuilder.calculators.resetThingCount(clazz));
         return builder.createRow().addRowClass('stats-display-row')
             .addRowLabel(thingName + 's')
-            .addData2(column)
+            .addData(column)
             .build();
     }
 
     function createTurnsRow(){
-        var builder = new DisplayRowBuilder(worldStats);
+        var builder = new DisplayRowBuilder();
+        var tdBuilder = new DisplayDataBuilder(worldStats);
+        var column = tdBuilder.withId('turns-count')
+            .withInitialValue(worldStats.getTurnCount)
+            .subscribe('turn-stats-updated', tdBuilder.calculators.displayTurnCount)
+            .subscribe('reset', tdBuilder.calculators.displayTurnCount);
         return builder.createRow().addRowClass('stats-display-row')
             .addRowLabel('Turns')
-            .addData('turns-count', worldStats.getTurnCount)
-            .subscribe('turn-stats-updated', builder.calculators.displayTurnCount)
-            .subscribe('reset', builder.calculators.displayTurnCount)
+            .addData(column)
             .build();
     }
 
     function createTotalRow(){
-        var builder = new DisplayRowBuilder(worldStats);
+        var builder = new DisplayRowBuilder();
+        var tdBuilder = new DisplayDataBuilder(worldStats);
+        var column = tdBuilder.withId('total-count')
+            .withInitialValue(tdBuilder.calculators.displayTotals)
+            .subscribe('turn-stats-updated', tdBuilder.calculators.displayTotals)
+            .subscribe('thing-added', tdBuilder.calculators.displayTotals)
+            .subscribe('reset', tdBuilder.calculators.displayTotals);
         return builder.createRow().addRowClass('stats-display-row')
             .addRowLabel('Total')
-            .addData('total-count', builder.calculators.displayTotals)
-            .subscribe('turn-stats-updated', builder.calculators.displayTotals)
-            .subscribe('thing-added', builder.calculators.displayTotals)
-            .subscribe('reset', builder.calculators.displayTotals)
+            .addData(column)
             .build();
     }
 
@@ -55,19 +61,10 @@ function StatsDisplay(worldStats){
     }
 }
 
-function DisplayRowBuilder(worldStats){
+function DisplayRowBuilder(){
     var pubsub = PubSub();
-    var rowDatas = [];
-    var rowDataBuilders = [];
-    var row, rowLabel, displayDataElement;
-
-    function getTotals(){
-        var total = 0;
-        [Cow, Civet, Wolf, PolarBear, FruitBush].forEach(function(thingClass){
-            total += worldStats.getThingCount(thingClass);
-        });
-        return total;
-    }
+    var rowData = [];
+    var row, rowLabel;
 
     return {
         createRow: function(){
@@ -84,17 +81,8 @@ function DisplayRowBuilder(worldStats){
             rowLabel.innerHTML = label + ": ";
             return this;
         },
-        addData: function(id, initialValueSetter){
-            var rowData = document.createElement("td");
-            displayDataElement = document.createElement("span");
-            displayDataElement.setAttribute('id', id);
-            displayDataElement.innerHTML = initialValueSetter();
-            rowDatas.push(displayDataElement);
-            rowData.appendChild(displayDataElement);
-            return this;
-        },
-        addData2: function(rowDataBuilder){
-            rowDataBuilders.push(rowDataBuilder);
+        addData: function(rowDataBuilder){
+            rowData.push(rowDataBuilder);
             return this;
         },
         subscribe: function(event, fun){
@@ -105,33 +93,10 @@ function DisplayRowBuilder(worldStats){
             if(rowLabel){
                 row.appendChild(rowLabel);
             }
-            rowDatas.forEach(function(datum){
-                row.appendChild(datum);
-            });
-            rowDataBuilders.forEach(function(builder){
+            rowData.forEach(function(builder){
                 row.appendChild(builder.build());
             });
             return row;
-        },
-        calculators: {
-            displayThingCount: function(clazz){
-                return function(addedThing){
-                    if(addedThing.getClazz() === clazz){
-                        displayDataElement.innerHTML = worldStats.getThingCount(clazz);
-                    }
-                };
-            },
-            resetThingCount: function(clazz){
-                return function(){
-                    displayDataElement.innerHTML = worldStats.getThingCount(clazz);
-                };
-            },
-            displayTurnCount: function(){
-                displayDataElement.innerHTML = worldStats.getTurnCount();
-            },
-            displayTotals: function(){
-                displayDataElement.innerHTML = getTotals();
-            }
         }
     };
 }
@@ -139,6 +104,14 @@ function DisplayRowBuilder(worldStats){
 function DisplayDataBuilder(worldStats){
     var td = document.createElement("td");
     var id, initialValueSetter;
+
+    function getTotals(){
+        var total = 0;
+        [Cow, Civet, Wolf, PolarBear, FruitBush].forEach(function(thingClass){
+            total += worldStats.getThingCount(thingClass);
+        });
+        return total;
+    }
 
     return {
         withId: function(_id){

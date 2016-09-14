@@ -21,8 +21,7 @@ describe("display data builders", function(){
     it('can subscribe to events', function(){
         var pubsub = PubSub();
         var called = false;
-        var tdBuilder = new DisplayDataBuilder();
-        var td = tdBuilder.subscribe('update-dammit', function(){
+        new DisplayDataBuilder().subscribe('update-dammit', function(){
             called = true;
         }).build();
         pubsub.publish('update-dammit');
