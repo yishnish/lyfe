@@ -2,7 +2,6 @@ function Carnivore(){}
 
 (function(){
     Carnivore.prototype = Object.create(BaseBehavior.prototype);
-    Carnivore.prototype.constructor = Carnivore;
 
     Carnivore.prototype.eatIfPossible = function (turn) {
         var placesWithFood = this.findPlaces(turn, function (thing) {

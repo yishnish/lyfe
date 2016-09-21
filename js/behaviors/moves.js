@@ -5,7 +5,6 @@ function Moves(){}
     var dy = [-1, 0, 1];
 
     Moves.prototype = Object.create(BaseBehavior.prototype);
-    Moves.prototype.constructor = Moves;
 
     Moves.prototype.moveIfPossible = function (turn) {
         var placesToMoveTo = this.findPlacesToMoveTo.call(this, turn);

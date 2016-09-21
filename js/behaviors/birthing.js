@@ -2,7 +2,6 @@ function Birthing() { }
 
 (function () {
     Birthing.prototype = Object.create(BaseBehavior.prototype);
-    Birthing.prototype.constructor = Birthing;
 
     Birthing.prototype.giveBirth = function (turn) {
         var placesToGiveBirthAt = this.findAdjacentEmptySpaces(turn);

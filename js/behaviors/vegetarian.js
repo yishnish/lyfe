@@ -2,7 +2,6 @@ function Vegetarian(){}
 
 (function(){
     Vegetarian.prototype = Object.create(BaseBehavior.prototype);
-    Vegetarian.prototype.constructor = Vegetarian;
 
     Vegetarian.prototype.eatIfPossible = function (turn) {
         var placesWithFood = this.findPlaces(turn, function (thing) {

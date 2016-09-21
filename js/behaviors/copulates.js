@@ -2,7 +2,6 @@ function Copulates(){}
 
 (function () {
     Copulates.prototype = Object.create(BaseBehavior.prototype);
-    Copulates.prototype.constructor = Birthing;
 
     Copulates.prototype.tryHumping = function (turn) {
         var humpableDeltas = this.findPlaces(turn, this.isHumpable.bind(this));

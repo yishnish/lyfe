@@ -78,6 +78,7 @@ describe("Things", function () {
     describe("mixins", function () {
         function MyMixin() { }
 
+        MyMixin.prototype = Object.create(BaseBehavior.prototype);
         MyMixin.prototype.foo = function () {
             return 'foo';
         };
@@ -94,6 +95,12 @@ describe("Things", function () {
             expect(thing.foo()).toEqual('foo');
             thing.removeMixin(MyMixin);
             expect(thing.foo).toBeUndefined();
+        });
+
+        it("shouldn't override its constructor with the mixin's constructor", function(){
+            var thing = new Cow();
+            thing.mixin(MyMixin);
+            expect(thing.constructor).toBe(Cow);
         });
     });
 

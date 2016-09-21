@@ -2,7 +2,6 @@ function Omnivore(){}
 
 (function(){
     Omnivore.prototype = Object.create(BaseBehavior.prototype);
-    Omnivore.prototype.constructor = Omnivore;
 
     Omnivore.prototype.eatIfPossible = function (turn) {
         var placesWithFood = this.findPlaces(turn, function (thing) {

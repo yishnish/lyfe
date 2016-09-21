@@ -2,7 +2,6 @@ function Cannibal(){}
 
 (function(){
     Cannibal.prototype = Object.create(BaseBehavior.prototype);
-    Cannibal.prototype.constructor = Cannibal;
 
     Cannibal.prototype.eatIfPossible = function (turn) {
         var placesWithFood = this.findPlaces(turn, function (thing) {
