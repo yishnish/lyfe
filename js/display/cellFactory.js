@@ -13,7 +13,7 @@ var CellFactory = {
                     td.appendChild(stats);
                 } else if (event.button === 2) {
                     td.classList.toggle('temp-highlight');
-                    node.toggleTag();
+                    node.toggleTagged();
                 }
                 return false;
             };

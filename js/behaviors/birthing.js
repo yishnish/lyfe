@@ -1,6 +1,5 @@
 function Birthing() { }
 
-(function () {
     Birthing.prototype = Object.create(BaseBehavior.prototype);
 
     Birthing.prototype.giveBirth = function (turn) {
@@ -14,4 +13,3 @@ function Birthing() { }
             return true;
         } else return false;
     };
-})();

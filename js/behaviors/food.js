@@ -1,12 +1,11 @@
-function Food() { }
+function Food(){
+}
 
-(function () {
-    Food.prototype = Object.create(BaseBehavior.prototype);
+Food.prototype = Object.create(BaseBehavior.prototype);
 
-    Food.prototype.getEaten = function () {
-        this.hp -= 10;
-        if (this.hp <= 0) {
-            this.die(null);
-        }
-    };
-})();
+Food.prototype.getEaten = function(){
+    this.hp -= 10;
+    if(this.hp <= 0){
+        this.die(null);
+    }
+};

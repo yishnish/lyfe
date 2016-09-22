@@ -19,7 +19,6 @@ function Visualizer(world, colorMapping) {
         });
     };
 
-//private
     function init() {
         var nodeStuff = createNodeStuff();
         nodes = nodeStuff.nodeCollection;
@@ -52,9 +51,5 @@ function Visualizer(world, colorMapping) {
             nodeCollection.push(r);
         });
         return {nodeHTML: tableNode, nodeCollection: nodeCollection};
-    }
-
-    function isEmptyObject(object) {
-        return Object.keys(object).length === 0;
     }
 }

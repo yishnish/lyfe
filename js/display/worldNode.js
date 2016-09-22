@@ -1,29 +1,33 @@
 function WorldNode(colorMapping, thing){
-    var thingDetails = new ThingDetails(thing);
-    var td = CellFactory.createCell(this, thingDetails);
-    var _thing = thing;
-
-    this.color = function () {
-        return td.getAttribute("color");
-    };
-    this.getTableCell = function(){
-        return td;
-    };
-    this.setContents = function(thing) {
-        _thing = thing;
-        td.classList.remove('temp-highlight');
-        if(thing && thing.isTagged()) {
-            td.classList.add('tagged');
-        }else{td.classList.remove('tagged');}
-
-        var color = colorMapping.colorFor(thing);
-        td.setAttribute("color", color);
-        thingDetails.setContents(thing);
-    };
-    this.toggleTag = function () {
-        if(_thing) {
-            _thing.toggleTag();
-        }
-    };
+    this.thing = thing;
+    this.colorMapping = colorMapping;
+    this.thingDetails = new ThingDetails(thing);
+    this.td = CellFactory.createCell(this, this.thingDetails);
     this.setContents(thing);
 }
+
+(function(){
+    WorldNode.prototype.color = function () {
+        return this.td.getAttribute("color");
+    };
+    WorldNode.prototype.getTableCell = function(){
+        return this.td;
+    };
+    WorldNode.prototype.setContents = function(thing) {
+        this.td.classList.remove('temp-highlight');
+        if(thing && thing.isTagged()) {
+            this.td.classList.add('tagged');
+        }else{this.td.classList.remove('tagged');}
+
+        var color = this.colorMapping.colorFor(thing);
+        this.td.setAttribute("color", color);
+        this.thingDetails.setContents(thing);
+    };
+    WorldNode.prototype.toggleTagged = function () {
+        if(this.thing) {
+            this.thing.toggleTagged();
+        }
+    };
+})();
+    
+
