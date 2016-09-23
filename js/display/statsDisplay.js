@@ -15,15 +15,20 @@ function StatsDisplay(worldStats){
     function createThingRow(clazz){
         var thingName = clazz.name;
         var builder = new DisplayRowBuilder();
-        var tdBuilder = new DisplayDataBuilder();
-        var column = tdBuilder.withId(thingName.toLowerCase() + '-count')
+        var currentCountBuilder = new DisplayDataBuilder();
+        var currentCount = currentCountBuilder.withId(thingName.toLowerCase() + '-count')
             .withInitialValue(0)
             .subscribe('thing-added', displayThingCount(clazz))
             .subscribe('thing-removed', displayThingCount(clazz))
             .subscribe('reset', resetThingCount(clazz));
+        var maxCountBuilder = new DisplayDataBuilder();
+        var maxCount = maxCountBuilder.withId(thingName.toLowerCase() + '-max-count')
+            .withInitialValue(0)
+            .subscribe('thing-added', displayMaxThingCount(clazz));
         return builder.createRow().addRowClass('stats-display-row')
             .addRowLabel(thingName + 's')
-            .addData(column)
+            .addData(currentCount)
+            .addData(maxCount)
             .build();
     }
 
@@ -72,6 +77,14 @@ function StatsDisplay(worldStats){
         return function(addedThing){
             if(addedThing.getClazz() === clazz){
                 return worldStats.getThingCount(clazz) || 0;
+            }
+        };
+    }
+
+    function displayMaxThingCount(clazz){
+        return function(addedThing){
+            if(addedThing.getClazz() === clazz){
+                return worldStats.getMaxThingCount(clazz) || 0;
             }
         };
     }

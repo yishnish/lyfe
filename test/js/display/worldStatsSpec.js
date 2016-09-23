@@ -28,4 +28,21 @@ describe("world statistics", function(){
         world.remove(0, 0);
         expect(worldStats.getThingCount(Cow)).toBe(0);
     });
+    it('should throw an error if you somehow decrement a value that was never added', function(){
+        var world = new World([[]]);
+        var worldStats = new WorldStats(world);
+        expect(function(){
+            PubSub().publish('thing-removed', new Cow());
+        }).toThrow();
+    });
+    it('should know the maximum number of a type of Thing that ever existed', function(){
+        var world = new World([[null, null]]);
+        var worldStats = new WorldStats(world);
+        world.add(new Cow(), new Coordinates(0, 0));
+        expect(worldStats.getMaxThingCount(Cow)).toBe(1);
+        world.add(new Cow(), new Coordinates(0, 1));
+        expect(worldStats.getMaxThingCount(Cow)).toBe(2);
+        world.remove(0, 0);
+        expect(worldStats.getMaxThingCount(Cow)).toBe(2);
+    });
 });
