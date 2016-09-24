@@ -15,16 +15,15 @@ function StatsDisplay(worldStats){
     function createThingRow(clazz){
         var thingName = clazz.name;
         var builder = new DisplayRowBuilder();
-        var currentCountBuilder = new DisplayDataBuilder();
-        var currentCount = currentCountBuilder.withId(thingName.toLowerCase() + '-count')
+        var currentCount = new DisplayDataBuilder().withId(thingName.toLowerCase() + '-count')
             .withInitialValue(0)
             .subscribe('thing-added', displayThingCount(clazz))
             .subscribe('thing-removed', displayThingCount(clazz))
             .subscribe('reset', resetThingCount(clazz));
-        var maxCountBuilder = new DisplayDataBuilder();
-        var maxCount = maxCountBuilder.withId(thingName.toLowerCase() + '-max-count')
+        var maxCount = new DisplayDataBuilder().withId(thingName.toLowerCase() + '-max-count')
             .withInitialValue(0)
-            .subscribe('thing-added', displayMaxThingCount(clazz));
+            .subscribe('thing-added', displayMaxThingCount(clazz))
+            .subscribe('reset', resetThingCount(clazz));
         return builder.createRow().addRowClass('stats-display-row')
             .addRowLabel(thingName + 's')
             .addData(currentCount)
@@ -34,8 +33,7 @@ function StatsDisplay(worldStats){
 
     function createTurnsRow(){
         var builder = new DisplayRowBuilder();
-        var tdBuilder = new DisplayDataBuilder();
-        var column = tdBuilder.withId('turns-count')
+        var column = new DisplayDataBuilder().withId('turns-count')
             .withInitialValue(worldStats.getTurnCount)
             .subscribe('turn-stats-updated', displayTurnCount)
             .subscribe('reset', displayTurnCount);
@@ -47,8 +45,7 @@ function StatsDisplay(worldStats){
 
     function createTotalRow(){
         var builder = new DisplayRowBuilder();
-        var tdBuilder = new DisplayDataBuilder();
-        var column = tdBuilder.withId('total-count')
+        var column = new DisplayDataBuilder().withId('total-count')
             .withInitialValue(displayTotals)
             .subscribe('turn-stats-updated', displayTotals)
             .subscribe('thing-added', displayTotals)

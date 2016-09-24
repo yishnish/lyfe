@@ -12,7 +12,7 @@ function ControlPanel(){
         startButton.innerText = "Reset";
         startButton.onclick = function(){
             this.pubsub.publish('reset');
-            this.world = resetWorld(this.world);
+            this.world = createWorld();
             if(!this.paused){
                 this.startWorld();
             }
@@ -62,15 +62,6 @@ function ControlPanel(){
     ControlPanel.prototype.createAndShowWorld = function(){
         this.world = createAndShowWorld();
     };
-
-    function clearWorld_soRemovalEventsGetFired(world){
-        world.clear();
-    }
-
-    function resetWorld(world){
-        clearWorld_soRemovalEventsGetFired(world);
-        return createAndShowWorld();
-    }
 
     function createWorld(){
         return new World(createGrid());
