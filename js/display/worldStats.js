@@ -1,6 +1,8 @@
 function WorldStats(){
     var pubsub = PubSub();
     var turnCount = 0;
+    var maxTotalThings = 0;
+    var totalThings = 0;
     var things = new Map();
 
     function updateTurnCount(){
@@ -24,13 +26,20 @@ function WorldStats(){
         return getOrCreateThingData(thingClass).maxConcurrent;
     };
 
+    this.getMaxTotalCount = function(){
+        return maxTotalThings;
+    };
+
     pubsub.subscribe('thing-added', function(thing){
         incrementThingCount(thing);
+        incrementTotalThingCount();
+        incrementMaxTotalCountIfNecessary();
         updateMaxThingCountIfNecessary(thing);
     });
 
     pubsub.subscribe('thing-removed', function(thing){
         decrementThingCount(thing);
+        decrementTotalThingCount();
     });
 
     pubsub.subscribe('turned', updateTurnCount.bind(this));
@@ -38,7 +47,21 @@ function WorldStats(){
     pubsub.subscribe('reset', function(){
         things = new Map();
         turnCount = 0;
+        totalThings = 0;
+        maxTotalThings = 0;
     });
+
+    function decrementTotalThingCount(){
+        totalThings--;
+    }
+
+    function incrementTotalThingCount(){
+        totalThings++;
+    }
+
+    function incrementMaxTotalCountIfNecessary(){
+        maxTotalThings = Math.max(maxTotalThings, totalThings);
+    }
 
     function getOrCreateThingData(thingClass){
         var thingData = things.get(thingClass);

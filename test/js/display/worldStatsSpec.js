@@ -45,4 +45,36 @@ describe("world statistics", function(){
         world.remove(0, 0);
         expect(worldStats.getMaxThingCount(Cow)).toBe(2);
     });
+    it('should know the maximum number of things that ever existed at the same time', function(){
+        var world = new World([[null, null]]);
+        var worldStats = new WorldStats(world);
+        world.add(new Cow(), new Coordinates(0, 0));
+        expect(worldStats.getMaxTotalCount()).toBe(1);
+        world.remove(0, 0);
+        expect(worldStats.getMaxTotalCount()).toBe(1);
+        world.add(new Cow(), new Coordinates(0, 0));
+        expect(worldStats.getMaxTotalCount()).toBe(1);
+        world.add(new Cow(), new Coordinates(0, 1));
+        expect(worldStats.getMaxTotalCount()).toBe(2);
+    });
+    it('should reset the max total number of things when a reset event occurs', function(){
+        var world = new World([[null, null]]);
+        var worldStats = new WorldStats(world);
+        expect(worldStats.getMaxTotalCount()).toBe(0);
+        world.add(new Cow(), new Coordinates(0, 0));
+        expect(worldStats.getMaxTotalCount()).toBe(1);
+        PubSub().publish('reset');
+        expect(worldStats.getMaxTotalCount()).toBe(0);
+    });
+    it('adding a thing after being reset should show the correct max total', function(){
+        var world = new World([[null, null]]);
+        var worldStats = new WorldStats(world);
+        expect(worldStats.getMaxTotalCount()).toBe(0);
+        world.add(new Cow(), new Coordinates(0, 0));
+        expect(worldStats.getMaxTotalCount()).toBe(1);
+        PubSub().publish('reset');
+        expect(worldStats.getMaxTotalCount()).toBe(0);
+        world.add(new Cow(), new Coordinates(0, 1));
+        expect(worldStats.getMaxTotalCount()).toBe(1);
+    });
 });

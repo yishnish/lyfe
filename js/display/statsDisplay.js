@@ -45,14 +45,20 @@ function StatsDisplay(worldStats){
 
     function createTotalRow(){
         var builder = new DisplayRowBuilder();
-        var column = new DisplayDataBuilder().withId('total-count')
+        var total = new DisplayDataBuilder().withId('total-count')
             .withInitialValue(displayTotals)
             .subscribe('turn-stats-updated', displayTotals)
             .subscribe('thing-added', displayTotals)
             .subscribe('reset', displayTotals);
+        var maxTotal = new DisplayDataBuilder().withId('max-total-count')
+            .withInitialValue(displayTotals)
+            .subscribe('turn-stats-updated', displayMaxTotals)
+            .subscribe('thing-added', displayMaxTotals)
+            .subscribe('reset', displayMaxTotals);
         return builder.createRow().addRowClass('stats-display-row')
             .addRowLabel('Total')
-            .addData(column)
+            .addData(total)
+            .addData(maxTotal)
             .build();
     }
 
@@ -60,14 +66,6 @@ function StatsDisplay(worldStats){
         var table = document.createElement("table");
         table.classList.add('stats-display');
         return table;
-    }
-
-    function getTotals(){
-        var total = 0;
-        [Cow, Civet, Wolf, PolarBear, FruitBush].forEach(function(thingClass){
-            total += worldStats.getThingCount(thingClass);
-        });
-        return total;
     }
 
     function displayThingCount(clazz){
@@ -97,7 +95,15 @@ function StatsDisplay(worldStats){
     }
 
     function displayTotals(){
-        return getTotals();
+        var total = 0;
+        [Cow, Civet, Wolf, PolarBear, FruitBush].forEach(function(thingClass){
+            total += worldStats.getThingCount(thingClass);
+        });
+        return total;
+    }
+
+    function displayMaxTotals(){
+        return worldStats.getMaxTotalCount();
     }
 }
 

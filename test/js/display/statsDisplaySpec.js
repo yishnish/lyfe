@@ -58,4 +58,16 @@ describe("displaying world statistics", function(){
         world.remove(0, 0);
         expect(statsDisplay.getMaxNumberOf(Cow)).toBe(2);
     });
+
+    it('should show the maximum total number of all things that ever existed at once', function(){
+        var stats = new WorldStats();
+        var world = new World([[null, null]]);
+        var statsDisplay = new StatsAccessor(new StatsDisplay(stats));
+        world.add(new Cow(), new Coordinates(0, 0));
+        expect(statsDisplay.getMaxTotal()).toBe(1);
+        world.add(new Cow(), new Coordinates(0, 1));
+        expect(statsDisplay.getMaxTotal()).toBe(2);
+        world.remove(0, 0);
+        expect(statsDisplay.getMaxTotal()).toBe(2);
+    });
 });

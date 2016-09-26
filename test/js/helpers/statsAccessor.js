@@ -15,4 +15,10 @@ function StatsAccessor(statsDisplay){
         var selector = '#' + thingClass.name.toLowerCase() + '-max-count';
         return parseInt(stats.querySelector(selector).innerHTML);
     };
+
+    this.getMaxTotal = function(){
+        var stats = statsDisplay.getDisplay();
+        var selector = '#max-total-count';
+        return parseInt(stats.querySelector(selector).innerHTML);
+    };
 }
