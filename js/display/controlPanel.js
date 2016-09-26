@@ -12,7 +12,7 @@ function ControlPanel(){
         startButton.innerText = "Reset";
         startButton.onclick = function(){
             this.pubsub.publish('reset');
-            this.world = createWorld();
+            this.world = createAndShowWorld();
             if(!this.paused){
                 this.startWorld();
             }
