@@ -8,6 +8,10 @@ function TableAccessor(table){
         return this.cellAt(row, col).getAttribute("color");
     };
 
+    this.classes = function(row, col){
+        return this.cellAt(row, col).classList;
+    };
+
     this.rows = function () {
         return table.rows.length;
     };

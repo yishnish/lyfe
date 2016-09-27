@@ -46,10 +46,9 @@ describe('Visualizers', function () {
 
         it('should setContents the display HTML when the backing world changes', function () {
             expect(cowColor).not.toEqual(wolfColor);
-            var dataGrid = [
+            var world = new World([
                 [cow]
-            ];
-            var world = new World(dataGrid);
+            ]);
             var viz = new Visualizer(world, ColorMapping());
             var table = new TableAccessor(viz.getDisplay());
 
@@ -58,6 +57,19 @@ describe('Visualizers', function () {
             world.add(wolf, new Coordinates(0, 0));
             world.turn();
             expect(table.cellColorAt(0, 0)).toBe(wolfColor);
+        });
+
+        it('should not remove a tagged status from a tagged thing when it moves to a new location', function(){
+            var cow = new Cow();
+            cow.tag();
+            var world = new World([
+                [cow, null]
+            ]);
+            var viz = new Visualizer(world, ColorMapping());
+            var table = new TableAccessor(viz.getDisplay());
+            world.turn();
+            expect(table.classes(0, 1)).toMatch("tagged");
+            expect(cow.isTagged()).toBe(true);
         });
     });
 });

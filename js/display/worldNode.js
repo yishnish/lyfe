@@ -1,5 +1,4 @@
 function WorldNode(colorMapping, thing){
-    this.thing = thing;
     this.colorMapping = colorMapping;
     this.thingDetails = new ThingDetails(thing);
     this.td = CellFactory.createCell(this, this.thingDetails);
@@ -14,6 +13,7 @@ function WorldNode(colorMapping, thing){
         return this.td;
     };
     WorldNode.prototype.setContents = function(thing) {
+        this.thing = thing;
         this.td.classList.remove('temp-highlight');
         if(thing && thing.isTagged()) {
             this.td.classList.add('tagged');

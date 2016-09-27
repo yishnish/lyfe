@@ -34,12 +34,31 @@ describe('WorldNode', function () {
                 expect(node.getTableCell().classList).toContain('temp-highlight');
             });
 
-            it('should highlight a cell when a tagged thing is added', function () {
+            it('should highlight a cell when a node is created with a tagged thing', function () {
                 var nodeFactory = new WorldNodeFactory(colorMapping);
                 var cow = new Cow();
                 cow.tag();
                 var node = nodeFactory.newNode(cow);
                 expect(node.getTableCell().classList).toContain('tagged');
+            });
+
+            it('should highlight a cell when a tagged thing is added to an existing node', function(){
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var cow = new Cow();
+                cow.tag();
+                var node = nodeFactory.newNode();
+                node.setContents(cow);
+                expect(node.getTableCell().classList).toContain('tagged');
+            });
+
+            it('should toggle a things tag state when told to do so', function(){
+                var nodeFactory = new WorldNodeFactory(colorMapping);
+                var cow = new Cow();
+                var node = nodeFactory.newNode(cow);
+                node.toggleTagged();
+                expect(cow.isTagged()).toBe(true);
+                node.toggleTagged();
+                expect(cow.isTagged()).toBe(false);
             });
 
             it('should clear highlight from a cell when a tagged thing is replaced by a not tagged thing', function () {

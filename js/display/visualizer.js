@@ -4,7 +4,7 @@ function Visualizer(world, colorMapping) {
     init.apply(this);
 
     this.thingAt = function (row, col) {
-        return getDataNodes.call(this)[row][col];
+        return nodes[row][col];
     };
 
     this.getDisplay = function () {
@@ -26,10 +26,6 @@ function Visualizer(world, colorMapping) {
         world.eachTurn(this, function () {
             this.setContents();
         });
-    }
-
-    function getDataNodes() {
-        return nodes;
     }
 
     function createNodeStuff() {
