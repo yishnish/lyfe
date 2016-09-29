@@ -146,18 +146,16 @@ describe("wolves", function () {
             ];
 
             var world = new World(dataGrid);
-            spyOn(thing1, 'getHumped');
-            spyOn(thing2, 'getHumped');
 
             thing1.vitality = 0;
             thing2.vitality = 0;
             world.turn();
-            expect(thing2.getHumped).not.toHaveBeenCalled();
+            expect(thing1.pregnant || thing2.pregnant).toBeFalsy();
 
-            thing1.vitality = 1;
-            thing2.vitality = 1;
+            thing1.vitality = 20;
+            thing2.vitality = 20;
             world.turn();
-            expect(thing2.getHumped).toHaveBeenCalled();
+            expect(thing1.pregnant && thing2.pregnant).toBe(true);
         });
     });
 });

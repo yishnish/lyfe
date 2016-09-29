@@ -7,30 +7,9 @@ function Wolf(){
     Wolf.prototype.constructor = Wolf;
     Wolf.prototype.behaviors = [];
 
-    Wolf.prototype.mixin(Copulates);
-    Wolf.prototype.mixin(Birthing);
-    Wolf.prototype.mixin(Carnivore);
+    Wolf.prototype.addBehavior(new Behavior('birthing').addAction(new GivesBirth()));
+    Wolf.prototype.addBehavior(new Behavior('copulates').addAction(new HasSex()));
+    Wolf.prototype.addBehavior(new Behavior('carnivore').addAction(new EatsMeat()));
+    Wolf.prototype.addBehavior(new Behavior('moves').addAction(new MovesAround()));
     Wolf.prototype.mixin(Food);
-    Wolf.prototype.mixin(Moves);
-
-    Wolf.prototype.doYourTurnThings = function (turn) {
-        var didEat, gaveBirth, didHump;
-        if (this.pregnant) {
-            gaveBirth = this.giveBirth(turn);
-        }
-        if (!gaveBirth && this.vitality > 0) {
-            didHump = this.tryHumping(turn);
-        }
-        if (!gaveBirth && !didHump && this.vitality < this.MAX_VITALITY) {
-            didEat = this.eatIfPossible(turn);
-        }
-        if (!gaveBirth && !didHump && !didEat) {
-            this.moveIfPossible.call(this, turn);
-        }
-    };
-
-    Wolf.prototype.eat = function (food) {
-        this.vitality += 20;
-        food.getEaten();
-    };
 })();
