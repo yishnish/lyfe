@@ -1,7 +1,7 @@
 function CannibalDiet(){
 }
 
-CannibalDiet.prototype = Object.create(BaseBehavior.prototype);
+CannibalDiet.prototype = Object.create(BaseAction.prototype);
 
 CannibalDiet.prototype.act = function(turn){
     var placesWithFood = this.findPlaces(turn, function(thing){

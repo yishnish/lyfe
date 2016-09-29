@@ -1,7 +1,7 @@
 function HasSex(){
 }
 
-HasSex.prototype = Object.create(BaseBehavior.prototype);
+HasSex.prototype = Object.create(BaseAction.prototype);
 
 HasSex.prototype.act = function(turn){
     if(turn.actor.vitality > 0){

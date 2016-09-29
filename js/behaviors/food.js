@@ -1,7 +1,7 @@
 function Food(){
 }
 
-Food.prototype = Object.create(BaseBehavior.prototype);
+Food.prototype = Object.create(BaseAction.prototype);
 
 Food.prototype.getEaten = function(){
     this.hp -= 10;

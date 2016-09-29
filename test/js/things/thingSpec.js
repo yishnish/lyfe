@@ -129,14 +129,13 @@ describe("Things", function(){
                 expect(behaviorId).toBe(2);
             });
         });
-
     });
 
     describe("mixins", function(){
         function MyMixin(){
         }
 
-        MyMixin.prototype = Object.create(BaseBehavior.prototype);
+        MyMixin.prototype = Object.create(BaseAction.prototype);
         MyMixin.prototype.foo = function(){
             return 'foo';
         };

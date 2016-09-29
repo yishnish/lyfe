@@ -1,7 +1,7 @@
 function EatsEverything(){
 }
 
-EatsEverything.prototype = Object.create(BaseBehavior.prototype);
+EatsEverything.prototype = Object.create(BaseAction.prototype);
 
 EatsEverything.prototype.act = function(turn){
     var actor = turn.actor;

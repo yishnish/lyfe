@@ -1,11 +1,11 @@
-function BaseBehavior() {
+function BaseAction() {
 }
 
 (function () {
     var dx = [-1, 0, 1];
     var dy = [-1, 0, 1];
 
-    BaseBehavior.prototype.findPlaces = function (turn, criteria) {
+    BaseAction.prototype.findPlaces = function (turn, criteria) {
         var places = [];
         dy.forEach(function (rowChange) {
             dx.forEach(function (colChange) {
@@ -20,14 +20,14 @@ function BaseBehavior() {
         return places;
     };
 
-    BaseBehavior.prototype.findAdjacentEmptySpaces = function (turn) {
+    BaseAction.prototype.findAdjacentEmptySpaces = function (turn) {
         return this.findPlaces(turn, function (thing) {
             return thing === null;
         });
     };
 
 
-    BaseBehavior.prototype.pickRandomLocation = function (locations) {
+    BaseAction.prototype.pickRandomLocation = function (locations) {
         return locations[Math.floor(Math.random() * locations.length)];
     };
 })();

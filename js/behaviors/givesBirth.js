@@ -1,6 +1,6 @@
 function GivesBirth(){}
 
-GivesBirth.prototype = Object.create(BaseBehavior.prototype);
+GivesBirth.prototype = Object.create(BaseAction.prototype);
 
 GivesBirth.prototype.act = function(turn){
     var actor = turn.actor;

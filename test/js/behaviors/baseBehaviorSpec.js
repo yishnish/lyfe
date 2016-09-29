@@ -1,9 +1,10 @@
 describe('Base behavior', function () {
     beforeAll(function () {
-        MyThing.prototype.mixin(BaseBehavior);
+        MyThing.prototype.mixin(BaseAction);
     });
+
     afterAll(function () {
-        MyThing.prototype.removeMixin(BaseBehavior);
+        MyThing.prototype.removeMixin(BaseAction);
     });
 
     it('should be able to find adjacent empty spaces', function () {

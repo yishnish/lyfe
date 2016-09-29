@@ -2,7 +2,7 @@ function EatsVegetables(){
 }
 
 (function(){
-    EatsVegetables.prototype = Object.create(BaseBehavior.prototype);
+    EatsVegetables.prototype = Object.create(BaseAction.prototype);
 
     EatsVegetables.prototype.act = function(turn){
         this.maybePoopAPlant(turn);

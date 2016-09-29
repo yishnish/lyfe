@@ -4,7 +4,7 @@ function MovesAround(){}
     var dx = [-1, 0, 1];
     var dy = [-1, 0, 1];
 
-    MovesAround.prototype = Object.create(BaseBehavior.prototype);
+    MovesAround.prototype = Object.create(BaseAction.prototype);
 
     MovesAround.prototype.act = function (turn) {
         var placesToMoveTo = findPlacesToMoveTo(turn);
