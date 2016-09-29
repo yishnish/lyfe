@@ -1,24 +1,24 @@
-describe("civets", function(){
+describe("polar bears", function(){
     beforeAll(function(){
         jasmine.addMatchers(customMatchers);
     });
 
     describe("Movement", function(){
         it('should be able to move around in the world', function(){
-            var creature = new Civet();
+            var creature = new PolarBear();
             var dataGrid = [
                 [creature, null]
             ];
             var world = new World(dataGrid);
             world.turn();
-            expect(world.thingAt(0, 0)).not.toBeA(Civet);
+            expect(world.thingAt(0, 0)).not.toBeA(PolarBear);
             expect(world.thingAt(0, 1)).toBe(creature);
         });
     });
     describe("type awareness", function(){
         it('should know what type of thing it is', function(){
-            var thing = new Civet();
-            expect(thing.getClazz()).toEqual(Civet);
+            var thing = new PolarBear();
+            expect(thing.getClazz()).toEqual(PolarBear);
         });
     });
 
@@ -26,7 +26,7 @@ describe("civets", function(){
         var creature;
 
         beforeEach(function(){
-            creature = new Civet();
+            creature = new PolarBear();
             creature.maybePoopAPlant = function(){
             };
         });
@@ -81,8 +81,8 @@ describe("civets", function(){
         describe("Eating", function(){
             var food, creature;
             beforeEach(function(){
-                food = new FruitBush();
-                creature = new Civet();
+                food = new PolarBear();
+                creature = new PolarBear();
             });
             it('should raise vitality by two when eating food', function(){
                 var startingVitality = creature.vitality;
@@ -96,10 +96,10 @@ describe("civets", function(){
                 var world = new World([
                     [food, creature]
                 ]);
+                //these are set to zero so that they don't try to have sex with each other
+                food.vitality = 0;
+                creature.vitality = 0;
                 spyOn(creature, 'eat');
-                world.turn();
-                expect(creature.eat).not.toHaveBeenCalled();
-                creature.vitality--;
                 world.turn();
                 expect(creature.eat).toHaveBeenCalled();
             });
@@ -108,7 +108,7 @@ describe("civets", function(){
 
     describe("Death", function(){
         it('Things should be removed from the world when their health reaches zero', function(){
-            var thing = new Civet();
+            var thing = new PolarBear();
 
             var dataGrid = [
                 [thing]
@@ -124,8 +124,8 @@ describe("civets", function(){
 
     describe("porking", function(){
         it('two adjacent creatures should create a new creature if their vitality is full', function(){
-            var thing1 = new Civet();
-            var thing2 = new Civet();
+            var thing1 = new PolarBear();
+            var thing2 = new PolarBear();
 
             var dataGrid = [
                 [thing1, thing2, null]
@@ -137,12 +137,12 @@ describe("civets", function(){
 
             expect(world.thingAt(0, 0)).toBe(thing1);
             expect(world.thingAt(0, 1)).toBe(thing2);
-            expect(world.thingAt(0, 2)).toBeA(Civet);
+            expect(world.thingAt(0, 2)).toBeA(PolarBear);
         });
 
-        it('two adjacent civets should not have carnal relations if their vitality is not full', function(){
-            var thing1 = new Civet();
-            var thing2 = new Civet();
+        it('two adjacent creatures should not have carnal relations if their vitality is at zero', function(){
+            var thing1 = new PolarBear();
+            var thing2 = new PolarBear();
 
             var dataGrid = [
                 [thing1, thing2]
@@ -164,9 +164,9 @@ describe("civets", function(){
         });
 
         it("should not allow multiple behaviors to successfully happen in the same turn", function(){
-            var thing1 = new Civet();
+            var thing1 = new PolarBear();
             thing1.marker = 'thing1';
-            var thing2 = new Civet();
+            var thing2 = new PolarBear();
             thing2.marker = 'thing2';
 
             var dataGrid = [
