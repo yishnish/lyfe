@@ -9,14 +9,6 @@ Cow.prototype.behaviors = [];
 Cow.prototype.addBehavior((new Behavior('birthing')).addTrait(new GivesBirth()));
 Cow.prototype.addBehavior((new Behavior('copulates')).addTrait(new HasSex()));
 Cow.prototype.addBehavior((new Behavior('diet')).addTrait(new EatsVegetables()));
+Cow.prototype.addBehavior((new Behavior('moves')).addTrait(new MovesAround()));
 Cow.prototype.mixin(Food);
-Cow.prototype.mixin(Moves);
 
-Cow.prototype.doYourTurnThings = function(turn){
-    this.moveIfPossible.call(this, turn);
-};
-
-Cow.prototype.eat = function(food){
-    this.vitality += 20;
-    food.getEaten();
-};

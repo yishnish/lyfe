@@ -90,6 +90,11 @@ function Thing(clazz){
         }
     };
 
+    Thing.prototype.eat = function(food){
+        this.vitality += 20;
+        food.getEaten();
+    };
+
     function decrementVitality(){
         this.vitality = Math.max(this.vitality - 10, 0);
     }

@@ -71,7 +71,7 @@ describe("Things", function(){
     describe("behaviors", function(){
         afterEach(function(){
             Thing.prototype.behaviors.forEach(function(it){
-                Thing.prototype.removeBehavior(it)
+                Thing.prototype.removeBehavior(it);
             });
         });
 
