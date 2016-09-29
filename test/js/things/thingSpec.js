@@ -1,32 +1,25 @@
-/**
- * philosophy stuff. does a thing know wabout the world? if i'm a thing and i want to move somewhere do i ask the
- * world if there is stuff there? i think so. i don't negotiate with the world about the location of objects, i
- * query it with my senses and determine whether there's stuff where i want to be. so i guess Things know about the
- * World. but maybe just when the world tells the thing it can do something? "ok, you can do a thing now, here's me if
- * you need any info about me"
- */
-describe("Things", function () {
-    describe("type awareness", function () {
-        it('should know what type of thing it is', function () {
+describe("Things", function(){
+    describe("type awareness", function(){
+        it('should know what type of thing it is', function(){
             var thing = new Thing(Thing);
             expect(thing.getClazz()).toEqual(Thing);
         });
     });
 
-    describe("Well being", function () {
+    describe("Well being", function(){
         var thing;
 
-        beforeEach(function () {
+        beforeEach(function(){
             thing = new Thing(Thing);
         });
 
-        it('has health', function () {
+        it('has health', function(){
             expect(thing.hp).toBeDefined();
         });
-        it('has vitality', function () {
+        it('has vitality', function(){
             expect(thing.vitality).toBeDefined();
         });
-        it('loses health every turn once its vitality reaches zero', function () {
+        it('loses health every turn once its vitality reaches zero', function(){
             var dataGrid = [
                 [thing, null]
             ];
@@ -40,8 +33,8 @@ describe("Things", function () {
         });
     });
 
-    describe("age", function () {
-        it('should know how old it is', function () {
+    describe("age", function(){
+        it('should know how old it is', function(){
             var thing = new Thing(Thing);
             expect(thing.age).toBe(0);
             var world = new World([[thing]]);
@@ -51,8 +44,8 @@ describe("Things", function () {
         });
     });
 
-    describe("Life and Death", function () {
-        it('Things should be removed from the world when their health reaches zero', function () {
+    describe("Life and Death", function(){
+        it('Things should be removed from the world when their health reaches zero', function(){
             var thing = new Thing(Thing);
 
             var dataGrid = [
@@ -67,29 +60,68 @@ describe("Things", function () {
         });
     });
 
-    describe("tracking beasts", function () {
-        it('beast should be able to be tagged for tracking', function () {
+    describe("tracking beasts", function(){
+        it('beast should be able to be tagged for tracking', function(){
             var thing = new Thing(Thing);
             thing.tag();
             expect(thing.isTagged()).toBe(true);
         });
     });
 
-    describe("mixins", function () {
-        function MyMixin() { }
+    describe("behaviors", function(){
+        afterEach(function(){
+            Thing.prototype.behaviors.forEach(function(it){
+                Thing.prototype.removeBehavior(it)
+            });
+        });
+
+        it('a thing should let you add behaviors to it', function(){
+            var behavior = new Behavior('my behavior');
+            Thing.prototype.addBehavior(behavior);
+            expect(Thing.prototype.behaviors).toContain(behavior);
+        });
+
+        it("a thing should let you remove behaviors from it", function(){
+            var behavior = new Behavior("behavior 1");
+            var behavior2 = new Behavior("behavior 2");
+            Thing.prototype.addBehavior(behavior);
+            Thing.prototype.addBehavior(behavior2);
+            expect(Thing.prototype.behaviors).toContain(behavior);
+            expect(Thing.prototype.behaviors).toContain(behavior2);
+            Thing.prototype.removeBehavior(behavior);
+            expect(Thing.prototype.behaviors).not.toContain(behavior);
+        });
+
+        it('should execute traits associated with a behavior when it takes a turn', function(){
+            var porks = new Behavior('porks');
+            porks.addTrait(new HasSex());
+            Thing.prototype.addBehavior(porks);
+
+            var thing = new Thing(Thing);
+            var otherThing = new Thing(Thing);
+
+            var turn = new TurnContext(new World([[thing, otherThing]]), thing, new Coordinates(0, 0));
+            thing.takeTurn(turn);
+            expect(otherThing.pregnant).toBe(true);
+        });
+    });
+
+    describe("mixins", function(){
+        function MyMixin(){
+        }
 
         MyMixin.prototype = Object.create(BaseBehavior.prototype);
-        MyMixin.prototype.foo = function () {
+        MyMixin.prototype.foo = function(){
             return 'foo';
         };
 
-        it('should be able to have behaviors mixed in', function () {
+        it('should be able to have behaviors mixed in', function(){
             var thing = new Thing(Thing);
             thing.mixin(MyMixin);
             expect(thing.foo()).toEqual('foo');
         });
 
-        it('should be able to remove mixins', function () {
+        it('should be able to remove mixins', function(){
             var thing = new Thing(Thing);
             thing.mixin(MyMixin);
             expect(thing.foo()).toEqual('foo');

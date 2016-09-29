@@ -10,6 +10,21 @@ function Thing(clazz){
 }
 
 (function(){
+    Thing.prototype.behaviors = [];
+
+    Thing.prototype.addBehavior = function(behavior){
+        this.behaviors.push(behavior);
+    };
+
+    Thing.prototype.removeBehavior = function(behavior){
+        var index = this.behaviors.findIndex(function(ohBehave){
+            return ohBehave.name === behavior.name;
+        });
+        if(index !== -1){
+            this.behaviors.splice(index, 1);
+        }
+    };
+
     Thing.prototype.getClazz = function(){
         return this.clazz;
     };
@@ -39,10 +54,17 @@ function Thing(clazz){
     };
 
     Thing.prototype.takeTurn = function(turnContext){
+        this.behave(turnContext);
         this.doYourTurnThings(turnContext);
         this.adjustHealthBasedOnVitality.call(this, turnContext);
         decrementVitality.call(this);
         this.age++;
+    };
+
+    Thing.prototype.behave = function(turn){
+        this.behaviors.some(function(behavior){
+            return behavior.behave(turn);
+        });
     };
 
     Thing.prototype.die = function(turnContext){
