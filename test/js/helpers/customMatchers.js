@@ -29,6 +29,20 @@ var customMatchers = {
         };
     },
 
+    toBeA: function(util, customEqualityTesters){
+        return {
+            compare: function(actual, expected){
+                var result = {pass: false};
+                if(actual instanceof expected){
+                    result.pass = true;
+                } else{
+                    result.message = 'Expected a '+ expected.name + ', got ' + actual;
+                }
+                return result;
+            }
+        };
+    },
+
     toBeAWolf: function(util, customEqualityTesters){
         return {
             compare: function(actual, expected){
