@@ -30,6 +30,17 @@ describe("things that can have sex", function(){
         expect(otherThing.pregnant).toBeFalsy();
     });
 
+    it("shouldn't hump if it's starving", function(){
+        var thing = new MySexThing();
+        var otherThing = new MySexThing();
+        var world = new World([
+            [thing, otherThing]
+        ]);
+        thing.vitality = 0;
+        world.turn();
+        expect(otherThing.pregnant).toBeFalsy();
+    });
+
     function MySexThing(){
         Thing.call(this);
     }

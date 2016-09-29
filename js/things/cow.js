@@ -8,19 +8,12 @@ Cow.prototype.behaviors = [];
 
 Cow.prototype.addBehavior((new Behavior('birthing')).addTrait(new GivesBirth()));
 Cow.prototype.addBehavior((new Behavior('copulates')).addTrait(new HasSex()));
-Cow.prototype.mixin(Vegetarian);
+Cow.prototype.addBehavior((new Behavior('diet')).addTrait(new EatsVegetables()));
 Cow.prototype.mixin(Food);
 Cow.prototype.mixin(Moves);
 
 Cow.prototype.doYourTurnThings = function(turn){
-    var didEat;
-    if(this.vitality < this.MAX_VITALITY){
-        didEat = this.eatIfPossible(turn);
-    }
-    if(!didEat){
-        this.moveIfPossible.call(this, turn);
-    }
-    this.maybePoopAPlant(turn);
+    this.moveIfPossible.call(this, turn);
 };
 
 Cow.prototype.eat = function(food){

@@ -107,7 +107,7 @@ function ControlPanel(){
                 grid[k][l] = makers[Math.floor(Math.random() * makers.length)]();
             }
         }
-
+grid[60][60] = new Cow();
         return grid;
     }
 
