@@ -94,7 +94,7 @@ describe("Things", function(){
 
         it('should execute traits associated with a behavior when it takes a turn', function(){
             var porks = new Behavior('porks');
-            porks.addTrait(new HasSex());
+            porks.addAction(new HasSex());
             Thing.prototype.addBehavior(porks);
 
             var thing = new Thing(Thing);

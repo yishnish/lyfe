@@ -7,7 +7,7 @@ describe("behavior", function(){
             }
         };
         var behavior = new Behavior();
-        behavior.addTrait(myTrait);
+        behavior.addAction(myTrait);
         expect(myTrait.acted).toBe(false);
         behavior.behave(null);
         expect(myTrait.acted).toBe(true);
@@ -27,7 +27,7 @@ describe("behavior", function(){
         var neverRuns = new MyTrait(true);
 
         var behavior = new Behavior();
-        behavior.addTrait(runs).addTrait(alsoRuns).addTrait(neverRuns);
+        behavior.addAction(runs).addAction(alsoRuns).addAction(neverRuns);
         behavior.behave(null);
         expect(runs.acted).toBe(true);
         expect(alsoRuns.acted).toBe(true);

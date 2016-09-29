@@ -2,7 +2,7 @@ describe("moves", function () {
     var movesAround;
     beforeAll(function () {
         movesAround = new Behavior('moves');
-        movesAround.addTrait(new MovesAround());
+        movesAround.addAction(new MovesAround());
         MyThing.prototype.addBehavior(movesAround);
     });
     afterAll(function () {

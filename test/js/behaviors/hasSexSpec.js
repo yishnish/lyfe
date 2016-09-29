@@ -48,5 +48,5 @@ describe("things that can have sex", function(){
     MySexThing.prototype = Object.create(Thing.prototype);
     MySexThing.prototype.constructor = MySexThing;
     MySexThing.prototype.behaviors = [];
-    MySexThing.prototype.addBehavior((new Behavior()).addTrait(new HasSex()));
+    MySexThing.prototype.addBehavior((new Behavior()).addAction(new HasSex()));
 });

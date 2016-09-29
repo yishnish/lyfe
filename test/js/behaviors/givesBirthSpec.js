@@ -2,7 +2,7 @@ describe("things that give birth", function(){
     var thing;
     var birthing = new Behavior('birthing');
     beforeAll(function(){
-        birthing.addTrait(new GivesBirth());
+        birthing.addAction(new GivesBirth());
         MyThing.prototype.addBehavior(birthing);
     });
     afterAll(function(){

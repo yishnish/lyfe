@@ -1,15 +1,15 @@
 function Behavior(name){
-    this.traits = [];
+    this.actions = [];
     this.name = name;
 }
 
-Behavior.prototype.addTrait = function(trait){
-    this.traits.push(trait);
+Behavior.prototype.addAction = function(trait){
+    this.actions.push(trait);
     return this;
 };
 
 Behavior.prototype.behave = function(turn){
-    return this.traits.some(function(trait){
+    return this.actions.some(function(trait){
         return trait.act(turn);
     });
 };

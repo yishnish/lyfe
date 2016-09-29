@@ -2,7 +2,7 @@ describe("Vegetarians", function () {
     var vegetarian;
     beforeAll(function () {
         vegetarian = new Behavior('vegetarian');
-        vegetarian.addTrait(new EatsVegetables());
+        vegetarian.addAction(new EatsVegetables());
 
         MyCreature.prototype.addBehavior(vegetarian);
     });
