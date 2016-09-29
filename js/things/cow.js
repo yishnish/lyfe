@@ -4,25 +4,20 @@ function Cow(){
 
 Cow.prototype = Object.create(Animal.prototype);
 Cow.prototype.constructor = Cow;
+Cow.prototype.behaviors = [];
 
-Cow.prototype.mixin(Birthing);
-Cow.prototype.mixin(Copulates);
+Cow.prototype.addBehavior((new Behavior('birthing')).addTrait(new GivesBirth()));
+Cow.prototype.addBehavior((new Behavior('copulates')).addTrait(new HasSex()));
 Cow.prototype.mixin(Vegetarian);
 Cow.prototype.mixin(Food);
 Cow.prototype.mixin(Moves);
 
 Cow.prototype.doYourTurnThings = function(turn){
-    var didEat, gaveBirth, didHump;
-    if(this.pregnant){
-        gaveBirth = this.giveBirth(turn);
-    }
-    if(!gaveBirth && this.vitality > 0){
-        didHump = this.tryHumping(turn);
-    }
-    if(!gaveBirth && !didHump && this.vitality < this.MAX_VITALITY){
+    var didEat;
+    if(this.vitality < this.MAX_VITALITY){
         didEat = this.eatIfPossible(turn);
     }
-    if(!gaveBirth && !didHump && !didEat){
+    if(!didEat){
         this.moveIfPossible.call(this, turn);
     }
     this.maybePoopAPlant(turn);

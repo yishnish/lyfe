@@ -54,15 +54,16 @@ function Thing(clazz){
     };
 
     Thing.prototype.takeTurn = function(turnContext){
-        this.behave(turnContext);
-        this.doYourTurnThings(turnContext);
+        if(!this.behave(turnContext)){
+            this.doYourTurnThings(turnContext);
+        }
         this.adjustHealthBasedOnVitality.call(this, turnContext);
         decrementVitality.call(this);
         this.age++;
     };
 
     Thing.prototype.behave = function(turn){
-        this.behaviors.some(function(behavior){
+        return this.behaviors.some(function(behavior){
             return behavior.behave(turn);
         });
     };

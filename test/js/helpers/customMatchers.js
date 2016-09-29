@@ -22,7 +22,7 @@ var customMatchers = {
                 if(actual instanceof Cow){
                     result.pass = true;
                 } else{
-                    result.message = 'Expected a cow';
+                    result.message = 'Expected a cow, got ' + actual;
                 }
                 return result;
             }

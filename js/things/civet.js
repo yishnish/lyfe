@@ -5,6 +5,7 @@ function Civet(){
 (function(){
     Civet.prototype = Object.create(Animal.prototype);
     Civet.prototype.constructor = Civet;
+    Civet.prototype.behaviors = [];
 
     Civet.prototype.mixin(Copulates);
     Civet.prototype.mixin(Birthing);

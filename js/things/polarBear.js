@@ -5,6 +5,7 @@ function PolarBear(){
 (function(){
     PolarBear.prototype = Object.create(Animal.prototype);
     PolarBear.prototype.constructor = PolarBear;
+    PolarBear.prototype.behaviors = [];
 
     PolarBear.prototype.mixin(Copulates);
     PolarBear.prototype.mixin(Birthing);

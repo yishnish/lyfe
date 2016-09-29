@@ -5,6 +5,7 @@ function Wolf(){
 (function(){
     Wolf.prototype = Object.create(Animal.prototype);
     Wolf.prototype.constructor = Wolf;
+    Wolf.prototype.behaviors = [];
 
     Wolf.prototype.mixin(Copulates);
     Wolf.prototype.mixin(Birthing);

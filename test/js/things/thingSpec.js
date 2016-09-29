@@ -104,6 +104,32 @@ describe("Things", function(){
             thing.takeTurn(turn);
             expect(otherThing.pregnant).toBe(true);
         });
+
+        describe("multiple behaviors", function(){
+            var behaviorId = 0;
+            var runs = {behave: function(){behaviorId = 1; return false;}};
+            var alsoRuns = {behave: function(){behaviorId = 2; return true;}};
+            var neverRuns = {behave: function(){behaviorId = 3;}};
+
+            beforeAll(function(){
+                Thing.prototype.addBehavior(runs);
+                Thing.prototype.addBehavior(alsoRuns);
+                Thing.prototype.addBehavior(neverRuns);
+
+            });
+            afterAll(function(){
+                Thing.prototype.removeBehavior(runs);
+                Thing.prototype.removeBehavior(alsoRuns);
+                Thing.prototype.removeBehavior(neverRuns);
+            });
+            it('should stop executing behaviors when one reports success', function(){
+                var thing = new Thing(Thing);
+                var turn = new TurnContext(new World([[]]), thing, new Coordinates(0, 0));
+                thing.takeTurn(turn);
+                expect(behaviorId).toBe(2);
+            });
+        });
+
     });
 
     describe("mixins", function(){

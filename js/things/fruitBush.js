@@ -5,6 +5,7 @@ function FruitBush(){
 (function(){
     FruitBush.prototype = Object.create(Vegetable.prototype);
     FruitBush.prototype.constructor = FruitBush;
+    FruitBush.prototype.behaviors = [];
 
     FruitBush.prototype.mixin(Food);
 
