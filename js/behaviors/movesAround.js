@@ -18,7 +18,7 @@ function MovesAround(){}
         var placesToMoveTo = [];
         dy.forEach(function (rowChange) {
             dx.forEach(function (colChange) {
-                if (!(rowChange === 0 && colChange ==0)) {
+                if (!(rowChange === 0 && colChange === 0)) {
                     var delta = new Delta(rowChange, colChange);
                     if (turn.canMoveTo(delta)) {
                         placesToMoveTo.push(delta);
