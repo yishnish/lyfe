@@ -1,4 +1,4 @@
-To set up:
+To set up:                  [![Build Status](https://travis-ci.org/yishnish/lyfe.svg?branch=master)](https://travis-ci.org/yishnish/lyfe)
 npm install
 
 run tests:
@@ -21,5 +21,3 @@ Time:
     Time tells each World cell to perform an action
     After all cells have acted Visualizer updates the nodes' color attribute
     -Does Time notify listeners?
-
-https://travis-ci.org/yishnish/lyfe.svg?branch=master
