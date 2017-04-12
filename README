@@ -21,3 +21,5 @@ Time:
     Time tells each World cell to perform an action
     After all cells have acted Visualizer updates the nodes' color attribute
     -Does Time notify listeners?
+
+https://travis-ci.org/yishnish/lyfe.svg?branch=master
