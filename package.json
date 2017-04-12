@@ -11,5 +11,8 @@
     "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "karma-jshint-preprocessor": "0.0.6"
+  },
+  "scripts": {
+    "test" : "./node_modules/.bin/karma start --browsers Firefox --single-run"
   }
 }
