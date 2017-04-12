@@ -31,7 +31,7 @@ var CellFactory = {
 
                 }
                 var highlighted = document.getElementsByClassName('highlight');
-                for(let hilited of highlighted) {
+                for(var hilited of highlighted) {
                     hilited.classList.remove('highlight');
                 }
             };
