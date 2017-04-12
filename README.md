@@ -1,23 +1,7 @@
-To set up:                  [![Build Status](https://travis-ci.org/yishnish/lyfe.svg?branch=master)](https://travis-ci.org/yishnish/lyfe)
+[![Build Status](https://travis-ci.org/yishnish/lyfe.svg?branch=master)](https://travis-ci.org/yishnish/lyfe)
+
+# To set up:                  
 npm install
 
-run tests:
+# Run tests:
 ./node_modules/.bin/karma start
-
-
-TODO:
-The data:
-    World is a grid of things
-    Things have types
-        Things are extended to create world inhabitants
-            Bees are Things, Bears are Things
-
-The view:
-    Visualizer is a 2D array of DOM Nodes
-    Visualizer nodes are used to construct the view in an HTML table(?)
-    CSS colors each cell according to it's 'color' attribute
-
-Time:
-    Time tells each World cell to perform an action
-    After all cells have acted Visualizer updates the nodes' color attribute
-    -Does Time notify listeners?
