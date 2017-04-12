@@ -15,16 +15,16 @@ describe("A World", function(){
             const ACCEPTABLE_CHROME_TIME = 300;
             const ACCEPTABLE_FF_TIME = 100;
             dataGrid = new Array(gridsize);
-            for(let i = 0; i < gridsize; i++){
+            for(var i = 0; i < gridsize; i++){
                 dataGrid[i] = new Array(gridsize);
-                for(let j = 0; j < gridsize; j++){
+                for(var j = 0; j < gridsize; j++){
                     dataGrid[i][j] = new Cow();
                 }
             }
             var world = new World(dataGrid);
             var start, end;
             var starts = [], ends = [];
-            for(let t =0; t < 10; t++){
+            for(var t =0; t < 10; t++){
                 start = Date.now();
                 world.turn();
                 end = Date.now();

@@ -11,7 +11,7 @@ var PubSub = (function(){
 
         pubsub.publish = function(topic, args){
             if(topics[topic]){
-                for(let fun of topics[topic]){
+                for(var fun of topics[topic]){
                     fun(args);
                 }
             }
